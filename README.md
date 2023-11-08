@@ -28,4 +28,6 @@ El resultado final de 'products.json' según los tests existentes debería ser:
 	}
 ]`
 
-- [Desafío 3] - Próximamente.
+- [Desafío 3] - Servidor con Express. Fecha de entrega: 08/11/2023.
+
+El archivo "productList.json" contiene 10 productos utilizados para el funcionamiento del servidor. El mismo se encuentra en la carpeta "./src/data". Se trabajó con ES Modules.
