@@ -11,27 +11,24 @@ cartRouter.get("/:cid", (req, res) => {
 
   try {
     const cartSelected = CarritoManagerOnline.getCartById(Number(cid));
-    return res.status(200).json(cartSelected);
+    res.status(200).json(cartSelected);
   } catch (e) {
-    return res.status(404).json({ error: e.message });
+    res.status(404).json({ error: e.message });
   }
 });
 
 cartRouter.post("/", async (req, res) => {
   const { products } = req.body;
 
-  if (!products)
-    return res
-      .status(400)
-      .json({
-        error: "Please enter an array of products to create your cart.",
-      });
+  if (!products) {
+    res.status(400).json({
+      error: "Please enter an array of products to create your cart.",
+    });
+  } else {
+    const newCart = await CarritoManagerOnline.createCart(products);
 
-  const newCart = await CarritoManagerOnline.createCart(products);
-
-  return res
-    .status(200)
-    .json({ message: "Successfully created!", cart: newCart });
+    res.status(200).json({ message: "Successfully created!", cart: newCart });
+  }
 });
 
 cartRouter.post("/:cid/product/:pid", (req, res) => {
@@ -39,9 +36,9 @@ cartRouter.post("/:cid/product/:pid", (req, res) => {
 
   try {
     CarritoManagerOnline.addProductToCart(Number(cid), Number(pid));
-    return res.status(200).json({ message: "New product has added!" });
+    res.status(200).json({ message: "New product has added!" });
   } catch (e) {
-    return res.status(400).json({ error: e.message });
+    res.status(400).json({ error: e.message });
   }
 });
 

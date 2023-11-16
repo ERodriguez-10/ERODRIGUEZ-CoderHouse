@@ -22,9 +22,9 @@ productRouter.get("/:pid", (req, res) => {
 
   try {
     const productFind = ProductManagerOnline.getProductById(pid);
-    return res.status(200).json(productFind);
+    res.status(200).json(productFind);
   } catch (e) {
-    return res.status(404).json({ error: e.message });
+    res.status(404).json({ error: e.message });
   }
 });
 
@@ -53,9 +53,9 @@ productRouter.post("/", async (req, res) => {
 
   try {
     await ProductManagerOnline.addProduct(productBody);
-    return res.status(201).json({ message: "Product succesfully created" });
+    res.status(201).json({ message: "Product succesfully created" });
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -90,16 +90,16 @@ productRouter.put("/:pid", async (req, res) => {
   try {
     ProductManagerOnline.getProductById(pid);
   } catch (e) {
-    return res.status(404).json({
+    res.status(404).json({
       error: e.message,
     });
   }
 
   try {
     await ProductManagerOnline.updateProduct(pid, newValuesProduct);
-    return res.status(200).json({ message: "Product has modified" });
+    res.status(200).json({ message: "Product has modified" });
   } catch (error) {
-    return res.status(400).json({
+    res.status(400).json({
       error: error.message,
     });
   }
@@ -110,11 +110,11 @@ productRouter.delete("/:pid", async (req, res) => {
 
   try {
     await ProductManagerOnline.deleteProduct(pid);
-    return res.status(200).json({
+    res.status(200).json({
       message: "Content successfully deleted!",
     });
   } catch (error) {
-    return res.status(400).json({
+    res.status(400).json({
       error: error.message,
     });
   }
