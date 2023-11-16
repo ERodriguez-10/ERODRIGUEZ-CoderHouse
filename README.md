@@ -31,3 +31,28 @@ El resultado final de 'products.json' según los tests existentes debería ser:
 - [Desafío 3] - Servidor con Express. Fecha de entrega: 08/11/2023.
 
 El archivo "productList.json" contiene 10 productos utilizados para el funcionamiento del servidor. El mismo se encuentra en la carpeta "./src/data". Se trabajó con ES Modules.
+
+- [PRE-ENTREGA 1] - Primera pre entrega. Fecha de entrega: 16/11/2023.
+
+El archivo "productList.json" contiene productos utilizados para el funcionamiento del servidor. Mientras que "cartList.json" contiene los productos agregados al carrito, este comienza con dos carritos ya creados. Se trabajó con ES Modules.
+
+API E-Commerce v1.0.0
+
+Endpoints de productos:
+
+- GET /api/products/ => devuelve todos los productos.
+- GET /api/products?limit=4 => devuelve los primeros 4 productos.
+- GET /api/products/:id => devuelve un producto según su id.
+- POST /api/products/ => agrega un producto al listado.
+- PUT /api/products/:id => actualiza un producto según su id.
+- DELETE /api/products/:id => elimina un producto según su id.
+
+Endpoints de carrito:
+
+- GET /api/carts/:id => devuelve un carrito según su id.
+- POST /api/carts/ => agrega un carrito con productos al listado.
+- POST /api/carts/:id/product/:idProd => agrega un producto al carrito según su id.
+
+TODO 16/11/2023: Validaciones a la hora de agregar productos al carrito.
+
+- [Desafío 4] - Próximamente.

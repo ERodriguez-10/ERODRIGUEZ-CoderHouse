@@ -2,7 +2,7 @@
   "name": "desafios-entregables",
   "version": "1.0.0",
   "description": "Desafío entregable n° 3 del curso de programación Backend de CoderHouse",
-  "main": "desafio-3.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon ./src/app.js"
