@@ -195,22 +195,27 @@ export class CarritoManager {
   }
 
   async addProductToCart(cartId, productId) {
-    const existCart = this.getCartById(cartId);
+    let isValid = true;
 
-    if (existCart) {
-      const hasExistProduct = existCart.products.find(
+    try {
+      this.getCartById(cartId);
+    } catch (e) {
+      isValid = false;
+      throw new Error(e);
+    }
+
+    if (isValid) {
+      const hasExistProduct = this.getCartById(cartId).products.find(
         (p) => p.productId === productId
       );
 
       if (hasExistProduct) {
         hasExistProduct.quantity++;
       } else {
-        const newProduct = existCart.products.push({
+        this.getCartById(cartId).products.push({
           productId: productId,
           quantity: 1,
         });
-
-        existCart.products.push(newProduct);
       }
 
       await this.saveFile();
