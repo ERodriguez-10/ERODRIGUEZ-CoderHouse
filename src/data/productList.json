@@ -1,72 +1,28 @@
 [
 	{
-		"title": "Adobe Creative Cloud",
-		"description": "A collection of 20+ desktop and mobile apps and services for photography, design, video, web, UX, and more.",
-		"price": 52.99,
-		"thumbnails": [
-			"https://example.com/creativecloud-thumb1.jpg",
-			"https://example.com/creativecloud-thumb2.jpg"
-		],
-		"code": "ADBCCLD",
-		"stock": 50,
-		"category": "Design",
-		"status": "True",
-		"id": 2
-	},
-	{
-		"title": "Windows 10 Pro",
-		"description": "The professional version of the Windows 10 operating system that includes advanced security, management, and productivity features.",
-		"price": 199.99,
-		"thumbnails": [
-			"https://example.com/windows10pro-thumb1.jpg",
-			"https://example.com/windows10pro-thumb2.jpg"
-		],
-		"code": "WIN10PRO",
-		"stock": 200,
-		"category": "Operating System",
-		"status": "True",
-		"id": 3
-	},
-	{
-		"title": "Visual Studio Code",
-		"description": "A lightweight but powerful source code editor that runs on your desktop and is available for Windows, macOS, and Linux.",
-		"price": 0,
-		"thumbnails": [
-			"https://example.com/vscode-thumb1.jpg",
-			"https://example.com/vscode-thumb2.jpg"
-		],
-		"code": "VSCODE",
-		"stock": 55,
-		"category": "Development",
-		"status": "True",
-		"id": 4
-	},
-	{
-		"title": "Google Workspace",
+		"title": "Google Workspace Pro",
 		"description": "A suite of cloud computing, productivity and collaboration tools, software and products developed by Google.",
-		"price": 6,
+		"price": 68.99,
 		"thumbnails": [
-			"https://example.com/googleworkspace-thumb1.jpg",
-			"https://example.com/googleworkspace-thumb2.jpg"
+			"https://picsum.photos/200"
 		],
 		"code": "GWS",
 		"stock": 1000,
 		"category": "Productivity",
-		"status": "True",
+		"status": "true",
 		"id": 5
 	},
 	{
-		"title": "GitHub Pro",
+		"title": "GitHub Pro Enterprise",
 		"description": "A paid subscription service for GitHub that includes unlimited private repositories, advanced code review tools, and more.",
-		"price": 7,
+		"price": 7.99,
 		"thumbnails": [
-			"https://example.com/githubpro-thumb1.jpg",
-			"https://example.com/githubpro-thumb2.jpg"
+			"https://picsum.photos/200"
 		],
 		"code": "GHPRO",
 		"stock": 250,
 		"category": "Development",
-		"status": "True",
+		"status": "true",
 		"id": 6
 	},
 	{
@@ -74,7 +30,7 @@
 		"description": "A paid subscription service for Zoom that includes advanced features for video conferencing, webinars, and more.",
 		"price": 14.99,
 		"thumbnails": [
-			"https://example.com/zoompro-thumb1.jpg",
+			"https://picsum.photos/200",
 			"https://example.com/zoompro-thumb2.jpg"
 		],
 		"code": "ZMPRO",
@@ -88,7 +44,7 @@
 		"description": "A commercial computer-aided design and drafting software application developed and marketed by Autodesk.",
 		"price": 1850,
 		"thumbnails": [
-			"https://example.com/autocad-thumb1.jpg",
+			"https://picsum.photos/200",
 			"https://example.com/autocad-thumb2.jpg"
 		],
 		"code": "AUTOCAD",
@@ -98,25 +54,11 @@
 		"id": 8
 	},
 	{
-		"title": "Norton 360 Deluxe",
-		"description": "A comprehensive security software that provides protection against viruses, malware, spyware, and other online threats.",
-		"price": 49.99,
-		"thumbnails": [
-			"https://example.com/norton360-thumb1.jpg",
-			"https://example.com/norton360-thumb2.jpg"
-		],
-		"code": "NRTN360",
-		"stock": 150,
-		"category": "Security",
-		"status": "True",
-		"id": 9
-	},
-	{
 		"title": "Final Cut Pro",
 		"description": "A professional video editing software application developed by Apple Inc.",
 		"price": 299.99,
 		"thumbnails": [
-			"https://example.com/finalcutpro-thumb1.jpg",
+			"https://picsum.photos/200",
 			"https://example.com/finalcutpro-thumb2.jpg"
 		],
 		"code": "FCP",
@@ -124,5 +66,31 @@
 		"category": "Video",
 		"status": "True",
 		"id": 10
+	},
+	{
+		"title": "Harry Potter IX",
+		"description": "New Harry Book",
+		"price": 59.99,
+		"thumbnails": [
+			"https://picsum.photos/200"
+		],
+		"code": "AAA6789LUO",
+		"stock": 1,
+		"category": "Magic",
+		"status": "true",
+		"id": 11
+	},
+	{
+		"title": "Milei The Handbook",
+		"description": "Any description",
+		"price": 59.99,
+		"thumbnails": [
+			"https://picsum.photos/200"
+		],
+		"code": "QPOEQW",
+		"stock": 500,
+		"category": "Non-fiction",
+		"status": "true",
+		"id": 12
 	}
 ]

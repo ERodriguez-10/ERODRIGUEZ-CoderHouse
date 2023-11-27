@@ -1,5 +1,17 @@
-import { Router } from "express";
+import { fileURLToPath } from "url";
+import path, { dirname } from "node:path";
+import { Router, json } from "express";
+
 import { ProductManager, Product } from "../pre-entrega-1.js";
+
+// Get this file path
+const filenamePath = fileURLToPath(import.meta.url);
+
+// Get directory from this file
+const dirnamePath = dirname(filenamePath);
+
+// Build a flexible path compatible with all platforms
+const jsonFilePath = path.join(dirnamePath, "src", "data", "productList.json");
 
 const ProductManagerOnline = new ProductManager("./src/data/productList.json");
 
