@@ -55,4 +55,15 @@ Endpoints de carrito:
 
 TODO 16/11/2023: Validaciones a la hora de agregar productos al carrito.
 
-- [Desafío 4] - Próximamente.
+- [Desafío 4] - WebSockets + Handlebars. Fecha de entrega: 28/11/2023.
+
+Se añadieron los siguientes paquetes:
+
+- express-handlebars
+- socket.io
+- @picocss/pico -> Minimal framework CSS
+
+Se añadieron los siguientes endpoints:
+
+- GET / => renderiza el index.handlebars donde se encuentran todos los productos.
+- GET /realtimeproducts => renderiza el realTimeProducts.handlebars realizando una conexión a través de WebSockets.

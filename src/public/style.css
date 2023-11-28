@@ -1,0 +1,18 @@
+[data-theme="dark"] {
+  --primary: #43a047;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1 0 auto;
+}

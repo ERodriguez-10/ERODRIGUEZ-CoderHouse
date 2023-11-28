@@ -1,0 +1,141 @@
+<div>
+  <h1 style="color: #43a047; text-align: center;"><i
+      class="fa-solid fa-bookmark"
+      style="color: #43a047"
+    ></i>
+    -
+    {{pageTitle}}
+    -
+    <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
+  </h1>
+
+  <form id="form" action="">
+    <label for="category">Category</label>
+    <select id="category" required>
+      <option value="" selected>Select a category...</option>
+      <option value="Drama">Drama</option>
+      <option value="Fiction">Fiction</option>
+    </select>
+
+    <label for="title">
+      Title
+      <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Eg: Harry Potter I"
+        required
+      />
+    </label>
+
+    <label for="description">
+      Description
+      <textarea id="description" required></textarea>
+    </label>
+
+    <div class="grid">
+      <label for="stock">
+        Stock
+        <input
+          type="text"
+          id="stock"
+          name="stock"
+          placeholder="Eg: 150"
+          required
+        />
+      </label>
+
+      <label for="price">
+        Price
+        <input
+          type="text"
+          id="price"
+          name="price"
+          placeholder="Eg: U$D 59.99"
+          required
+        />
+      </label>
+
+      <label for="code">
+        Code
+        <input
+          type="text"
+          id="code"
+          name="code"
+          placeholder="Eg: 65ASEQ"
+          required
+        />
+      </label>
+    </div>
+
+    <div class="grid">
+      <label for="thumbnails">
+        Thumbnail
+        <input
+          type="text"
+          id="thumbnails"
+          name="thumbnails"
+          placeholder="Eg: `https://picsum.photos/200/300`"
+        />
+      </label>
+
+      <fieldset style="margin-left: 40px; display: flex">
+        <legend>Status</legend>
+        <label for="active">
+          <input type="radio" id="active" name="status" value="true" checked />
+          Active
+        </label>
+        <label for="deactive" style="margin-left: 40px;">
+          <input type="radio" id="deactive" name="status" value="false" />
+          Disabled
+        </label>
+      </fieldset>
+    </div>
+
+    <input
+      type="submit"
+      value="Send"
+      style="background-color: #43a047; border-color: #43a047;"
+    />
+  </form>
+
+  <div class="parent">
+    {{#each products}}
+      <article class="product" id="product-{{id}}">
+        <header class="card-header">{{category}} - {{title}}</header>
+        <div class="card-body">
+          <i
+            class="fa-solid fa-circle-info"
+            style="margin-right: 5px; color: lightskyblue"
+          ></i>
+          {{description}}
+        </div>
+        <footer class="flex">
+          <div>
+            <i class="fa-solid fa-book" style="color: #43a047"></i>
+            {{stock}}
+            units
+          </div>
+          <div>
+            <i class="fa-solid fa-dollar-sign" style="color: #43a047"></i>
+            {{{price}}}
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <button
+              class="outline contrast"
+              style="color: red;"
+              id="buttonDelete"
+              data-product-id="{{id}}"
+            >
+              <i class="fa-solid fa-trash"></i>
+              Delete product</button>
+          </div>
+        </footer>
+      </article>
+    {{/each}}
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/realTime.js"></script>
+</div>

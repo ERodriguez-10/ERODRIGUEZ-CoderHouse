@@ -1,17 +1,12 @@
-import { fileURLToPath } from "url";
-import path, { dirname } from "node:path";
 import { Router } from "express";
+import path from "node:path";
 
 import { CarritoManager } from "../pre-entrega-1.js";
 
-// Get this file path
-const filenamePath = fileURLToPath(import.meta.url);
-
-// Get directory from this file
-const dirnamePath = dirname(filenamePath);
+import __dirname from "../utils.js";
 
 // Build a flexible path compatible with all platforms
-const jsonFilePath = path.join(dirnamePath, "src", "data", "cartList.json");
+const jsonFilePath = path.join(__dirname, "data", "cartList.json");
 const CarritoManagerOnline = new CarritoManager(jsonFilePath);
 
 const cartRouter = Router();

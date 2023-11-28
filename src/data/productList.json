@@ -1,96 +1,67 @@
 [
 	{
-		"title": "Google Workspace Pro",
-		"description": "A suite of cloud computing, productivity and collaboration tools, software and products developed by Google.",
-		"price": 68.99,
+		"title": "To Kill a Mockingbird",
+		"description": "A novel by Harper Lee",
+		"price": 10.99,
 		"thumbnails": [
 			"https://picsum.photos/200"
 		],
-		"code": "GWS",
-		"stock": 1000,
-		"category": "Productivity",
-		"status": "true",
-		"id": 5
-	},
-	{
-		"title": "GitHub Pro Enterprise",
-		"description": "A paid subscription service for GitHub that includes unlimited private repositories, advanced code review tools, and more.",
-		"price": 7.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "GHPRO",
-		"stock": 250,
-		"category": "Development",
-		"status": "true",
-		"id": 6
-	},
-	{
-		"title": "Zoom Pro",
-		"description": "A paid subscription service for Zoom that includes advanced features for video conferencing, webinars, and more.",
-		"price": 14.99,
-		"thumbnails": [
-			"https://picsum.photos/200",
-			"https://example.com/zoompro-thumb2.jpg"
-		],
-		"code": "ZMPRO",
-		"stock": 100,
-		"category": "Communication",
+		"code": "BK001",
+		"stock": 50,
+		"category": "Fiction",
 		"status": "True",
-		"id": 7
+		"id": "1"
 	},
 	{
-		"title": "AutoCAD",
-		"description": "A commercial computer-aided design and drafting software application developed and marketed by Autodesk.",
-		"price": 1850,
+		"title": "1984",
+		"description": "A dystopian novel by George Orwell",
+		"price": 9.99,
 		"thumbnails": [
-			"https://picsum.photos/200",
-			"https://example.com/autocad-thumb2.jpg"
+			"https://picsum.photos/200"
 		],
-		"code": "AUTOCAD",
+		"code": "BK002",
+		"stock": 25,
+		"category": "Fiction",
+		"status": "True",
+		"id": 2
+	},
+	{
+		"title": "The Great Gatsby",
+		"description": "A novel by F. Scott Fitzgerald",
+		"price": 12.99,
+		"thumbnails": [
+			"https://picsum.photos/200"
+		],
+		"code": "BK003",
+		"stock": 40,
+		"category": "Fiction",
+		"status": "True",
+		"id": 3
+	},
+	{
+		"title": "Pride and Prejudice",
+		"description": "A novel by Jane Austen",
+		"price": 8.99,
+		"thumbnails": [
+			"https://picsum.photos/200"
+		],
+		"code": "BK004",
+		"stock": 35,
+		"category": "Fiction",
+		"status": "True",
+		"id": 4
+	},
+	{
+		"title": "To the Lighthouse",
+		"description": "A novel by Virginia Woolf",
+		"price": 11.99,
+		"thumbnails": [
+			"https://picsum.photos/200"
+		],
+		"code": "BK005",
 		"stock": 20,
-		"category": "Design",
+		"category": "Fiction",
 		"status": "True",
-		"id": 8
-	},
-	{
-		"title": "Final Cut Pro",
-		"description": "A professional video editing software application developed by Apple Inc.",
-		"price": 299.99,
-		"thumbnails": [
-			"https://picsum.photos/200",
-			"https://example.com/finalcutpro-thumb2.jpg"
-		],
-		"code": "FCP",
-		"stock": 55,
-		"category": "Video",
-		"status": "True",
-		"id": 10
-	},
-	{
-		"title": "Harry Potter IX",
-		"description": "New Harry Book",
-		"price": 59.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "AAA6789LUO",
-		"stock": 1,
-		"category": "Magic",
-		"status": "true",
-		"id": 11
-	},
-	{
-		"title": "Milei The Handbook",
-		"description": "Any description",
-		"price": 59.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "QPOEQW",
-		"stock": 500,
-		"category": "Non-fiction",
-		"status": "true",
-		"id": 12
+		"id": 5
 	}
 ]

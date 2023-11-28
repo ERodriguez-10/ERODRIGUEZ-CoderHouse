@@ -1,7 +1,7 @@
 {
   "name": "desafios-entregables",
   "version": "1.0.0",
-  "description": "Desafío entregable n° 3 del curso de programación Backend de CoderHouse",
+  "description": "Desafío entregable n°4 del curso de programación Backend de CoderHouse",
   "main": "app.js",
   "type": "module",
   "scripts": {
@@ -17,6 +17,9 @@
     "nodemon": "^3.0.1"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@picocss/pico": "^1.5.10",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "socket.io": "^4.7.2"
   }
 }

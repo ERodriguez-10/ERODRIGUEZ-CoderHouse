@@ -1,19 +1,13 @@
-import { fileURLToPath } from "url";
-import path, { dirname } from "node:path";
-import { Router, json } from "express";
+import { Router } from "express";
+import path from "node:path";
 
 import { ProductManager, Product } from "../pre-entrega-1.js";
 
-// Get this file path
-const filenamePath = fileURLToPath(import.meta.url);
-
-// Get directory from this file
-const dirnamePath = dirname(filenamePath);
+import __dirname from "../utils.js";
 
 // Build a flexible path compatible with all platforms
-const jsonFilePath = path.join(dirnamePath, "src", "data", "productList.json");
-
-const ProductManagerOnline = new ProductManager("./src/data/productList.json");
+const jsonFilePath = path.join(__dirname, "data", "productList.json");
+const ProductManagerOnline = new ProductManager(jsonFilePath);
 
 const productRouter = Router();
 
@@ -68,8 +62,11 @@ productRouter.post("/", async (req, res) => {
   );
 
   try {
-    await ProductManagerOnline.addProduct(productBody);
-    res.status(201).json({ message: "Product succesfully created" });
+    const productCreated = await ProductManagerOnline.addProduct(productBody);
+    res.status(201).json({
+      message: "Product succesfully created",
+      product: productCreated,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

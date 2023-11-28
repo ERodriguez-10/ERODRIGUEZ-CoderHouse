@@ -64,6 +64,8 @@ export class ProductManager {
           this.products.push(newProductWithThumbnail);
 
           await this.saveFile();
+
+          return newProductWithThumbnail;
         } else {
           const newProduct = {
             ...product,
@@ -73,6 +75,8 @@ export class ProductManager {
           this.products.push(newProduct);
 
           await this.saveFile();
+
+          return newProduct;
         }
       }
     }

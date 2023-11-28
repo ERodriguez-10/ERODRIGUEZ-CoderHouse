@@ -1,0 +1,41 @@
+<div>
+  <h1 style="color: #43a047; text-align: center;"><i
+      class="fa-solid fa-bookmark"
+      style="color: #43a047"
+    ></i>
+    -
+    {{pageTitle}}
+    -
+    <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
+  </h1>
+
+  <div class="parent">
+    {{#each products}}
+
+      <article class="product">
+        <header class="card-header">{{category}} - {{title}}</header>
+        <div class="card-body">
+          <i
+            class="fa-solid fa-circle-info"
+            style="margin-right: 5px; color: lightskyblue"
+          ></i>
+          {{description}}
+        </div>
+        <footer class="flex">
+          <div>
+            <i class="fa-solid fa-book" style="color: #43a047"></i>
+            {{stock}}
+            units
+          </div>
+          <div>
+            <i class="fa-solid fa-dollar-sign" style="color: #43a047"></i>
+            {{{price}}}
+          </div>
+        </footer>
+      </article>
+
+    {{/each}}
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</div>

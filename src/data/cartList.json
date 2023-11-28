@@ -75,7 +75,7 @@
 			},
 			{
 				"productId": 2,
-				"quantity": 1
+				"quantity": 2
 			},
 			{
 				"productId": 3,
@@ -120,6 +120,19 @@
 			},
 			{
 				"productId": 7,
+				"quantity": 1
+			}
+		]
+	},
+	{
+		"id": 6,
+		"products": [
+			{
+				"productId": 1,
+				"quantity": 1
+			},
+			{
+				"productId": 2,
 				"quantity": 1
 			}
 		]
