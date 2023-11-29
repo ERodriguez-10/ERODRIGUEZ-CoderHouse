@@ -2,16 +2,15 @@
 import express from "express";
 import handlebars from "express-handlebars";
 import { createServer } from "node:http";
-import path from "node:path";
 import { Server } from "socket.io";
 
 // Routers
+import viewRouter from "./routes/view-routes.js";
 import productRouter from "./routes/products-routes.js";
 import cartRouter from "./routes/carts-routes.js";
 
 // Other imports
 import __dirname from "./utils.js";
-import { ProductManager } from "./pre-entrega-1.js";
 
 // Server
 const app = express();
@@ -23,32 +22,6 @@ const serverSocket = new Server(server);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Load data from JSON file
-const jsonFilePath = path.join(__dirname, "data", "productList.json");
-const ProductManagerHome = new ProductManager(jsonFilePath);
-
-const productDataListHome = ProductManagerHome.getProducts();
-
-// Home site
-app.get("/", (req, res) => {
-  res.render("index", {
-    tabTitle: "Bookify Store",
-    pageTitle: "All products",
-    products: productDataListHome,
-    fileCss: "style.css",
-  });
-});
-
-// WebSocket page
-app.get("/realtimeproducts", (req, res) => {
-  res.render("realTimeProducts", {
-    tabTitle: "Bookify Store",
-    pageTitle: "Real Time Products",
-    products: productDataListHome,
-    fileCss: "style.css",
-  });
-});
-
 // Cors middleware
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -59,6 +32,11 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
   next();
 });
+
+// Router configuration
+app.use("/", viewRouter);
+app.use("/api/products", productRouter);
+app.use("/api/carts", cartRouter);
 
 // Handlebars configuration
 app.engine(
@@ -73,10 +51,6 @@ app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
 app.use(express.static(`${__dirname}/public`));
-
-// Router configuration
-app.use("/api/products", productRouter);
-app.use("/api/carts", cartRouter);
 
 // Socket.io configuration
 serverSocket.on("connection", (socket) => {
