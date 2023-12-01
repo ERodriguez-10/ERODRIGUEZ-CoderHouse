@@ -1,67 +1,57 @@
 [
-	{
-		"title": "To Kill a Mockingbird",
-		"description": "A novel by Harper Lee",
-		"price": 10.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "BK001",
-		"stock": 50,
-		"category": "Fiction",
-		"status": "True",
-		"id": "1"
-	},
-	{
-		"title": "1984",
-		"description": "A dystopian novel by George Orwell",
-		"price": 9.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "BK002",
-		"stock": 25,
-		"category": "Fiction",
-		"status": "True",
-		"id": 2
-	},
-	{
-		"title": "The Great Gatsby",
-		"description": "A novel by F. Scott Fitzgerald",
-		"price": 12.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "BK003",
-		"stock": 40,
-		"category": "Fiction",
-		"status": "True",
-		"id": 3
-	},
-	{
-		"title": "Pride and Prejudice",
-		"description": "A novel by Jane Austen",
-		"price": 8.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "BK004",
-		"stock": 35,
-		"category": "Fiction",
-		"status": "True",
-		"id": 4
-	},
-	{
-		"title": "To the Lighthouse",
-		"description": "A novel by Virginia Woolf",
-		"price": 11.99,
-		"thumbnails": [
-			"https://picsum.photos/200"
-		],
-		"code": "BK005",
-		"stock": 20,
-		"category": "Fiction",
-		"status": "True",
-		"id": 5
-	}
+  {
+    "title": "To Kill a Mockingbird",
+    "description": "A novel by Harper Lee",
+    "price": 10.99,
+    "thumbnails": ["https://picsum.photos/id/13/200"],
+    "code": "BK001",
+    "stock": 50,
+    "category": "Fiction",
+    "status": "True",
+    "id": "1"
+  },
+  {
+    "title": "1984",
+    "description": "A dystopian novel by George Orwell",
+    "price": 9.99,
+    "thumbnails": ["https://picsum.photos/id/14/200"],
+    "code": "BK002",
+    "stock": 25,
+    "category": "Fiction",
+    "status": "True",
+    "id": 2
+  },
+  {
+    "title": "The Great Gatsby",
+    "description": "A novel by F. Scott Fitzgerald",
+    "price": 12.99,
+    "thumbnails": ["https://picsum.photos/id/15/200"],
+    "code": "BK003",
+    "stock": 40,
+    "category": "Fiction",
+    "status": "True",
+    "id": 3
+  },
+  {
+    "title": "Pride and Prejudice",
+    "description": "A novel by Jane Austen",
+    "price": 8.99,
+    "thumbnails": ["https://picsum.photos/id/16/200"],
+    "code": "BK004",
+    "stock": 35,
+    "category": "Fiction",
+    "status": "True",
+    "id": 4
+  },
+  {
+    "title": "To the Lighthouse",
+    "description": "A novel by Virginia Woolf",
+    "price": 11.99,
+    "thumbnails": ["https://picsum.photos/id/17/200"],
+    "code": "BK005",
+    "stock": 20,
+    "category": "Fiction",
+    "status": "True",
+    "id": 5
+  }
 ]
