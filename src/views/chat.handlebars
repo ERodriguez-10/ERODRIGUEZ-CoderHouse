@@ -1,0 +1,41 @@
+<div class="home-chat container">
+  <h1 style="color: #43a047; text-align: center;"><i
+      class="fa-solid fa-bookmark"
+      style="color: #43a047"
+    ></i>
+    -
+    {{pageTitle}}
+    -
+    <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
+  </h1>
+
+  <div class="flex-column">
+    <h4 style="text-align: center;">Start chatting now
+      <span id="userTag">{{username}}</span>!</h4>
+    <ul class="chat" id="chat">
+      {{#each messages}}
+        <li><span class="date-bold">{{date}} - {{user}}:</span> {{message}}</li>
+      {{/each}}
+    </ul>
+
+    <form id="chatForm" action="">
+      <div class="flex">
+        <input
+          type="text"
+          id="message"
+          name="message"
+          placeholder="Message"
+          style="margin-right: 50px;"
+        />
+        <input
+          type="submit"
+          value="Send"
+          style="width: 25%; padding-left: 15px; background-color: #43a047; border-color: #43a047;"
+        />
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/chat.js"></script>
+</div>

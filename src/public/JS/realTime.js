@@ -52,7 +52,6 @@ document.querySelectorAll("#buttonDelete").forEach((button) => {
 
 // Socket.io events
 socket.on("productCreatedServer", (product) => {
-  console.log(product);
   const cardProduct = document.createElement("article");
   cardProduct.className = "product";
   cardProduct.id = `product-${product.id}`;

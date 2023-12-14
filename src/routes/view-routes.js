@@ -1,30 +1,39 @@
 import { Router } from "express";
-import path from "node:path";
 
-import { ProductManager } from "../pre-entrega-1.js";
+import ProductDAO from "../dao/mongo/product.dao.js";
+import MessageDAO from "../dao/mongo/message.dao.js";
 
-import __dirname from "../utils.js";
-
-// Build a flexible path compatible with all platforms
-const jsonFilePath = path.join(__dirname, "data", "productList.json");
-const CarritoManagerOnline = new ProductManager(jsonFilePath);
+const ProductsInstance = new ProductDAO();
+const MessageInstance = new MessageDAO();
 
 const viewRouter = Router();
 
-viewRouter.get("/", (req, res) => {
+viewRouter.get("/", async (req, res) => {
   res.render("home", {
     tabTitle: "Bookify Store",
     pageTitle: "All products",
-    products: CarritoManagerOnline.getProducts(),
+    products: await ProductsInstance.getProducts(),
     fileCss: "css/style.css",
   });
 });
 
-viewRouter.get("/realtimeproducts", (req, res) => {
+viewRouter.get("/chat", async (req, res) => {
+  const randomUser = `Anonymous${Math.floor(Math.random() * 1000000)}`;
+
+  res.render("chat", {
+    tabTitle: "Bookify Store",
+    pageTitle: "Chat Room",
+    messages: await MessageInstance.getMessages(),
+    username: randomUser,
+    fileCss: "css/style.css",
+  });
+});
+
+viewRouter.get("/realtimeproducts", async (req, res) => {
   res.render("realTimeProducts", {
     tabTitle: "Bookify Store",
     pageTitle: "Real Time Products",
-    products: CarritoManagerOnline.getProducts(),
+    products: await ProductsInstance.getProducts(),
     fileCss: "css/style.css",
   });
 });

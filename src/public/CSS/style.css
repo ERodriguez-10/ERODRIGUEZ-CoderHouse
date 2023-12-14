@@ -16,3 +16,46 @@
 .card-body {
   flex: 1 0 auto;
 }
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-chat {
+  height: calc(100vh - ((1rem * 4) * 2));
+}
+
+.chat {
+  height: 600px;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 15px;
+  padding: 0;
+  background-color: aliceblue;
+  color: black;
+  overflow-y: scroll;
+}
+
+.chat > li {
+  list-style-type: none;
+  padding: 0.5rem 1rem;
+}
+
+.chat > li:nth-child(odd) {
+  background: #efefef;
+}
+
+.date-bold {
+  font-weight: bold;
+}
+
+.messageText {
+  color: black;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}

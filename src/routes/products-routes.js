@@ -1,71 +1,41 @@
 import { Router } from "express";
-import path from "node:path";
+import ProductDAO from "../dao/mongo/product.dao.js";
 
-import { ProductManager, Product } from "../pre-entrega-1.js";
-
-import __dirname from "../utils.js";
-
-// Build a flexible path compatible with all platforms
-const jsonFilePath = path.join(__dirname, "data", "productList.json");
-const ProductManagerOnline = new ProductManager(jsonFilePath);
+const ProductsInstance = new ProductDAO();
 
 const productRouter = Router();
 
-productRouter.get("/", (req, res) => {
+productRouter.get("/", async (req, res) => {
   const limit = req.query.limit;
 
-  const productData = ProductManagerOnline.getProducts();
+  const productData = await ProductsInstance.getProducts();
 
   if (limit) {
-    res.json(productData.slice(0, limit));
+    res.status(200).json(productData.slice(0, limit));
   } else {
-    res.json(productData);
+    res.status(200).json({ productsList: productData });
   }
 });
 
-productRouter.get("/:pid", (req, res) => {
+productRouter.get("/:pid", async (req, res) => {
   const { pid } = req.params;
 
-  if (isNaN(pid)) {
-    res.status(400).json({ error: "Invalid ProductID. It must be number." });
-  } else {
-    try {
-      const productFind = ProductManagerOnline.getProductById(pid);
-      res.status(200).json(productFind);
-    } catch (e) {
-      res.status(404).json({ error: e.message });
-    }
+  try {
+    const productFind = await ProductsInstance.getProductById(pid);
+    res.status(200).json({ productSelected: productFind });
+  } catch (e) {
+    res.status(404).json({ error: e.message });
   }
 });
 
 productRouter.post("/", async (req, res) => {
-  const {
-    title,
-    description,
-    code,
-    price,
-    status,
-    stock,
-    category,
-    thumbnails,
-  } = req.body;
-
-  const productBody = new Product(
-    title,
-    description,
-    price,
-    thumbnails,
-    code,
-    stock,
-    category,
-    status
-  );
+  const productReq = req.body;
 
   try {
-    const productCreated = await ProductManagerOnline.addProduct(productBody);
+    const productCreated = await ProductsInstance.addProduct(productReq);
     res.status(201).json({
       message: "Product succesfully created",
-      product: productCreated,
+      productCreated: productCreated,
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -74,71 +44,32 @@ productRouter.post("/", async (req, res) => {
 
 productRouter.put("/:pid", async (req, res) => {
   const { pid } = req.params;
+  const productReq = req.body;
 
-  if (isNaN(pid)) {
-    res.status(400).json({ error: "Invalid ProductID. It must be number." });
-  } else {
-    const {
-      title,
-      description,
-      code,
-      price,
-      status,
-      stock,
-      category,
-      thumbnails,
-    } = req.body;
+  try {
+    const updateProduct = await ProductsInstance.updateProduct(pid, productReq);
+    if (updateProduct.modifiedCount === 0) throw new Error("Product not found");
 
-    const bodyProduct = {
-      title,
-      description,
-      code,
-      price,
-      status,
-      stock,
-      category,
-      thumbnails,
-    };
-
-    const newValuesProduct = Object.fromEntries(
-      Object.entries(bodyProduct).filter(([key, value]) => value !== undefined)
-    );
-
-    try {
-      ProductManagerOnline.getProductById(pid);
-    } catch (e) {
-      res.status(404).json({
-        error: e.message,
-      });
-    }
-
-    try {
-      await ProductManagerOnline.updateProduct(pid, newValuesProduct);
-      res.status(200).json({ message: "Product has modified" });
-    } catch (error) {
-      res.status(400).json({
-        error: error.message,
-      });
-    }
+    res.status(200).json({ message: "Product has modified" });
+  } catch (e) {
+    res.status(500).json({
+      error: e.message,
+    });
   }
 });
 
 productRouter.delete("/:pid", async (req, res) => {
   const { pid } = req.params;
 
-  if (isNaN(pid)) {
-    res.status(400).json({ error: "Invalid ProductID. It must be number." });
-  } else {
-    try {
-      await ProductManagerOnline.deleteProduct(pid);
-      res.status(200).json({
-        message: "Content successfully deleted!",
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: error.message,
-      });
-    }
+  try {
+    await ProductsInstance.deleteProduct(pid);
+    res.status(200).json({
+      message: "Content successfully deleted!",
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error.message,
+    });
   }
 });
 
