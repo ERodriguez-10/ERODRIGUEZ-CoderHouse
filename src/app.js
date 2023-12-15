@@ -85,7 +85,9 @@ serverSocket.on("connection", (socket) => {
       .then((data) => {
         if (data.error) return socket.emit("errorServer", data.error);
 
-        serverSocket.emit("productCreatedServer", data.product);
+        console.log(data);
+
+        serverSocket.emit("productCreatedServer", data.productCreated);
       })
       .catch((err) => {
         console.log(err);

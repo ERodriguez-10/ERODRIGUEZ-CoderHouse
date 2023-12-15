@@ -1,17 +1,25 @@
-<div class="home-chat container">
-  <h1 style="color: #43a047; text-align: center;"><i
-      class="fa-solid fa-bookmark"
-      style="color: #43a047"
-    ></i>
-    -
-    {{pageTitle}}
-    -
-    <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
-  </h1>
+<div
+  class="home-chat container flex tems-center justify-center flex-col max-w-screen-lg mx-auto h-[calc(100vh-80px)]"
+>
+  <div class="text-center my-20">
+    <h1 class="text-center text-4xl font-bold pb-5"><i
+        class="fa-solid fa-bookmark"
+        style="color: #43a047"
+      ></i>
+      -
+      {{pageTitle}}
+      -
+      <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
+    </h1>
+    <p
+      class="text-base leading-relaxed mx-auto text-gray-400 text-opacity-80"
+    >Start chatting now <span id="userTag">{{username}}</span>!</p>
+    <div class="flex mt-6 justify-center">
+      <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
+    </div>
+  </div>
 
   <div class="flex-column">
-    <h4 style="text-align: center;">Start chatting now
-      <span id="userTag">{{username}}</span>!</h4>
     <ul class="chat" id="chat">
       {{#each messages}}
         <li><span class="date-bold">{{date}} - {{user}}:</span> {{message}}</li>
@@ -19,19 +27,37 @@
     </ul>
 
     <form id="chatForm" action="">
-      <div class="flex">
+      <div class="flex bg-gray-700 py-2 px-4 rounded-lg">
         <input
           type="text"
           id="message"
           name="message"
           placeholder="Message"
-          style="margin-right: 50px;"
+          class="w-full bg-gray-700 rounded-md p-2 mr-4"
         />
-        <input
+
+        <button
           type="submit"
-          value="Send"
-          style="width: 25%; padding-left: 15px; background-color: #43a047; border-color: #43a047;"
-        />
+          class="flex items-center justify-center bg-green-500 hover:bg-green-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+        >
+          <span>Send</span>
+          <span class="ml-2">
+            <svg
+              class="w-4 h-4 transform rotate-45 -mt-px"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              ></path>
+            </svg>
+          </span>
+        </button>
       </div>
     </form>
   </div>

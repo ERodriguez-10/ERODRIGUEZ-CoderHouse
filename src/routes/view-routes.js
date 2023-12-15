@@ -29,6 +29,27 @@ viewRouter.get("/chat", async (req, res) => {
   });
 });
 
+viewRouter.get("/product/:id", async (req, res) => {
+  const product = await ProductsInstance.getProductById(req.params.id);
+
+  console.log(product);
+
+  res.render("detail", {
+    tabTitle: "Bookify Store",
+    pageTitle: product.name,
+    product,
+    fileCss: "css/style.css",
+  });
+});
+
+viewRouter.get("/cart", async (req, res) => {
+  res.render("mycart", {
+    tabTitle: "Bookify Store",
+    pageTitle: "Cart",
+    fileCss: "css/style.css",
+  });
+});
+
 viewRouter.get("/realtimeproducts", async (req, res) => {
   res.render("realTimeProducts", {
     tabTitle: "Bookify Store",

@@ -10,7 +10,7 @@ class ProductDAO {
   }
 
   async getProductById(id) {
-    const productSelected = await this.productModel.findById(id);
+    const productSelected = await this.productModel.findById(id).lean();
     if (productSelected !== null) {
       return productSelected;
     } else {

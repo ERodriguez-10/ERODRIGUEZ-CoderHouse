@@ -1,158 +1,230 @@
-<div class="container">
-  <h1 style="color: #43a047; text-align: center;"><i
-      class="fa-solid fa-bookmark"
-      style="color: #43a047"
-    ></i>
-    -
-    {{pageTitle}}
-    -
-    <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
-  </h1>
-
-  <form id="form" action="">
-    <label for="category">Category</label>
-    <select id="category" required>
-      <option value="" selected>Select a category...</option>
-      <option value="Drama">Drama</option>
-      <option value="Fiction">Fiction</option>
-    </select>
-
-    <label for="title">
-      Title
-      <input
-        type="text"
-        id="title"
-        name="title"
-        placeholder="Eg: Harry Potter I"
-        required
-      />
-    </label>
-
-    <label for="description">
-      Description
-      <textarea id="description" required></textarea>
-    </label>
-
-    <div class="grid">
-      <label for="stock">
-        Stock
-        <input
-          type="text"
-          id="stock"
-          name="stock"
-          placeholder="Eg: 150"
-          required
-        />
-      </label>
-
-      <label for="price">
-        Price
-        <input
-          type="text"
-          id="price"
-          name="price"
-          placeholder="Eg: U$D 59.99"
-          required
-        />
-      </label>
-
-      <label for="code">
-        Code
-        <input
-          type="text"
-          id="code"
-          name="code"
-          placeholder="Eg: 65ASEQ"
-          required
-        />
-      </label>
+<div class="container-fluid">
+  <div
+    class="container mx-auto flex px-5 py-24 items-center justify-center flex-col h-[calc(100vh-80px)]"
+  >
+    <div class="text-center mt-20">
+      <h1 class="text-center text-4xl font-bold pb-5"><i
+          class="fa-solid fa-bookmark"
+          style="color: #43a047"
+        ></i>
+        - Publish your own book! -
+        <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
+      </h1>
+      <p
+        class="text-base leading-relaxed mx-auto text-gray-400 text-opacity-80"
+      >Complete the form and publish books now!</p>
+      <div class="flex mt-6 justify-center">
+        <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
+      </div>
     </div>
 
-    <div class="grid">
-      <label for="thumbnails">
-        Thumbnail
-        <input
-          type="text"
-          id="thumbnails"
-          name="thumbnails"
-          placeholder="Eg. `https://picsum.photos/id/54/200`"
-        />
-      </label>
+    <div class="container max-w-screen-lg mx-auto">
+      <div class="py-20">
+        <div class="bg-gray-800 rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+          <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+            <div class="text-white">
+              <p class="font-medium text-lg">Book Details</p>
+              <p>Please fill out all the fields.</p>
+            </div>
 
-      <fieldset style="margin-left: 40px; display: flex">
-        <legend>Status</legend>
-        <label for="active">
-          <input type="radio" id="active" name="status" value="true" checked />
-          Active
-        </label>
-        <label for="deactive" style="margin-left: 40px;">
-          <input type="radio" id="deactive" name="status" value="false" />
-          Disabled
-        </label>
-      </fieldset>
-    </div>
+            <div class="lg:col-span-2">
+              <form id="form" action="">
+                <div
+                  class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"
+                >
+                  <div class="md:col-span-5">
+                    <label
+                      for="title"
+                      class="leading-7 text-sm text-gray-400"
+                    >Title</label>
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      placeholder="Eg: Harry Potter I"
+                      class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      required
+                    />
+                  </div>
 
-    <input
-      type="submit"
-      value="Send"
-      style="background-color: #43a047; border-color: #43a047;"
-    />
-  </form>
+                  <div class="md:col-span-5">
+                    <label
+                      for="description"
+                      class="leading-7 text-sm text-gray-400"
+                    >
+                      Description
+                      <textarea
+                        id="description"
+                        class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        required
+                      ></textarea>
+                    </label>
+                  </div>
 
-  <div class="parent">
-    {{#each products}}
-      <article class="product" id="product-{{id}}">
-        <header class="card-header">{{category}} - {{title}}</header>
-        <div class="card-body">
-          <div
-            style="display: flex; justify-content: center; margin-bottom: 35px;"
-          >
-            <img src="{{thumbnail}}" alt="{{title}}" />
+                  <div class="md:col-span-3">
+                    <label
+                      for="thumbnail"
+                      class="leading-7 text-sm text-gray-400"
+                    >
+                      Thumbnail
+                      <input
+                        type="text"
+                        id="thumbnail"
+                        name="thumbnail"
+                        placeholder="Eg. `https://picsum.photos/id/54/200`"
+                        class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
+                    </label>
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label
+                      for="category"
+                      class="leading-7 text-sm text-gray-400"
+                    >Category</label>
+                    <select
+                      id="category"
+                      class="w-full h-[42.2px] bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      required
+                    >
+                      <option value="" selected>Select a category...</option>
+                      <option value="Drama">Drama</option>
+                      <option value="Fiction">Fiction</option>
+                    </select>
+                  </div>
+
+                  <div class="md:col-span-1">
+                    <label for="stock" class="leading-7 text-sm text-gray-400">
+                      Stock
+                      <input
+                        type="text"
+                        id="stock"
+                        name="stock"
+                        placeholder="Eg: 150"
+                        class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        required
+                      />
+                    </label>
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label for="price" class="leading-7 text-sm text-gray-400">
+                      Price
+                      <input
+                        type="text"
+                        id="price"
+                        name="price"
+                        placeholder="Eg: U$D 59.99"
+                        class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        required
+                      />
+                    </label>
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label for="code" class="leading-7 text-sm text-gray-400">
+                      Code
+                      <input
+                        type="text"
+                        id="code"
+                        name="code"
+                        placeholder="Eg: 65ASEQ"
+                        class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        required
+                      />
+                    </label>
+                  </div>
+
+                  <div class="md:col-span-5">
+                    <div class="inline-flex items-center">
+                      <input
+                        type="checkbox"
+                        name="status"
+                        id="status"
+                        class="bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
+                      <label
+                        for="status"
+                        class="leading-7 text-sm text-gray-400 ml-2"
+                      >Set active publication</label>
+                    </div>
+                  </div>
+
+                  <div class="md:col-span-5 text-right">
+                    <div class="inline-flex items-end">
+                      <input
+                        type="submit"
+                        value="Publish"
+                        class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-base"
+                      />
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+            </div>
           </div>
-
-          <i
-            class="fa-solid fa-circle-info"
-            style="margin-right: 5px; color: lightskyblue"
-          ></i>
-          {{description}}
         </div>
-        <footer class="flex-column">
-          <div>
-            <i class="fa-solid fa-book" style="color: #43a047"></i>
-            {{stock}}
-            units
-          </div>
-          <div>
-            <i class="fa-solid fa-dollar-sign" style="color: #43a047"></i>
-            {{{price}}}
-          </div>
-          <div>
-            {{#if status}}
-              <i class="fa-solid fa-check" style="color: #43a047"></i>
-              Active
-            {{else}}
-              <i class="fa-solid fa-times" style="color: red"></i>
-              Disabled
-            {{/if}}
-          </div>
-          <div>
-            <i class="fa-solid fa-barcode" style="color: #43a047"></i>
-            {{code}}
-          </div>
+      </div>
+    </div>
+  </div>
 
-          <div style="margin-top: 1rem;">
-            <button
-              class="outline contrast"
-              style="color: red;"
-              id="buttonDelete"
-              data-product-id="{{id}}"
-            >
-              <i class="fa-solid fa-trash"></i>
-              Delete product</button>
+  <div class="container px-5 py-24 mx-auto">
+    <div class="text-center mb-20">
+      <h3 class="text-center text-2xl font-bold pb-5"><i
+          class="fa-solid fa-bookmark"
+          style="color: #43a047"
+        ></i>
+        - The Shop -
+        <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
+      </h3>
+      <p
+        class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-400 text-opacity-80"
+      > Discover all our products! </p>
+      <div class="flex mt-6 justify-center">
+        <div class="w-16 h-1 rounded-full bg-green-500 inline-flex"></div>
+      </div>
+    </div>
+
+    <div class="-m-4 parent">
+      {{#each products}}
+        <div class="p-4 lg:w-1/4 md:w-1/2" id="product-{{_id}}">
+          <div class="h-full flex flex-col items-center text-center">
+            <img
+              alt="team"
+              class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+              src="{{thumbnail}}"
+            />
+            <div class="w-full">
+              <h2
+                class="title-font font-medium text-lg text-white"
+              >{{title}}</h2>
+              <h3 class="text-gray-500 mb-3">{{category}}</h3>
+              <p class="mb-4">U$D {{{price}}}</p>
+              <div class="flex justify-evenly">
+                <a href="/product/{{_id}}">
+                  <button
+                    class="flex items-center mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded text-base"
+                  >
+                    <i class="fa-solid fa-eye mr-2"></i>
+                    View product</button>
+                </a>
+
+                <button
+                  class="flex items-center mt-6 text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded text-base"
+                  id="buttonDelete"
+                  data-product-id="{{_id}}"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+
+              </div>
+
+            </div>
           </div>
-        </footer>
-      </article>
-    {{/each}}
+        </div>
+      {{/each}}
+    </div>
   </div>
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>

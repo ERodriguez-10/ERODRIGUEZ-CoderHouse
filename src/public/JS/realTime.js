@@ -9,21 +9,13 @@ const iDescription = document.getElementById("description");
 const iStock = document.getElementById("stock");
 const iPrice = document.getElementById("price");
 const iCode = document.getElementById("code");
-const iThumbnails = document.getElementById("thumbnails");
-const iStatus = document.getElementsByName("status");
+const iThumbnail = document.getElementById("thumbnail");
+const iStatus = document.getElementById("status").checked;
 
 // Form submit event
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const iDescriptionTrim = iDescription.value.trim();
-  let iStatusValue;
-
-  for (var i = 0, length = iStatus.length; i < length; i++) {
-    if (iStatus[i].checked) {
-      iStatusValue = iStatus[i].value;
-      break;
-    }
-  }
 
   const newProductFromSocket = {
     category: iCategory.value,
@@ -32,8 +24,8 @@ form.addEventListener("submit", (e) => {
     stock: iStock.value,
     price: iPrice.value,
     code: iCode.value,
-    thumbnails: iThumbnails.value,
-    status: iStatusValue,
+    thumbnail: iThumbnail.value,
+    status: iStatus,
   };
 
   if (newProductFromSocket) {
@@ -54,7 +46,7 @@ document.querySelectorAll("#buttonDelete").forEach((button) => {
 socket.on("productCreatedServer", (product) => {
   const cardProduct = document.createElement("article");
   cardProduct.className = "product";
-  cardProduct.id = `product-${product.id}`;
+  cardProduct.id = `product-${product._id}`;
   cardProduct.innerHTML = `
       <header class="card-header">${product.category} - ${product.title}</header>
       <div class="card-body">
