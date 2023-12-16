@@ -1,4 +1,4 @@
-const socket = io("https://fifth-large-bonsai.glitch.me/realtimeproducts");
+const socket = io();
 
 // Forms selectors
 const form = document.getElementById("form");

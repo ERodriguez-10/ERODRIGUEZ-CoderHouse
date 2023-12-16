@@ -25,6 +25,17 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 
+// Cors middleware
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  next();
+});
+
 // Mongoose configuration
 mongoose
   .connect(
@@ -37,17 +48,6 @@ mongoose
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Cors middleware
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-  next();
-});
 
 // Router configuration
 app.use("/", viewRouter);
@@ -74,7 +74,7 @@ serverSocket.on("connection", (socket) => {
   console.log("A new client has connected.");
 
   socket.on("newProductClient", (product) => {
-    fetch("https://fifth-large-bonsai.glitch.me/api/products", {
+    fetch("http://localhost:8080/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,8 +85,6 @@ serverSocket.on("connection", (socket) => {
       .then((data) => {
         if (data.error) return socket.emit("errorServer", data.error);
 
-        console.log(data);
-
         serverSocket.emit("productCreatedServer", data.productCreated);
       })
       .catch((err) => {
@@ -95,7 +93,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("newMessageClient", (message) => {
-    fetch("https://fifth-large-bonsai.glitch.me/api/messages", {
+    fetch("http://localhost:8080/api/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +112,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("deleteProductClient", (id) => {
-    fetch(`https://fifth-large-bonsai.glitch.me/api/products/${id}`, {
+    fetch(`http://localhost:8080/api/products/${id}`, {
       method: "DELETE",
       headers: {
         "Contet-Type": "application/json",

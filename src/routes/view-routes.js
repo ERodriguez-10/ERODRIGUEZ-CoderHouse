@@ -32,8 +32,6 @@ viewRouter.get("/chat", async (req, res) => {
 viewRouter.get("/product/:id", async (req, res) => {
   const product = await ProductsInstance.getProductById(req.params.id);
 
-  console.log(product);
-
   res.render("detail", {
     tabTitle: "Bookify Store",
     pageTitle: product.name,

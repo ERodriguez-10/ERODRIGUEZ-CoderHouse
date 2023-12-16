@@ -1,4 +1,4 @@
-const socket = io("https://fifth-large-bonsai.glitch.me/chat");
+const socket = io();
 
 // Forms selectors
 
