@@ -74,7 +74,7 @@ serverSocket.on("connection", (socket) => {
   console.log("A new client has connected.");
 
   socket.on("newProductClient", (product) => {
-    fetch("http://localhost:8080/api/products", {
+    fetch("https://fifth-large-bonsai.glitch.me/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +95,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("newMessageClient", (message) => {
-    fetch("http://localhost:8080/api/messages", {
+    fetch("https://fifth-large-bonsai.glitch.me/api/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("deleteProductClient", (id) => {
-    fetch(`http://localhost:8080/api/products/${id}`, {
+    fetch(`https://fifth-large-bonsai.glitch.me/api/products/${id}`, {
       method: "DELETE",
       headers: {
         "Contet-Type": "application/json",
