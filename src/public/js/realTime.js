@@ -1,4 +1,4 @@
-const socket = io();
+const socket = serverSocket();
 
 // Forms selectors
 const form = document.getElementById("form");
