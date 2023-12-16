@@ -67,6 +67,7 @@ app.engine(
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
+app.use(express.static("public"));
 app.use(express.static(`${__dirname}/public`));
 
 // Socket.io configuration
