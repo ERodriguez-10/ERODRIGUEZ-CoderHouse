@@ -13,8 +13,8 @@ class CartDAO {
     return await this.cartModel.findById(id);
   }
 
-  async createCart(products) {
-    return await this.cartModel.create({ products });
+  async createCart(cartObject) {
+    return await this.cartModel.create({ products: cartObject });
   }
 
   async addProductToCart(cartId, productId) {

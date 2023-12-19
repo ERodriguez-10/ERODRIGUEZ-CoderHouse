@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
-const productCollection = "products";
+const bookCollection = "products";
 
-const productSchema = new mongoose.Schema({
+const bookSchema = new mongoose.Schema({
   title: { type: String, required: true, max: 100 },
   description: { type: String, required: true, max: 250 },
   price: { type: Number, required: true, min: 0, max: 1000000 },
@@ -14,36 +14,36 @@ const productSchema = new mongoose.Schema({
     required: true,
     max: 50,
     enum: [
-      "Drama",
-      "Horror",
-      "Fiction",
-      "Non-fiction",
-      "Design",
-      "History",
-      "Biography",
-      "Poetry",
-      "Children",
-      "Cooking",
-      "Travel",
-      "Health",
-      "Science",
       "Art",
-      "Religion",
-      "Comics",
-      "Manga",
-      "Fantasy",
-      "Romance",
-      "Thriller",
-      "Mystery",
-      "Young Adult",
-      "Humor",
       "Autobiography",
+      "Biography",
+      "Children",
+      "Comics",
+      "Cooking",
+      "Design",
+      "Drama",
+      "Fantasy",
+      "Fiction",
+      "Health",
+      "History",
+      "Horror",
+      "Humor",
+      "Manga",
+      "Mystery",
+      "Non-fiction",
       "Other",
+      "Poetry",
+      "Religion",
+      "Romance",
+      "Science",
+      "Thriller",
+      "Travel",
+      "Young Adult",
     ],
   },
   status: { type: Boolean, required: true, max: 100 },
 });
 
-const productModel = mongoose.model(productCollection, productSchema);
+const bookModel = mongoose.model(bookCollection, bookSchema);
 
-export default productModel;
+export default bookModel;

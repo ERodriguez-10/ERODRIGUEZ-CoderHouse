@@ -54,14 +54,3 @@ function formatDate(dateString) {
 
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
-
-/*
-
-socket.on("messageCreatedServer", (message) => {
-  const cardMessage = document.createElement("li");
-  cardMessage.textContent = `${message.date} - ${message.user}: ${message.message}`;
-  elChat.appendChild(cardMessage);
-  elChat.scrollTop = elChat.scrollHeight;
-});
-
-*/

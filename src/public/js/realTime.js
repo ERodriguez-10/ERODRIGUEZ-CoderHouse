@@ -78,7 +78,7 @@ socket.on("productCreatedServer", (product) => {
       <button
         class="flex items-center mt-6 text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded text-base"
         id="buttonDelete"
-        data-product-id="{{_id}}"
+        data-product-id="${product._id}"
       >
         <i class="fa-solid fa-trash"></i>
       </button>

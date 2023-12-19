@@ -1,24 +1,34 @@
 {
-  "name": "desafios-entregables",
+  "name": "bookify-store",
   "version": "1.0.0",
-  "description": "Desafío entregable n°4 del curso de programación Backend de CoderHouse",
-  "main": "app.js",
+  "description": "Online store with Node.js, Express, MongoDB, Mongoose, Handlebars, TailwindCSS, Socket.io",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --env-file .env ./src/app.js",
-    "start": "node ./src/app.js"
+    "dev": "nodemon --env-file .env ./src/server.js",
+    "start": "node ./src/server.js"
   },
   "keywords": [
     "Node",
-    "Express"
+    "Express",
+    "MongoDB",
+    "Mongoose",
+    "Handlebars",
+    "TailwindCSS",
+    "Socket.io"
   ],
   "author": "ERODRIGUEZ-10",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
     "nodemon": "^3.0.2",
+    "postcss": "^8.4.32",
     "tailwindcss": "^3.3.6"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.10",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
     "mongodb": "~6.3.0",

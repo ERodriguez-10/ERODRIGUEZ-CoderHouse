@@ -1,21 +1,81 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{tabTitle}}</title>
-    <link rel="stylesheet" href="/{{fileCss}}" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
+
+    <!-- Icons -->
     <link
       rel="icon"
       type="image/x-icon"
       href="https://infolibros.org/wp-content/uploads/2019/02/cropped-Favicon-Infolibros-192x192.png"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- MetaTags -->
+    <meta
+      name="description"
+      content="Bookify Store is a web application that allows you to buy books in real time, chat with other users and more."
+    />
+    <meta
+      name="keywords"
+      content="Bookify, Bookify Store, BookifyStore, BookifyStore.com, Bookify Store.com, BookifyStore.com, BookifyStore, Bookify Store, BookifyStore.com, BookifyStore.com, BookifyStore, Bookify Store, BookifyStore.com, BookifyStore.com, BookifyStore, Bookify Store, BookifyStore.com, BookifyStore.com, BookifyStore, Bookify Store, BookifyStore.com, BookifyStore.com, BookifyStore, Bookify Store, BookifyStore.com, BookifyStore.com, BookifyStore, Bookify Store, BookifyStore.com, BookifyStore.com, BookifyStore, Bookify Store, BookifyStore.com, BookifyStore.com, BookifyStore, Bookify Store"
+    />
+    <meta name="author" content="CodeGuez" />
+    <meta name="robots" content="index, follow" />
+    <meta name="revisit-after" content="3 month" />
+    <meta name="language" content="English" />
+    <meta name="generator" content="CodeGuez" />
+    <meta name="rating" content="general" />
+    <meta name="distribution" content="global" />
+    <meta name="theme-color" content="#000000" />
+
+    <!--Twitter-->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@CodeGuez" />
+    <meta name="twitter:creator" content="@CodeGuez" />
+    <meta name="twitter:title" content="Bookify Store" />
+    <meta
+      name="twitter:description"
+      content="Bookify Store is a web application that allows you to buy books in real time, chat with other users and more."
+    />
+    <meta
+      name="twitter:image"
+      content="https://infolibros.org/wp-content/uploads/2019/02/cropped-Favicon-Infolibros-192x192.png"
+    />
+
+    <!--Facebook-->
+    <meta property="fb:admins" content="CodeGuez" />
+    <meta property="fb:app_id" content="CodeGuez" />
+
+    <!--Open Graph-->
+    <meta property="og:title" content="Bookify Store" />
+    <meta
+      property="og:description"
+      content="Bookify Store is a web application that allows you to buy books in real time, chat with other users and more."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bookifystore.com" />
+    <meta
+      property="og:image"
+      content="https://infolibros.org/wp-content/uploads/2019/02/cropped-Favicon-Infolibros-192x192.png"
+    />
+    <meta property="og:image:width" content="192" />
+    <meta property="og:image:height" content="192" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Bookify Store" />
+    <meta property="og:image:secure_url" content="https://bookifystore.com" />
+    <meta property="og:site_name" content="Bookify Store" />
+    <meta property="og:locale" content="en_US" />
+
+    <!--Styles-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <link href="/css/output.css" rel="stylesheet" />
   </head>
+
   <body class="text-gray-400 bg-gray-900">
     <main>
 
@@ -65,7 +125,7 @@
           <nav
             class="md:ml-auto flex flex-wrap items-center text-base justify-center"
           >
-            <a class="mr-5 hover:text-white" href="/realtimeproducts">Real Time</a>
+            <a class="mr-5 hover:text-white" href="/realtimebooks">Real Time</a>
             <a class="mr-5 hover:text-white" href="/chat">Chat</a>
           </nav>
           <a href="/cart">
