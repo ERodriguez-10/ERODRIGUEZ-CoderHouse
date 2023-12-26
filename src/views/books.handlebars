@@ -617,14 +617,15 @@
                   {{#each categories}}
                     <div class="flex items-center">
                       <input
-                        id="filter-category-{{@index}}"
+                        id="f-category-{{@index}}"
                         name="category[]"
                         value="{{this}}"
                         type="checkbox"
                         class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        onchange=""
                       />
                       <label
-                        for="filter-category-{{@index}}"
+                        for="f-category-{{@index}}"
                         class="ml-3 text-sm text-gray-600"
                       >{{this}}</label>
                     </div>
@@ -679,7 +680,7 @@
                 <div class="space-y-4">
                   <div class="flex items-center">
                     <input
-                      id="filter-size-0"
+                      id="filter-size-04654"
                       name="size[]"
                       value="2l"
                       type="checkbox"
@@ -879,27 +880,29 @@
                 <div class="space-y-4">
                   <div class="flex items-center">
                     <input
-                      id="filter-size-0"
+                      id="f-status-available"
                       name="size[]"
-                      value="2l"
+                      value="available"
                       type="checkbox"
                       class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      onchange="navigateToUrl(this, 'f-status-unavailable')"
                     />
                     <label
-                      for="filter-size-0"
+                      for="f-status-available"
                       class="ml-3 text-sm text-gray-600"
                     >Available</label>
                   </div>
                   <div class="flex items-center">
                     <input
-                      id="filter-size-1"
+                      id="f-status-unavailable"
                       name="size[]"
-                      value="6l"
+                      value="unavailable"
                       type="checkbox"
                       class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      onchange="navigateToUrl(this, 'f-status-available')"
                     />
                     <label
-                      for="filter-size-1"
+                      for="f-status-unavailable"
                       class="ml-3 text-sm text-gray-600"
                     >Not Available</label>
                   </div>
@@ -1110,4 +1113,5 @@
   </div>
 
   <script src="/js/bookShop.js"></script>
+  <script src="/js/utilsNavegation.js"></script>
 </div>

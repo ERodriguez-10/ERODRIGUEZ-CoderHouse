@@ -60,4 +60,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
     openSection4.classList.toggle("hidden");
     closeSection4.classList.toggle("hidden");
   });
+
+  const fStatusAvailable = document.getElementById("f-status-available");
+  const fStatusUnavailable = document.getElementById("f-status-unavailable");
+
+  const currentUrl = new URL(window.location.href);
+
+  const urlParams = new URLSearchParams(currentUrl.search);
+
+  const status = urlParams.get("status");
+
+  if (status === "available") {
+    fStatusAvailable.checked = true;
+  } else if (status === "unavailable") {
+    fStatusUnavailable.checked = true;
+  }
 });

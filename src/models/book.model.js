@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const bookCollection = "products";
 
@@ -44,6 +45,7 @@ const bookSchema = new mongoose.Schema({
   status: { type: Boolean, required: true, max: 100 },
 });
 
+bookSchema.plugin(mongoosePaginate);
 const bookModel = mongoose.model(bookCollection, bookSchema);
 
 export default bookModel;

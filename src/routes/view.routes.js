@@ -3,6 +3,8 @@ import { Router } from "express";
 import BookDAO from "../dao/mongo/book.dao.js";
 import ChatDAO from "../dao/mongo/chat.dao.js";
 
+import bookModel from "../models/book.model.js";
+
 const BooksInstance = new BookDAO();
 const ChatsInstance = new ChatDAO();
 
@@ -30,31 +32,54 @@ viewRouter.get("/chat", async (req, res) => {
 });
 
 viewRouter.get("/books", async (req, res) => {
-  const { limit, page, sort, query } = req.query;
+  const { limit, page, sort, query, status } = req.query;
 
-  limit ? parseInt(limit) : 10;
-  page ? parseInt(page) : 1;
-  sort ? sort : null;
-  query ? query : null;
+  var currentUrl = new URL(
+    req.protocol + "://" + req.get("host") + req.originalUrl
+  );
 
-  let productData = await BooksInstance.getBooks();
+  const limitOption = limit !== undefined ? parseInt(limit) : 10;
+  const pageOption = page !== undefined ? parseInt(page) : 1;
+  const sortOption = sort !== undefined ? parseInt(sort) : null;
+  const queryOption = query !== undefined ? query : null;
+  const statusOption = status !== undefined ? status : null;
 
-  if (sort === "price-desc") {
-    productData = productData.sort((a, b) => b.price - a.price);
-  } else if (sort === "price-asc") {
-    productData = productData.sort((a, b) => a.price - b.price);
+  const options = {
+    lean: true,
+    limit: limitOption,
+    page: pageOption,
+  };
+
+  if (sortOption !== null) {
+    options.sort = { price: sortOption };
   }
 
-  if (limit) {
-    productData = productData.slice(0, limit);
+  console.log(options);
+
+  let productData = await bookModel.paginate(
+    {},
+    { limit: 4, page: 2, sort: { price: -1 }, lean: true }
+  );
+
+  console.log(productData);
+
+  if (status) {
+    productData = productData.filter((product) => {
+      if (status === "available") {
+        return product.status === true;
+      } else if (status === "unavailable") {
+        return product.status === false;
+      }
+    });
   }
 
   res.render("books", {
     tabTitle: "Bookify Store",
     pageTitle: "All products",
-    products: productData,
+    products: productData.docs,
     fileCss: "css/output.css",
     categories: BooksInstance.getCategories(),
+    currentUrl: currentUrl.href,
   });
 });
 

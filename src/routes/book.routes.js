@@ -13,7 +13,7 @@ bookRouter.get("/", async (req, res) => {
   sort ? sort : null;
   query ? query : null;
 
-  const listOfBooks = await BooksInstance.getBooks();
+  const listOfBooks = await BooksInstance.getBooks(limit, page, sort, query);
 
   if (limit) {
     res.status(200).json(listOfBooks.slice(0, limit));

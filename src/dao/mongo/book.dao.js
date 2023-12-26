@@ -5,7 +5,12 @@ class BookDAO {
     this.bookModel = bookModel;
   }
 
-  async getBooks() {
+  async getBooks(limit, page, sort, query) {
+    console.log(query);
+    if (query !== null) {
+      const testing = await this.bookModel.find({ category: "Humor" });
+      console.log(testing);
+    }
     return await this.bookModel.find().lean();
   }
 
