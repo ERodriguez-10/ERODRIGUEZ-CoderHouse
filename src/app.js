@@ -24,11 +24,24 @@ const PORT = process.env.PORT || 8080;
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
+const CLUSTER_URL = process.env.CLUSTER_URL;
+const URL = process.env.URL;
+
+// Cors middleware
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  next();
+});
 
 // Mongoose configuration
 mongoose
   .connect(
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster49875.2v7q1js.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}/${DB_NAME}?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("Connected to MongoDB Atlas.");
@@ -37,17 +50,6 @@ mongoose
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Cors middleware
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-  next();
-});
 
 // Router configuration
 app.use("/", viewRouter);
@@ -67,14 +69,14 @@ app.engine(
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(__dirname + "/public"));
 
 // Socket.io configuration
 serverSocket.on("connection", (socket) => {
   console.log("A new client has connected.");
 
   socket.on("newProductClient", (product) => {
-    fetch("http://localhost:8080/api/products", {
+    fetch("${URL}/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +95,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("newMessageClient", (message) => {
-    fetch("http://localhost:8080/api/messages", {
+    fetch("${URL}/api/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +114,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("deleteProductClient", (id) => {
-    fetch(`http://localhost:8080/api/products/${id}`, {
+    fetch(`${URL}/api/products/${id}`, {
       method: "DELETE",
       headers: {
         "Contet-Type": "application/json",
@@ -122,6 +124,45 @@ serverSocket.on("connection", (socket) => {
       .then((res) => res.json())
       .then((data) => {
         serverSocket.emit("productDeletedServer", id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
+  socket.on("newCartToUser", () => {
+    fetch(`${URL}/api/carts/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        products: [],
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        serverSocket.emit("cartCreated", data.cartCreated._id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
+  socket.on("addProductToCart", (data) => {
+    const { cartId, productId } = data;
+
+    fetch(`${URL}/api/carts/${cartId}/product/${productId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        serverSocket.emit("productSuccessfullyAdded");
       })
       .catch((err) => {
         console.log(err);

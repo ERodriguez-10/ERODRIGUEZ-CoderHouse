@@ -1,0 +1,22 @@
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"> Title </th>
+        <th scope="col"> Price </th>
+        <th scope="col"> Quantity </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products.products}}
+        <tr>
+          <td>{{productId.title}}</td>
+          <td>{{productId.price}}</td>
+          <td>{{quantity}}</td>
+        </tr>
+      {{/each}}
+
+    </tbody>
+
+  </table>
+</div>

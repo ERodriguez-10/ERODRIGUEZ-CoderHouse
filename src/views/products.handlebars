@@ -1,0 +1,74 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"> Title </th>
+        <th scope="col"> Category </th>
+        <th scope="col"> Price </th>
+        <th scope="col" style="text-align: center;"> Buy </th>
+        <th scope="col" style="text-align: center;"> Show more</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products}}
+        <tr>
+          <td> {{_doc.title}}</td>
+          <td> {{_doc.category}}</td>
+          <td> USD {{_doc.price}} </td>
+          <td>
+            <button
+              style="background-color: green; padding: 10px 20px; margin: 0 auto; max-width: fit-content;"
+              data-product-id="{{_doc._id}}"
+              id="addProduct"
+            >
+              ADD
+            </button>
+          </td>
+          <td>
+            <a href="/product/{{_doc._id}}">
+
+              <button
+                style="background-color: blue; padding: 10px 20px; margin: 0 auto; max-width: fit-content;"
+              >
+                VIEW
+              </button>
+            </a>
+          </td>
+        </tr>
+      {{/each}}
+
+    </tbody>
+
+  </table>
+  <div class="position-relative m-4">
+
+    <nav aria-label="Page navigation example">
+      <ul style="display: flex; justify-content: center; align-items: center;">
+        {{#if controllers.hasPrevPage}}
+          <li class="page-item"><a
+              class="page-link"
+              href="/products?page={{controllers.prevPage}}&limit={{limit}}"
+            >Previous</a></li>
+        {{/if}}
+
+        {{! Links a siguientes páginas }}
+
+        {{#if controllers.hasNextPage}}
+          <li class="page-item"><a
+              class="page-link"
+              style="color: aliceblue"
+              href="/products?page={{controllers.nextPage}}&limit={{limit}}"
+            >Next</a></li>
+        {{/if}}
+
+      </ul>
+    </nav>
+    <p class="btn btn-primary">
+      Current Page:
+      {{controllers.page}}
+    </p>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/productsView.js"></script>
+</div>

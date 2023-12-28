@@ -1,11 +1,20 @@
-[data-theme="dark"] {
-  --primary: #43a047;
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* If the user prefers light mode, 
+we still enforce color-scheme: dark, despite the user preference */
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: dark;
+  }
 }
 
 .parent {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .product {
@@ -31,7 +40,7 @@
 }
 
 .chat {
-  height: 600px;
+  height: 550px;
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   margin-bottom: 15px;
@@ -58,4 +67,8 @@
   color: black;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+.add-button {
+  background: "green";
 }

@@ -110,3 +110,5 @@ Producto de ejemplo para agregar:
 	"status": true,
 	"stock": 100
 }`
+
+- [PRE-ENTREGA 2] - Mongo Avanzado (Parte II). Fecha de entrega: 27/12/2023.

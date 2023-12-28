@@ -6,15 +6,18 @@ const ProductsInstance = new ProductDAO();
 const productRouter = Router();
 
 productRouter.get("/", async (req, res) => {
-  const limit = req.query.limit;
+  const { limit, page, sort, query } = req.query;
 
-  const productData = await ProductsInstance.getProducts();
+  console.log(limit, page, sort, query);
 
-  if (limit) {
-    res.status(200).json(productData.slice(0, limit));
-  } else {
-    res.status(200).json({ productsList: productData });
-  }
+  const productData = await ProductsInstance.getProducts(
+    limit,
+    page,
+    sort,
+    query
+  );
+
+  res.status(200).json({ productData });
 });
 
 productRouter.get("/:pid", async (req, res) => {
