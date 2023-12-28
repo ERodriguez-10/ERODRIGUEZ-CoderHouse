@@ -161,7 +161,6 @@ serverSocket.on("connection", (socket) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         serverSocket.emit("productSuccessfullyAdded");
       })
       .catch((err) => {

@@ -5,8 +5,6 @@ socket.emit("newCartToUser");
 let cartId;
 
 socket.on("cartCreated", (id) => {
-  console.log("This is the new cart ID " + id);
-
   cartId = id;
 
   Toastify({
@@ -28,8 +26,6 @@ document.querySelectorAll("#addProduct").forEach((button) => {
       cartId,
       productId,
     };
-
-    console.log(data);
 
     socket.emit("addProductToCart", data);
   });

@@ -8,8 +8,6 @@ const productRouter = Router();
 productRouter.get("/", async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
-  console.log(limit, page, sort, query);
-
   const productData = await ProductsInstance.getProducts(
     limit,
     page,

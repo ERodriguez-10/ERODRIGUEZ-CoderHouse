@@ -70,8 +70,6 @@ viewRouter.get("/product/:pid", async (req, res) => {
 
   const productInfo = await ProductsInstance.getProductById(pid);
 
-  console.log(productInfo);
-
   res.render("productDetail", {
     tabTitle: "Bookify Store",
     pageTitle: "All products",
