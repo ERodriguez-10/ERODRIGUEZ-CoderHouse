@@ -1,7 +1,7 @@
 import { Router } from "express";
-import ProductDAO from "../dao/mongo/product.dao.js";
+import ProductController from "../controllers/mongo/product.controller.js";
 
-const ProductsInstance = new ProductDAO();
+const ProductsInstance = new ProductController();
 
 const productRouter = Router();
 

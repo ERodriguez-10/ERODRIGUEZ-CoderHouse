@@ -1,6 +1,6 @@
 import productModel from "../../models/product.model.js";
 
-class ProductDAO {
+class ProductController {
   constructor() {
     this.productModel = productModel;
   }
@@ -112,4 +112,4 @@ class ProductDAO {
   }
 }
 
-export default ProductDAO;
+export default ProductController;

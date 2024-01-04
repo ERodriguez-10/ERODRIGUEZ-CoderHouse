@@ -1,7 +1,7 @@
 import { Router } from "express";
-import MessageDAO from "../dao/mongo/message.dao.js";
+import MessageController from "../controllers/mongo/message.controller.js";
 
-const MessageInstance = new MessageDAO();
+const MessageInstance = new MessageController();
 
 const messageRouter = Router();
 

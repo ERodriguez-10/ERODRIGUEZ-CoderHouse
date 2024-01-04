@@ -1,6 +1,6 @@
 import cartModel from "../../models/cart.model.js";
 
-class CartDAO {
+class CartController {
   constructor() {
     this.cartModel = cartModel;
   }
@@ -97,4 +97,4 @@ class CartDAO {
   }
 }
 
-export default CartDAO;
+export default CartController;

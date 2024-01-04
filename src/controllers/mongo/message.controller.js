@@ -1,6 +1,6 @@
 import messageModal from "../../models/message.model.js";
 
-class MessageDAO {
+class MessageController {
   constructor() {
     this.messageModal = messageModal;
   }
@@ -18,4 +18,4 @@ class MessageDAO {
   }
 }
 
-export default MessageDAO;
+export default MessageController;

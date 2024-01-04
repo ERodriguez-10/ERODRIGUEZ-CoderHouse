@@ -1,5 +1,5 @@
 import { Router } from "express";
-import AccountController from "../dao/mongo/account.controller.js";
+import AccountController from "../controllers/mongo/account.controller.js";
 
 const sessionRouter = Router();
 const accountController = new AccountController();

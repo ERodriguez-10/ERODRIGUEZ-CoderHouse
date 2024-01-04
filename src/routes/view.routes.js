@@ -1,12 +1,12 @@
 import { Router } from "express";
 
-import ProductDAO from "../dao/mongo/product.dao.js";
-import MessageDAO from "../dao/mongo/message.dao.js";
-import CartDAO from "../dao/mongo/cart.dao.js";
+import ProductController from "../controllers/mongo/product.controller.js";
+import MessageController from "../controllers/mongo/message.controller.js";
+import CartController from "../controllers/mongo/cart.controller.js";
 
-const ProductsInstance = new ProductDAO();
-const MessageInstance = new MessageDAO();
-const CartInstance = new CartDAO();
+const ProductsInstance = new ProductController();
+const MessageInstance = new MessageController();
+const CartInstance = new CartController();
 
 const viewRouter = Router();
 
