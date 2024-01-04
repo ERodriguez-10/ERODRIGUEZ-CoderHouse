@@ -1,18 +1,21 @@
 // Packages
-import express from "express";
-import handlebars from "express-handlebars";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import mongoose from "mongoose";
+import express from "express";
+import handlebars from "express-handlebars";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 // Routers
-import cartRouter from "./routes/carts-routes.js";
-import messageRouter from "./routes/messages-routes.js";
-import productRouter from "./routes/products-routes.js";
-import viewRouter from "./routes/view-routes.js";
+import cartRouter from "./routes/carts.routes.js";
+import messageRouter from "./routes/messages.routes.js";
+import productRouter from "./routes/products.routes.js";
+import viewRouter from "./routes/view.routes.js";
 
 // Other imports
 import __dirname from "./utils.js";
+import mongoose from "mongoose";
+import sessionRouter from "./routes/sessions.routes.js";
 
 // Server
 const app = express();
@@ -44,8 +47,20 @@ mongoose
     `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}/${DB_NAME}?retryWrites=true&w=majority`
   )
   .then(() => {
-    console.log("Connected to MongoDB Atlas.");
+    console.log("[server]: Database connected.");
   });
+
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl: `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}/${DB_NAME}?retryWrites=true&w=majority`,
+      ttl: 600,
+    }),
+    secret: "I47iXcIY216SSWgS",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // Middlewares
 app.use(express.json());
@@ -55,6 +70,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", viewRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/messages", messageRouter);
+app.use("/api/sessions", sessionRouter);
 app.use("/api/products", productRouter);
 
 // Handlebars configuration
@@ -73,7 +89,7 @@ app.use(express.static(__dirname + "/public"));
 
 // Socket.io configuration
 serverSocket.on("connection", (socket) => {
-  console.log("A new client has connected.");
+  console.log("[server-socket]: A new client has connected.");
 
   socket.on("newProductClient", (product) => {
     fetch("${URL}/api/products", {
@@ -169,10 +185,10 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("A client has disconnected.");
+    console.log("[server-socket]:A client has disconnected.");
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`[server]: Server is running on port ${PORT}`);
 });

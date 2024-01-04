@@ -11,16 +11,15 @@ const CartInstance = new CartDAO();
 const viewRouter = Router();
 
 viewRouter.get("/", async (req, res) => {
-  const payloadProducts = (await ProductsInstance.getProducts()).payload;
-
-  let productsView = payloadProducts.map((product) => {
-    return Object.assign({}, product);
+  res.render("login", {
+    tabTitle: "Bookify Store - Login",
+    fileCss: "css/styles.css",
   });
+});
 
-  res.render("home", {
-    tabTitle: "Bookify Store",
-    pageTitle: "All products",
-    products: productsView,
+viewRouter.get("/register", async (req, res) => {
+  res.render("register", {
+    tabTitle: "Bookify Store - Register",
     fileCss: "css/styles.css",
   });
 });
@@ -62,6 +61,7 @@ viewRouter.get("/products", async (req, res) => {
     controllers: productData,
     limit: limitProps,
     fileCss: "css/styles.css",
+    name: req.session.user,
   });
 });
 
