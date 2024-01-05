@@ -1,75 +1,188 @@
-<div class="container">
-  <h1>Welcome my dear user {{name}}</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col"> Title </th>
-        <th scope="col"> Category </th>
-        <th scope="col"> Price </th>
-        <th scope="col" style="text-align: center;"> Buy </th>
-        <th scope="col" style="text-align: center;"> Show more</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each products}}
-        <tr>
-          <td> {{_doc.title}}</td>
-          <td> {{_doc.category}}</td>
-          <td> USD {{_doc.price}} </td>
-          <td>
-            <button
-              style="background-color: green; padding: 10px 20px; margin: 0 auto; max-width: fit-content;"
-              data-product-id="{{_doc._id}}"
-              id="addProduct"
-            >
-              ADD
-            </button>
-          </td>
-          <td>
-            <a href="/product/{{_doc._id}}">
+<div
+  class="container h-screen mx-auto text-black flex flex-col justify-between"
+>
+  <div>
+    <nav class="grid grid-cols-2 py-8">
+      <div class="flex align-middle items-center">
+        <p class="font-bold text-2xl">BookifyStore</p>
+        <p class="text-lg mx-6 items-center text-gray-600">Categories</p>
+        <input
+          type="text"
+          placeholder="Search"
+          class="text-white bg-slate-200 border-slate-200 py-2 px-4 rounded lg:w-full"
+        />
+      </div>
+      <div class="flex align-center items-center justify-end">
+        <a href="/cart"><i
+            class="fa-solid fa-cart-shopping mx-3 lg:mx-6 text-xl"
+          ></i></a>
 
-              <button
-                style="background-color: blue; padding: 10px 20px; margin: 0 auto; max-width: fit-content;"
-              >
-                VIEW
-              </button>
-            </a>
-          </td>
-        </tr>
-      {{/each}}
+        <a href="/profile" class="flex items-center mx-3 lg:mx-6">
+          <i class="fa-solid fa-user text-xl"></i>
+          <p class="ms-4">{{name}}</p>
+        </a>
 
-    </tbody>
+        <button class="bg-black text-white py-2 px-4 rounded" id="logout-btn">
+          <i class="fa-solid fa-door-open me-2"></i>
+          Logout
+        </button>
 
-  </table>
-  <div class="position-relative m-4">
-
-    <nav aria-label="Page navigation example">
-      <ul style="display: flex; justify-content: center; align-items: center;">
-        {{#if controllers.hasPrevPage}}
-          <li class="page-item"><a
-              class="page-link"
-              href="/products?page={{controllers.prevPage}}&limit={{limit}}"
-            >Previous</a></li>
-        {{/if}}
-
-        {{! Links a siguientes páginas }}
-
-        {{#if controllers.hasNextPage}}
-          <li class="page-item"><a
-              class="page-link"
-              style="color: aliceblue"
-              href="/products?page={{controllers.nextPage}}&limit={{limit}}"
-            >Next</a></li>
-        {{/if}}
-
-      </ul>
+      </div>
     </nav>
-    <p class="btn btn-primary">
-      Current Page:
-      {{controllers.page}}
-    </p>
+
+    <hr />
+
+    <h2 class="text-center text-6xl font-bold my-8">Our store</h2>
+    <p class="pb-6 font-bold">Showing
+      {{nProduct}}
+      of
+      {{controllers.totalDocs}}
+      products</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12">
+      {{#each products}}
+        <div id="product-{{_doc._id}}">
+          <div class="h-full flex flex-col items-center text-center">
+            <img
+              alt="team"
+              class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+              src="{{_doc.thumbnail}}"
+            />
+            <div class="w-full">
+              <h2 class="title-font font-medium text-lg">{{_doc.title}}</h2>
+              <h3 class="text-gray-500 mb-3">{{_doc.category}}</h3>
+              <p class="mb-4">U$D {{{_doc.price}}}</p>
+
+              <div class="flex">
+                <a href="/product/{{_doc._id}}" class="block w-full me-4">
+                  <button
+                    class="flex flex-grow items-center w-full text-white bg-black py-2 px-4 focus:outline-none justify-center rounded-sm text-base"
+                  >
+                    <i class="fa-solid fa-cart-shopping mr-3"></i>
+                    Add to cart</button>
+                </a>
+
+                <a href="/product/{{_doc._id}}">
+                  <button
+                    class="flex h-full items-center border-2 border-black py-2 px-4 focus:outline-none rounded text-base"
+                    id="view-product"
+                    data-product-id="{{_doc._id}}"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+
+    <div class="text-center py-12">
+
+      <nav aria-label="Page navigation example text-black">
+        <ul
+          style="display: flex; justify-content: center; align-items: center;"
+        >
+          {{#if controllers.hasPrevPage}}
+            <li class="flex justify-center items-center pe-4"><a
+                href="/products?page={{controllers.prevPage}}&limit={{controllers.limit}}"
+              ><i class="fa-solid fa-chevron-left mr-1"></i>
+                Previous</a></li>
+          {{/if}}
+
+          {{#each pages}}
+            {{#if isActive}}
+              <a
+                href="/products?page={{page}}&limit={{limit}}"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-slate-300 shadow-sm hover:bg-accent hover:text-accent-foreground h-9 w-9 mx-1"
+              >
+                {{page}}
+              </a>
+            {{/if}}
+            {{#unless isActive}}
+              <a
+                href="/products?page={{page}}&limit={{limit}}"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9 mx-1"
+              >
+                {{page}}
+              </a>
+            {{/unless}}
+          {{/each}}
+
+          {{! Links a siguientes páginas }}
+
+          {{#if controllers.hasNextPage}}
+            <li class="flex justify-center items-center ps-4"><a
+                href="/products?page={{controllers.nextPage}}&limit={{controllers.limit}}"
+              >Next <i class="fa-solid fa-chevron-right ms-1"></i></a></li>
+          {{/if}}
+
+        </ul>
+      </nav>
+
+    </div>
   </div>
+
+  <footer class="text-gray-600 body-font">
+    <div
+      class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
+    >
+      <a
+        class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+      >
+        <i class="fa-solid fa-book"></i>
+        <span class="ml-3 text-xl">BookifyStore</span>
+      </a>
+      <p
+        class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
+      >© 2024 BookifyStore —
+        <a
+          href="https://twitter.com/knyttneve"
+          class="text-gray-600 ml-1"
+          rel="noopener noreferrer"
+          target="_blank"
+        >@CodeGuez</a>
+      </p>
+      <span
+        class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
+      >
+        <a class="ml-3 text-gray-500">
+          <svg
+            fill="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
+            ></path>
+          </svg>
+        </a>
+        <a class="ml-3 text-gray-500">
+          <svg
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="none"
+              d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+            ></path>
+            <circle cx="4" cy="4" r="2" stroke="none"></circle>
+          </svg>
+        </a>
+      </span>
+    </div>
+  </footer>
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script src="/js/productsView.js"></script>
+  <script src="/js/logout.js"></script>
 </div>

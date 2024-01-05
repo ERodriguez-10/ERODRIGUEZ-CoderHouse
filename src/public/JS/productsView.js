@@ -1,6 +1,6 @@
 const socket = io();
 
-socket.emit("newCartToUser");
+//socket.emit("newCartToUser");
 
 let cartId;
 

@@ -45,4 +45,20 @@ sessionRouter.post("/login", async (req, res) => {
   }
 });
 
+sessionRouter.get("/logout", async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(400).json({
+        success: false,
+        error: err.message,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        data: "User logged out",
+      });
+    }
+  });
+});
+
 export default sessionRouter;
