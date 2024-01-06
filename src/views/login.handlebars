@@ -5,7 +5,7 @@
   <div class="container mx-auto">
     <div class="flex h-full items-center justify-end">
       <div
-        class="text-black bg-white min-w-[550] rounded-2xl box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12) py-8"
+        class="text-black bg-slate-100 min-w-[550] rounded-2xl box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12) py-8"
       >
         <h1 class="text-center text-4xl font-bold pt-8">
           <i class="fa-solid fa-unlock me-2"></i>
@@ -29,16 +29,36 @@
             required
           />
 
-          <label for="user_password" class="font-bold mt-4">Password</label>
-          <input
-            type="password"
-            id="user_password"
-            name="user_password"
-            placeholder="********"
-            autocomplete="current-password"
-            class="px-4 py-2 border border-gray-300 rounded-lg mt-2 text-black"
-            required
-          />
+          <div class="mt-4">
+            <label for="user_password" class="font-bold">Password</label>
+            <div class="flex">
+              <input
+                type="password"
+                id="user_password"
+                name="user_password"
+                placeholder="********"
+                autocomplete="current-password"
+                class="px-4 py-2 border border-gray-300 rounded-lg mt-2 text-black w-full"
+                required
+              />
+              <div
+                style="margin-left: -35px; margin-top: 20px"
+                id="showPasswordIcon"
+              >
+                <i
+                  class="fa-solid fa-eye-slash text-lg hover:cursor-pointer"
+                ></i>
+              </div>
+
+              <div
+                class="hidden"
+                style="margin-left: -35px; margin-top: 20px; display: none"
+                id="hidePasswordIcon"
+              >
+                <i class="fa-solid fa-eye text-lg hover:cursor-pointer"></i>
+              </div>
+            </div>
+          </div>
 
           <button
             type="submit"
