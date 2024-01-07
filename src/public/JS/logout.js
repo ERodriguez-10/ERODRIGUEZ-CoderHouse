@@ -12,7 +12,6 @@ logoutBtn.addEventListener("click", async () => {
       if (!data.success) {
         return alert("Logout failed");
       }
-      alert("Logout successfull");
       window.location.href = "/";
     })
     .catch((error) => {

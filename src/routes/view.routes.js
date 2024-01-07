@@ -100,6 +100,7 @@ viewRouter.get("/product/:pid", auth, async (req, res) => {
     pageTitle: "All products",
     product: productInfo,
     fileCss: "css/styles.css",
+    name: req.session.user,
   });
 });
 

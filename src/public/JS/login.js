@@ -23,7 +23,6 @@ registerForm.addEventListener("submit", async (event) => {
         return alert("Invalid credentials");
       }
 
-      alert("Login successfull");
       window.location.href = "/products";
     })
     .catch((error) => {

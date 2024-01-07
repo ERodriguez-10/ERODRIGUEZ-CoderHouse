@@ -29,7 +29,6 @@ registerForm.addEventListener("submit", async (event) => {
         return alert("Error al crear el usuario");
       }
 
-      alert("Usuario creado con éxito");
       window.location.href = "/";
     })
     .catch((error) => {
