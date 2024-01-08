@@ -58,7 +58,7 @@ app.use(
     }),
     secret: "I47iXcIY216SSWgS",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
 
@@ -92,7 +92,7 @@ serverSocket.on("connection", (socket) => {
   console.log("[server-socket]: A new client has connected.");
 
   socket.on("newProductClient", (product) => {
-    fetch("${URL}/api/products", {
+    fetch(`${URL}/api/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +111,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("newMessageClient", (message) => {
-    fetch("${URL}/api/messages", {
+    fetch(`${URL}/api/messages`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
