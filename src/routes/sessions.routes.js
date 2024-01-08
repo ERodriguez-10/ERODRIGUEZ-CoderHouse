@@ -25,7 +25,9 @@ sessionRouter.post("/login", async (req, res) => {
 
     if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
       req.session.user = "Admin";
+      req.session.lastName = "N/A";
       req.session.role = "admin";
+      req.session.email = "N/A";
       return res.status(200).json({
         success: true,
         data: "admin",
@@ -41,6 +43,8 @@ sessionRouter.post("/login", async (req, res) => {
     }
 
     req.session.user = account.first_name;
+    req.session.lastName = account.last_name;
+    req.session.email = account.email;
     req.session.role = "user";
 
     res.status(200).json({

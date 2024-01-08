@@ -1,0 +1,147 @@
+<div
+  class="container h-screen mx-auto text-black flex flex-col justify-between"
+>
+  <div>
+    <nav class="grid grid-cols-2 py-8">
+      <div class="flex align-middle items-center">
+        <a href="/products"><p class="font-bold text-2xl">BookifyStore</p></a>
+        <p class="text-lg mx-6 items-center text-gray-600">Categories</p>
+        <input
+          type="text"
+          placeholder="Search"
+          class="text-white bg-slate-200 border-slate-200 py-2 px-4 rounded lg:w-full"
+          disabled
+        />
+      </div>
+      <div class="flex align-center items-center justify-end">
+        <a href="/cart"><i
+            class="fa-solid fa-cart-shopping mx-3 lg:mx-6 text-xl"
+          ></i></a>
+
+        <a href="/profile" class="flex items-center mx-3 lg:mx-6">
+          <i class="fa-solid fa-user text-xl"></i>
+          <p class="ms-4">{{name}}</p>
+        </a>
+
+        <button class="bg-black text-white py-2 px-4 rounded" id="logout-btn">
+          <i class="fa-solid fa-door-open me-2"></i>
+          Logout
+        </button>
+
+      </div>
+    </nav>
+
+    <hr />
+
+    <h2 class="text-center text-6xl font-bold my-8 pb-6">My profile</h2>
+
+    <div
+      class="bg-white overflow-hidden shadow rounded-lg border mx-auto w-1/2"
+    >
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+          User Profile
+        </h3>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+          This is some information about the user.
+        </p>
+      </div>
+      <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+        <dl class="sm:divide-y sm:divide-gray-200">
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              First name
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{name}}
+            </dd>
+          </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Last Name
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{lastName}}
+            </dd>
+          </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Email
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{email}}
+            </dd>
+          </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Role
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{role}}
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-gray-600 body-font">
+    <div
+      class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
+    >
+      <a
+        class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+      >
+        <i class="fa-solid fa-book"></i>
+        <span class="ml-3 text-xl">BookifyStore</span>
+      </a>
+      <p
+        class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
+      >© 2024 BookifyStore —
+        <a
+          href="https://twitter.com/knyttneve"
+          class="text-gray-600 ml-1"
+          rel="noopener noreferrer"
+          target="_blank"
+        >@CodeGuez</a>
+      </p>
+      <span
+        class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
+      >
+        <a class="ml-3 text-gray-500">
+          <svg
+            fill="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"
+            ></path>
+          </svg>
+        </a>
+        <a class="ml-3 text-gray-500">
+          <svg
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="none"
+              d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+            ></path>
+            <circle cx="4" cy="4" r="2" stroke="none"></circle>
+          </svg>
+        </a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="/js/logout.js"></script>
+</div>

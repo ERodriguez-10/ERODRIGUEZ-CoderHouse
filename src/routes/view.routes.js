@@ -34,6 +34,17 @@ viewRouter.get("/register", async (req, res) => {
   });
 });
 
+viewRouter.get("/profile", auth, async (req, res) => {
+  res.render("profile", {
+    tabTitle: "Bookify Store - Profile",
+    fileCss: "css/styles.css",
+    name: req.session.user,
+    lastName: req.session.lastName,
+    email: req.session.email,
+    role: req.session.role,
+  });
+});
+
 viewRouter.get("/chat", auth, async (req, res) => {
   const randomUser = `Anonymous${Math.floor(Math.random() * 1000000)}`;
 
