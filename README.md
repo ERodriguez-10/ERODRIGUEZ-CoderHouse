@@ -112,3 +112,18 @@ Producto de ejemplo para agregar:
 }`
 
 - [PRE-ENTREGA 2] - Mongo Avanzado (Parte II). Fecha de entrega: 27/12/2023.
+
+- [Desafío 6] - Implementación de login
+
+Se agregaron nuevas vistas y controladores:
+
+- "/" renderiza el login
+- "/register" renderiza el formulario de registro
+- Rutas protegidas no se podrá acceder a ninguna otra ruta sin estar logeado.
+
+Se agregaron los siguientes endpoints:
+
+- POST /api/sessions/register => permite registrar una cuenta
+- POST /api/sessions/login => permite logear una cuenta
+
+Cuenta con una cuenta admin no registrada en la base de datos.
