@@ -2,15 +2,22 @@ import { Router } from "express";
 
 import ProductController from "../controllers/mongo/product.controller.js";
 import MessageController from "../controllers/mongo/message.controller.js";
-import CartController from "../controllers/mongo/cart.controller.js";
+import { getCartByUserId, getUserByEmail } from "../utils.js";
 
 const ProductsInstance = new ProductController();
 const MessageInstance = new MessageController();
-const CartInstance = new CartController();
 
 const viewRouter = Router();
 
 // Middleware to check if user is logged in
+
+function isLogged(req, res, next) {
+  if (req.session.user) {
+    res.redirect("/products");
+  } else {
+    next();
+  }
+}
 
 function auth(req, res, next) {
   if (req.session.user) {
@@ -20,14 +27,16 @@ function auth(req, res, next) {
   }
 }
 
-viewRouter.get("/", async (req, res) => {
+// Routes
+
+viewRouter.get("/", isLogged, async (req, res) => {
   res.render("login", {
     tabTitle: "Bookify Store - Login",
     fileCss: "css/styles.css",
   });
 });
 
-viewRouter.get("/register", async (req, res) => {
+viewRouter.get("/register", isLogged, async (req, res) => {
   res.render("register", {
     tabTitle: "Bookify Store - Register",
     fileCss: "css/styles.css",
@@ -95,6 +104,7 @@ viewRouter.get("/products", auth, async (req, res) => {
     controllers: productData,
     fileCss: "css/styles.css",
     name: req.session.user,
+    email: req.session.email,
     role: req.session.role,
     nProduct: nProduct,
     pages: arrayPages,
@@ -130,10 +140,12 @@ viewRouter.get("/realtimeproducts", auth, async (req, res) => {
   });
 });
 
-viewRouter.get("/cart/:cid", auth, async (req, res) => {
-  const { cid } = req.params;
+viewRouter.get("/cart", auth, async (req, res) => {
+  const userEmail = req.session.email;
 
-  const payloadCarts = await CartInstance.getCartById(cid);
+  const userId = await getUserByEmail(userEmail);
+
+  const payloadCarts = await getCartByUserId(userId);
 
   res.render("cart", {
     tabTitle: "Bookify Store",

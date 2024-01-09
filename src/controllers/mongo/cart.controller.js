@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import cartModel from "../../models/cart.model.js";
 
 class CartController {
@@ -13,8 +14,16 @@ class CartController {
     return await this.cartModel.findById(id).lean();
   }
 
-  async createCart(products) {
-    return await this.cartModel.create({ products });
+  async getCartByUserId(userId) {
+    return await this.cartModel.findOne({ userId, hasPurchased: false }).lean();
+  }
+
+  async createCart(products, userId) {
+    return await this.cartModel.create({
+      products,
+      userId,
+      hasPurchased: false,
+    });
   }
 
   async addProductToCart(cartId, productId) {
@@ -22,7 +31,7 @@ class CartController {
 
     if (selectedCart) {
       const productIndex = selectedCart.products.findIndex(
-        (p) => p.productId === productId
+        (p) => p.productId._id.toString() === productId
       );
 
       if (productIndex > -1) {

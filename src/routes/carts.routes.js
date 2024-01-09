@@ -10,8 +10,19 @@ cartRouter.get("/", async (req, res) => {
   res.status(200).json({ cartList: carts });
 });
 
+cartRouter.get("/user/:uid", async (req, res) => {
+  const { uid } = req.params;
+
+  try {
+    const cartSelected = await CartsInstance.getCartByUserId(uid);
+    res.status(200).json({ cartSelected: cartSelected });
+  } catch (e) {
+    res.status(404).json({ error: e.message });
+  }
+});
+
 cartRouter.post("/", async (req, res) => {
-  const { products } = req.body;
+  const { products, userId } = req.body;
 
   const productMap = products.map((p) => {
     return {
@@ -25,7 +36,7 @@ cartRouter.post("/", async (req, res) => {
       error: "Please send an array of products to create your cart.",
     });
   } else {
-    const newCart = await CartsInstance.createCart(productMap);
+    const newCart = await CartsInstance.createCart(productMap, userId);
 
     res
       .status(200)

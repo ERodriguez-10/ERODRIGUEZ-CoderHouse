@@ -75,4 +75,23 @@ sessionRouter.get("/logout", async (req, res) => {
   });
 });
 
+sessionRouter.get("/user/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const account = await accountController.getAccountByEmail(email);
+    if (!account) {
+      throw new Error("Invalid credentials");
+    }
+    res.status(200).json({
+      success: true,
+      data: account,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
 export default sessionRouter;

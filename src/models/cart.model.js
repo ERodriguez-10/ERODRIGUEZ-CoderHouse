@@ -12,6 +12,8 @@ const productSchema = new mongoose.Schema(
 
 const cartSchema = new mongoose.Schema({
   products: { type: [productSchema], required: true, max: 25 },
+  userId: { type: Schema.Types.ObjectId, ref: "accounts", required: true },
+  hasPurchased: { type: Boolean, default: false },
 });
 
 cartSchema.pre("findOne", function () {

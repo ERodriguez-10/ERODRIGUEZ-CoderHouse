@@ -1,5 +1,5 @@
 // Packages
-import { createServer } from "node:http";
+import { createServer, get } from "node:http";
 import { Server } from "socket.io";
 import express from "express";
 import handlebars from "express-handlebars";
@@ -13,7 +13,12 @@ import productRouter from "./routes/products.routes.js";
 import viewRouter from "./routes/view.routes.js";
 
 // Other imports
-import __dirname from "./utils.js";
+import __dirname, {
+  getCartByUserId,
+  getUserByEmail,
+  postNewCart,
+  postProductToCart,
+} from "./utils.js";
 import mongoose from "mongoose";
 import sessionRouter from "./routes/sessions.routes.js";
 
@@ -50,17 +55,17 @@ mongoose
     console.log("[server]: Database connected.");
   });
 
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}/${DB_NAME}?retryWrites=true&w=majority`,
-      ttl: 600,
-    }),
-    secret: "I47iXcIY216SSWgS",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+const sessionMiddleware = session({
+  store: MongoStore.create({
+    mongoUrl: `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}/${DB_NAME}?retryWrites=true&w=majority`,
+    ttl: 600,
+  }),
+  secret: "I47iXcIY216SSWgS",
+  resave: false,
+  saveUninitialized: true,
+});
+
+app.use(sessionMiddleware);
 
 // Middlewares
 app.use(express.json());
@@ -88,6 +93,8 @@ app.set("views", `${__dirname}/views`);
 app.use(express.static(__dirname + "/public"));
 
 // Socket.io configuration
+serverSocket.engine.use(sessionMiddleware);
+
 serverSocket.on("connection", (socket) => {
   console.log("[server-socket]: A new client has connected.");
 
@@ -146,42 +153,24 @@ serverSocket.on("connection", (socket) => {
       });
   });
 
-  socket.on("newCartToUser", () => {
-    fetch(`${URL}/api/carts/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        products: [],
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        serverSocket.emit("cartCreated", data.cartCreated._id);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  socket.on("addProductToCart", async (productId) => {
+    const userEmail = socket.request.session.email;
 
-  socket.on("addProductToCart", (data) => {
-    const { cartId, productId } = data;
+    const id = await getUserByEmail(userEmail);
 
-    fetch(`${URL}/api/carts/${cartId}/product/${productId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        serverSocket.emit("productSuccessfullyAdded");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const cartId = await getCartByUserId(id);
+
+    if (!cartId) {
+      const newCart = await postNewCart(id, productId);
+      if (newCart) {
+        socket.emit("productSuccessfullyAdded");
+      }
+    }
+    const addProductToCart = await postProductToCart(cartId._id, productId);
+
+    if (addProductToCart) {
+      socket.emit("productSuccessfullyAdded");
+    }
   });
 
   socket.on("disconnect", () => {
