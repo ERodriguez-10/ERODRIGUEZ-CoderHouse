@@ -18,7 +18,7 @@ import __dirname, {
   getUserByEmail,
   postNewCart,
   postProductToCart,
-} from "./utils.js";
+} from "./utils/utils.js";
 import mongoose from "mongoose";
 import sessionRouter from "./routes/sessions.routes.js";
 
