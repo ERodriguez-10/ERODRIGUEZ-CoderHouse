@@ -1,5 +1,5 @@
 // Packages
-import { createServer, get } from "node:http";
+import { createServer } from "node:http";
 import { Server } from "socket.io";
 import express from "express";
 import handlebars from "express-handlebars";
@@ -13,14 +13,16 @@ import productRouter from "./routes/products.routes.js";
 import viewRouter from "./routes/view.routes.js";
 
 // Other imports
-import __dirname, {
+import {
   getCartByUserId,
   getUserByEmail,
   postNewCart,
   postProductToCart,
-} from "./utils/utils.js";
+} from "./utils/fetch.js";
+import __dirname from "./utils.js";
 import mongoose from "mongoose";
 import sessionRouter from "./routes/sessions.routes.js";
+import authRouter from "./routes/auth.routes.js";
 
 // Server
 const app = express();
@@ -73,6 +75,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Router configuration
 app.use("/", viewRouter);
+app.use("/auth", authRouter);
 app.use("/api/carts", cartRouter);
 app.use("/api/messages", messageRouter);
 app.use("/api/sessions", sessionRouter);
@@ -89,7 +92,6 @@ app.engine(
 
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
-
 app.use(express.static(__dirname + "/public"));
 
 // Socket.io configuration

@@ -2,48 +2,30 @@ import { Router } from "express";
 
 import ProductController from "../controllers/mongo/product.controller.js";
 import MessageController from "../controllers/mongo/message.controller.js";
-import { getCartByUserId, getUserByEmail } from "../utils.js";
+import { getCartByUserId, getUserByEmail } from "../utils/fetch.js";
 
 const ProductsInstance = new ProductController();
 const MessageInstance = new MessageController();
 
 const viewRouter = Router();
 
-// Middleware to check if user is logged in
-
-function isLogged(req, res, next) {
-  if (req.session.user) {
-    res.redirect("/products");
-  } else {
-    next();
-  }
-}
-
-function auth(req, res, next) {
-  if (req.session.user) {
-    next();
-  } else {
-    res.redirect("/");
-  }
-}
-
 // Routes
 
-viewRouter.get("/", isLogged, async (req, res) => {
+viewRouter.get("/", async (req, res) => {
   res.render("login", {
     tabTitle: "Bookify Store - Login",
     fileCss: "css/styles.css",
   });
 });
 
-viewRouter.get("/register", isLogged, async (req, res) => {
+viewRouter.get("/register", async (req, res) => {
   res.render("register", {
     tabTitle: "Bookify Store - Register",
     fileCss: "css/styles.css",
   });
 });
 
-viewRouter.get("/profile", auth, async (req, res) => {
+viewRouter.get("/profile", async (req, res) => {
   res.render("profile", {
     tabTitle: "Bookify Store - Profile",
     fileCss: "css/styles.css",
@@ -54,7 +36,7 @@ viewRouter.get("/profile", auth, async (req, res) => {
   });
 });
 
-viewRouter.get("/chat", auth, async (req, res) => {
+viewRouter.get("/chat", async (req, res) => {
   const randomUser = `Anonymous${Math.floor(Math.random() * 1000000)}`;
 
   res.render("chat", {
@@ -66,7 +48,7 @@ viewRouter.get("/chat", auth, async (req, res) => {
   });
 });
 
-viewRouter.get("/products", auth, async (req, res) => {
+viewRouter.get("/products", async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
   const productData = await ProductsInstance.getProducts(
@@ -111,7 +93,7 @@ viewRouter.get("/products", auth, async (req, res) => {
   });
 });
 
-viewRouter.get("/product/:pid", auth, async (req, res) => {
+viewRouter.get("/product/:pid", async (req, res) => {
   const { pid } = req.params;
 
   const productInfo = await ProductsInstance.getProductById(pid);
@@ -125,7 +107,7 @@ viewRouter.get("/product/:pid", auth, async (req, res) => {
   });
 });
 
-viewRouter.get("/realtimeproducts", auth, async (req, res) => {
+viewRouter.get("/realtimeproducts", async (req, res) => {
   const payloadProducts = (await ProductsInstance.getProducts()).payload;
 
   let productsView = payloadProducts.map((product) => {
@@ -140,7 +122,7 @@ viewRouter.get("/realtimeproducts", auth, async (req, res) => {
   });
 });
 
-viewRouter.get("/cart", auth, async (req, res) => {
+viewRouter.get("/cart", async (req, res) => {
   const userEmail = req.session.email;
 
   const userId = await getUserByEmail(userEmail);
