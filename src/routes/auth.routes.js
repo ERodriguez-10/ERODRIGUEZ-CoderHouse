@@ -1,6 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
-import GitHubStrategy from "../configs/passport.config.js";
+import GitHubStrategy from "../configs/github.config.js";
+
+// TODO: Add more strategies
 
 passport.use(GitHubStrategy);
 

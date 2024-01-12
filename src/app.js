@@ -35,7 +35,6 @@ const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 const CLUSTER_URL = process.env.CLUSTER_URL;
-const URL = process.env.URL;
 
 // Cors middleware
 app.use((req, res, next) => {

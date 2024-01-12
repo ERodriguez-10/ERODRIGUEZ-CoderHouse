@@ -7,6 +7,8 @@ const GitHubStrategy = new Strategy(
     callbackURL: process.env.GITHUB_CALLBACK_URL,
   },
   (accessToken, refreshToken, profile, done) => {
+    // TODO: save user to database
+
     console.log(profile);
     done(null, profile.id);
   }

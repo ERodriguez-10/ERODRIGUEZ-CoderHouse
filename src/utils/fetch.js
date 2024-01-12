@@ -1,5 +1,7 @@
+const URL = process.env.URL;
+
 export async function getUserByEmail(userEmail) {
-  return fetch(`http://localhost:8080/api/sessions/user/${userEmail}`, {
+  return fetch(`${URL}/api/sessions/user/${userEmail}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +20,7 @@ export async function getUserByEmail(userEmail) {
 }
 
 export async function getCartByUserId(_id) {
-  return fetch(`http://localhost:8080/api/carts/user/${_id}`, {
+  return fetch(`${URL}/api/carts/user/${_id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +38,7 @@ export async function getCartByUserId(_id) {
 }
 
 export async function postNewCart(_id, productId) {
-  return fetch(`http://localhost:8080/api/carts`, {
+  return fetch(`${URL}/api/carts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -53,7 +55,7 @@ export async function postNewCart(_id, productId) {
 }
 
 export async function postProductToCart(_id, productId) {
-  return fetch(`http://localhost:8080/api/carts/${_id}/product/${productId}`, {
+  return fetch(`${URL}/api/carts/${_id}/product/${productId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
