@@ -27,7 +27,6 @@
             name="user_name"
             placeholder="John"
             class="px-4 py-2 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
-            autocomplete="name"
             required
           />
 
@@ -38,7 +37,6 @@
             name="user_lastname"
             placeholder="Doe"
             class="px-4 py-2 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
-            autocomplete="family-name"
             required
           />
 
@@ -48,17 +46,6 @@
             id="user_email"
             name="user_email"
             placeholder="johndoe@example.com"
-            class="px-4 py-2 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
-            autocomplete="email"
-            required
-          />
-
-          <lable for="user_age" class="font-bold mt-4">Age</lable>
-          <input
-            type="number"
-            id="user_age"
-            name="user_age"
-            placeholder="18"
             class="px-4 py-2 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
             required
           />
@@ -71,7 +58,6 @@
                 id="user_password"
                 name="user_password"
                 placeholder="********"
-                autocomplete="current-password"
                 class="px-4 py-2 border border-gray-300 rounded-lg mt-2 text-black w-full"
                 required
               />
@@ -100,9 +86,31 @@
           >Create an account</button>
         </form>
 
+        <div class="flex items-center justify-center my-6">
+          <div class="w-24 h-px bg-gray-400"></div>
+          <span class="mx-4 text-gray-400">or continue with</span>
+          <div class="w-24 h-px bg-gray-400"></div>
+        </div>
+
+        <div class="flex justify-center my-6 px-8">
+          <a
+            href="auth/github"
+            class="border-2 border-gray-500 bg-slate-100 w-1/2 px-4 py-2 mx-2 rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-300 flex justify-center items-center"
+          >
+            <i class="fa-brands fa-github text-2xl"></i>
+          </a>
+
+          <a
+            href="auth/google"
+            class="border-2 border-gray-500 bg-slate-100 w-1/2 px-4 py-2 mx-2 rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-300 flex justify-center items-center"
+          >
+            <i class="fab fa-google text-2xl"></i>
+          </a>
+        </div>
+
         <a
           href="/"
-          class="block text-center mt-6 mb-8 text-gray-600 hover:underline"
+          class="block text-center mt-10 mb-8 text-gray-600 hover:underline"
         >Already have an account? Log in now</a>
       </div>
     </div>
