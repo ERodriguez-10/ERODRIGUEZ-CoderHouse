@@ -13,4 +13,5 @@ const GitHubStrategy = new Strategy(
     done(null, profile.id);
   }
 );
+
 export default GitHubStrategy;

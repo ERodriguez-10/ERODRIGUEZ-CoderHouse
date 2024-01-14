@@ -1,10 +1,12 @@
 import { Router } from "express";
 import passport from "passport";
 import GitHubStrategy from "../configs/github.config.js";
+import GoogleStrategy from "../configs/google.config.js";
 
 // TODO: Add more strategies
 
 passport.use(GitHubStrategy);
+passport.use(GoogleStrategy);
 
 const authRouter = new Router();
 
@@ -27,6 +29,22 @@ authRouter.get(
 authRouter.get(
   "/github/callback",
   passport.authenticate(GitHubStrategy, {
+    failureRedirect: "/",
+    failureFlash: true,
+  }),
+  (req, res) => {
+    res.redirect("/products");
+  }
+);
+
+authRouter.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+authRouter.get(
+  "/google/callback",
+  passport.authenticate("google", {
     failureRedirect: "/",
     failureFlash: true,
   }),
