@@ -7,8 +7,14 @@
       <div
         class="text-black bg-slate-100 min-w-[550] rounded-2xl box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12) py-6"
       >
-        <h1 class="text-center text-4xl font-bold pt-8">
-          <i class="fa-solid fa-lock me-2"></i>
+        <h1
+          class="text-center text-4xl flex justify-center align-middle font-bold pt-8"
+        >
+          <img
+            src="/assets/padlock.png"
+            alt="Login icon"
+            class="h-8 w-8 self-center me-4"
+          />
           Sing up
         </h1>
         <p class="text-center mt-3 mb-6 text-gray-600">Create an account</p>
@@ -62,20 +68,26 @@
                 required
               />
               <div
-                style="margin-left: -35px; margin-top: 20px"
+                style="margin-left: -35px; margin-top: 17px"
                 id="showPasswordIcon"
               >
-                <i
-                  class="fa-solid fa-eye-slash text-lg hover:cursor-pointer"
-                ></i>
+                <img
+                  src="/assets/hidden.png"
+                  alt="Hidden icon"
+                  class="w-6 h-6 self-center hover:cursor-pointer"
+                />
               </div>
 
               <div
                 class="hidden"
-                style="margin-left: -35px; margin-top: 20px; display: none"
+                style="margin-left: -35px; margin-top: 17px; display: none"
                 id="hidePasswordIcon"
               >
-                <i class="fa-solid fa-eye text-lg hover:cursor-pointer"></i>
+                <img
+                  src="/assets/view.png"
+                  alt="View icon"
+                  class="w-6 h-6 self-center hover:cursor-pointer"
+                />
               </div>
             </div>
           </div>
@@ -95,16 +107,18 @@
         <div class="flex justify-center my-6 px-8">
           <a
             href="auth/github"
-            class="border-2 border-gray-500 bg-slate-100 w-1/2 px-4 py-2 mx-2 rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-300 flex justify-center items-center"
+            class="border-2 border-gray-500 bg-slate-100 w-1/2 px-4 py-2 mx-2 rounded-lg hover:bg-slate-300 transition-all duration-300 flex justify-center items-center"
           >
-            <i class="fa-brands fa-github text-2xl"></i>
+            <p>Register with</p>
+            <img src="/assets/github.png" alt="Github" class="ms-2 w-6 h-6" />
           </a>
 
           <a
             href="auth/google"
-            class="border-2 border-gray-500 bg-slate-100 w-1/2 px-4 py-2 mx-2 rounded-lg hover:bg-emerald-700 hover:text-white transition-all duration-300 flex justify-center items-center"
+            class="border-2 border-gray-500 bg-slate-100 w-1/2 px-4 py-2 mx-2 rounded-lg hover:bg-slate-300 transition-all duration-300 flex justify-center items-center"
           >
-            <i class="fab fa-google text-2xl"></i>
+            <p>Register with</p>
+            <img src="/assets/google.png" alt="Google" class="ms-2 w-6 h-6" />
           </a>
         </div>
 

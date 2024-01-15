@@ -13,8 +13,20 @@ class AccountController {
     return await this.accountModel.findOne({ email: email });
   }
 
+  async getAccountByGitHubId(github_id) {
+    return await this.accountModel.findOne({ github_id: github_id });
+  }
+
+  async getAccountByGoogleId(google_id) {
+    return await this.accountModel.findOne({ google_id: google_id });
+  }
+
   async createAccount(account) {
-    return await this.accountModel.create(account);
+    console.log("llegue antes de explotar");
+    console.log(account);
+    const testing = await this.accountModel.create(account);
+    console.log(testing);
+    return testing;
   }
 
   async updateAccount(id, account) {

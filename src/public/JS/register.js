@@ -12,8 +12,12 @@ registerForm.addEventListener("submit", async (event) => {
     first_name: iFirstname.value,
     last_name: iLastname.value,
     email: iEmail.value,
-    age: iAge.value,
     password: iPassword.value,
+    avatar: "",
+    role: "User",
+    registerWith: "App",
+    github_id: "",
+    google_id: "",
   };
 
   await fetch("http://localhost:8080/api/sessions/register", {

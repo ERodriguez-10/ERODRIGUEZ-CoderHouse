@@ -32,7 +32,15 @@ authRouter.get(
     failureRedirect: "/",
     failureFlash: true,
   }),
-  (req, res) => {
+  async (req, res) => {
+    const user = req.user;
+
+    req.session.user = user.first_name;
+    req.session.lastName = "N/A";
+    req.session.email = "N/A";
+    req.session.role = user.role;
+    req.session.passedBy = user.registerWith;
+
     res.redirect("/products");
   }
 );
@@ -49,6 +57,16 @@ authRouter.get(
     failureFlash: true,
   }),
   (req, res) => {
+    const user = req.user;
+
+    console.log("Estoy encerrado acá");
+
+    req.session.user = user.first_name;
+    req.session.lastName = "N/A";
+    req.session.email = "N/A";
+    req.session.role = user.role;
+    req.session.passedBy = user.registerWith;
+
     res.redirect("/products");
   }
 );

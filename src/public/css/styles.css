@@ -16,6 +16,10 @@ we still enforce color-scheme: dark, despite the user preference */
   }
 }
 
+* {
+  font-family: "Poppins", sans-serif;
+}
+
 .parent {
   display: flex;
   flex-wrap: wrap;

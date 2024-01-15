@@ -4,14 +4,17 @@ const accountCollection = "accounts";
 
 const accountSchema = new Schema({
   first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
+  last_name: { type: String },
   email: {
     type: String,
-    required: true,
     unique: true,
   },
-  age: { type: Number, required: true },
-  password: { type: String, required: true },
+  avatar: { type: String },
+  password: { type: String },
+  registerWith: { type: String, required: true },
+  role: { type: String, required: true },
+  github_id: { type: String },
+  google_id: { type: String },
 });
 
 const accountModel = model(accountCollection, accountSchema);
