@@ -113,7 +113,7 @@ Producto de ejemplo para agregar:
 
 - [PRE-ENTREGA 2] - Mongo Avanzado (Parte II). Fecha de entrega: 27/12/2023.
 
-- [Desafío 6] - Implementación de login
+- [Desafío 6] - Implementación de login. Fecha de entrega: 08/01/2024.
 
 Se agregaron nuevas vistas y controladores:
 
@@ -127,3 +127,5 @@ Se agregaron los siguientes endpoints:
 - POST /api/sessions/login => permite logear una cuenta
 
 Cuenta con una cuenta admin no registrada en la base de datos.
+
+- [Desafío 7] - Refactor a nuestro login. Fecha de entrega: 16/01/2024.
