@@ -1,13 +1,16 @@
 import { Router } from "express";
 import AccountController from "../controllers/mongo/account.controller.js";
+import { createHash, isValidPassword } from "../utils/bcrytp.js";
 
 const sessionRouter = Router();
 const accountController = new AccountController();
 
 sessionRouter.post("/register", async (req, res) => {
+  let newUser = req.body;
+  newUser.password = await createHash(newUser.password);
   try {
-    const account = await accountController.createAccount(req.body);
-    res.status(201).json({
+    const account = await accountController.createAccount(newUser);
+    return res.status(200).json({
       success: true,
       data: account,
     });
@@ -38,7 +41,10 @@ sessionRouter.post("/login", async (req, res) => {
     if (!account) {
       throw new Error("Invalid credentials");
     }
-    if (account.password !== password) {
+
+    const verifyPassowrd = await isValidPassword(account.password, password);
+
+    if (!verifyPassowrd) {
       throw new Error("Invalid credentials");
     }
 

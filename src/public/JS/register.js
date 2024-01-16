@@ -3,7 +3,6 @@ const registerForm = document.querySelector("#register-form");
 const iFirstname = document.querySelector("#user_name");
 const iLastname = document.querySelector("#user_lastname");
 const iEmail = document.querySelector("#user_email");
-const iAge = document.querySelector("#user_age");
 const iPassword = document.querySelector("#user_password");
 
 registerForm.addEventListener("submit", async (event) => {
@@ -12,12 +11,10 @@ registerForm.addEventListener("submit", async (event) => {
     first_name: iFirstname.value,
     last_name: iLastname.value,
     email: iEmail.value,
+    avatar: null,
     password: iPassword.value,
-    avatar: "",
-    role: "User",
     registerWith: "App",
-    github_id: "",
-    google_id: "",
+    role: "User",
   };
 
   await fetch("http://localhost:8080/api/sessions/register", {
@@ -36,7 +33,6 @@ registerForm.addEventListener("submit", async (event) => {
       window.location.href = "/";
     })
     .catch((error) => {
-      console.log(error);
       alert("Error al crear el usuario");
     });
 });

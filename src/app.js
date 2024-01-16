@@ -23,6 +23,7 @@ import __dirname from "./utils.js";
 import mongoose from "mongoose";
 import sessionRouter from "./routes/sessions.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import accountModel from "./models/account.model.js";
 
 // Server
 const app = express();
@@ -53,6 +54,7 @@ mongoose
     `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_URL}/${DB_NAME}?retryWrites=true&w=majority`
   )
   .then(() => {
+    accountModel.syncIndexes();
     console.log("[server]: Database connected.");
   });
 

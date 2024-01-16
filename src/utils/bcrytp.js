@@ -6,7 +6,7 @@ export const createHash = async (password) => {
   return hash;
 };
 
-export const isValidPassword = async (password, hash) => {
-  const isValid = await bycrypt.compare(password, hash);
+export const isValidPassword = async (accountPassword, passwordLogin) => {
+  const isValid = await bycrypt.compare(passwordLogin, accountPassword);
   return isValid;
 };

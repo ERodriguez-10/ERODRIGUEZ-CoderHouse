@@ -59,8 +59,6 @@ authRouter.get(
   (req, res) => {
     const user = req.user;
 
-    console.log("Estoy encerrado acá");
-
     req.session.user = user.first_name;
     req.session.lastName = "N/A";
     req.session.email = "N/A";

@@ -16,23 +16,19 @@ const GoogleStrategy = new Strategy(
         let newUser = {
           first_name: profile._json.given_name,
           last_name: profile._json.family_name,
-          email: "",
           avatar: profile._json.picture,
-          password: "",
+          password: null,
           registerWith: "Google",
           role: "User",
-          github_id: "",
           google_id: profile._json.sub,
         };
 
         let result = await AccountInstance.createAccount(newUser);
         done(null, result);
       } else {
-        console.log("Estoy dentro del else");
         done(null, user);
       }
-    } catch {
-      console.log("Estoy dentro del catch");
+    } catch (error) {
       done(null, false);
     }
   }

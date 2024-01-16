@@ -22,11 +22,7 @@ class AccountController {
   }
 
   async createAccount(account) {
-    console.log("llegue antes de explotar");
-    console.log(account);
-    const testing = await this.accountModel.create(account);
-    console.log(testing);
-    return testing;
+    return await this.accountModel.create(account);
   }
 
   async updateAccount(id, account) {

@@ -15,14 +15,12 @@ const GitHubStrategy = new Strategy(
       if (!user) {
         let newUser = {
           first_name: profile._json.name,
-          last_name: "",
-          email: "",
+          last_name: null,
           avatar: profile._json.avatar_url,
-          password: "",
+          password: null,
           registerWith: "GitHub",
           role: "User",
           github_id: profile._json.id,
-          google_id: "",
         };
 
         let result = await AccountInstance.createAccount(newUser);
@@ -30,7 +28,7 @@ const GitHubStrategy = new Strategy(
       } else {
         done(null, user);
       }
-    } catch {
+    } catch (error) {
       done(null, false);
     }
   }

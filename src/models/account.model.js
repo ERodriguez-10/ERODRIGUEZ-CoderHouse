@@ -7,15 +7,42 @@ const accountSchema = new Schema({
   last_name: { type: String },
   email: {
     type: String,
-    unique: true,
   },
   avatar: { type: String },
   password: { type: String },
   registerWith: { type: String, required: true },
   role: { type: String, required: true },
-  github_id: { type: String },
-  google_id: { type: String },
+  github_id: {
+    type: String,
+  },
+  google_id: {
+    type: String,
+  },
 });
+
+accountSchema.index(
+  { email_index: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { email: { $exists: true, $type: "string" } },
+  }
+);
+
+accountSchema.index(
+  { github_id_index: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { github_id: { $exists: true, $type: "string" } },
+  }
+);
+
+accountSchema.index(
+  { google_id_index: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { google_id: { $exists: true, $type: "string" } },
+  }
+);
 
 const accountModel = model(accountCollection, accountSchema);
 
