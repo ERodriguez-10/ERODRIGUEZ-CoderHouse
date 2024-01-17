@@ -50,6 +50,18 @@
         <dl class="sm:divide-y sm:divide-gray-200">
           <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
+              Avatar
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <img
+                src="{{avatar}}"
+                alt="avatar"
+                class="rounded-full w-32 h-32 border-2 border-gray-300"
+              />
+            </dd>
+          </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
               First name
             </dt>
             <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -80,9 +92,18 @@
               {{role}}
             </dd>
           </div>
+          <div class="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">
+              Register with
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{registerWith}}
+            </dd>
+          </div>
         </dl>
       </div>
     </div>
+
   </div>
 
   <footer class="text-gray-600 body-font">

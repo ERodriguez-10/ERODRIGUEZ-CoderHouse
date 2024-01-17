@@ -33,6 +33,8 @@ viewRouter.get("/profile", async (req, res) => {
     lastName: req.session.lastName,
     email: req.session.email,
     role: req.session.role,
+    registerWith: req.session.registerWith,
+    avatar: req.session.passport.user.avatar,
   });
 });
 
