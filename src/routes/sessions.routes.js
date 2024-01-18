@@ -31,6 +31,7 @@ sessionRouter.post("/login", async (req, res) => {
       req.session.lastName = "N/A";
       req.session.role = "admin";
       req.session.email = "N/A";
+      req.session.passedBy = "App";
       return res.status(200).json({
         success: true,
         data: "admin",
@@ -52,6 +53,7 @@ sessionRouter.post("/login", async (req, res) => {
     req.session.lastName = account.last_name;
     req.session.email = account.email;
     req.session.role = "user";
+    req.session.registerWith = account.registerWith;
 
     res.status(200).json({
       success: true,

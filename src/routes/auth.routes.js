@@ -39,7 +39,7 @@ authRouter.get(
     req.session.lastName = "N/A";
     req.session.email = "N/A";
     req.session.role = user.role;
-    req.session.passedBy = user.registerWith;
+    req.session.registerWith = user.registerWith;
 
     res.redirect("/products");
   }
@@ -59,11 +59,13 @@ authRouter.get(
   (req, res) => {
     const user = req.user;
 
+    console.log(user);
+
     req.session.user = user.first_name;
     req.session.lastName = "N/A";
     req.session.email = "N/A";
     req.session.role = user.role;
-    req.session.passedBy = user.registerWith;
+    req.session.registerWith = user.registerWith;
 
     res.redirect("/products");
   }

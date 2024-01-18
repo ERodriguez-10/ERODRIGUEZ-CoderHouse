@@ -9,6 +9,16 @@ const MessageInstance = new MessageController();
 
 const viewRouter = Router();
 
+// Middleware to check if user is authenticated
+
+function auth(req, res, next) {
+  if (req.session.user) {
+    return next();
+  }
+
+  res.redirect("/");
+}
+
 // Routes
 
 viewRouter.get("/", async (req, res) => {
@@ -25,7 +35,7 @@ viewRouter.get("/register", async (req, res) => {
   });
 });
 
-viewRouter.get("/profile", async (req, res) => {
+viewRouter.get("/profile", auth, async (req, res) => {
   res.render("profile", {
     tabTitle: "Bookify Store - Profile",
     fileCss: "css/styles.css",
@@ -33,10 +43,12 @@ viewRouter.get("/profile", async (req, res) => {
     lastName: req.session.lastName,
     email: req.session.email,
     role: req.session.role,
+    registerWith: req.session.registerWith,
+    avatar: req.session.passport.user.avatar,
   });
 });
 
-viewRouter.get("/chat", async (req, res) => {
+viewRouter.get("/chat", auth, async (req, res) => {
   const randomUser = `Anonymous${Math.floor(Math.random() * 1000000)}`;
 
   res.render("chat", {
@@ -48,7 +60,7 @@ viewRouter.get("/chat", async (req, res) => {
   });
 });
 
-viewRouter.get("/products", async (req, res) => {
+viewRouter.get("/products", auth, async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
   const productData = await ProductsInstance.getProducts(
@@ -93,7 +105,7 @@ viewRouter.get("/products", async (req, res) => {
   });
 });
 
-viewRouter.get("/product/:pid", async (req, res) => {
+viewRouter.get("/product/:pid", auth, async (req, res) => {
   const { pid } = req.params;
 
   const productInfo = await ProductsInstance.getProductById(pid);
@@ -107,7 +119,7 @@ viewRouter.get("/product/:pid", async (req, res) => {
   });
 });
 
-viewRouter.get("/realtimeproducts", async (req, res) => {
+viewRouter.get("/realtimeproducts", auth, async (req, res) => {
   const payloadProducts = (await ProductsInstance.getProducts()).payload;
 
   let productsView = payloadProducts.map((product) => {
@@ -122,7 +134,7 @@ viewRouter.get("/realtimeproducts", async (req, res) => {
   });
 });
 
-viewRouter.get("/cart", async (req, res) => {
+viewRouter.get("/cart", auth, async (req, res) => {
   const userEmail = req.session.email;
 
   const userId = await getUserByEmail(userEmail);
