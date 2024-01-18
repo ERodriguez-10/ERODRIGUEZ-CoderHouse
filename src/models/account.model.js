@@ -21,7 +21,7 @@ const accountSchema = new Schema({
 });
 
 accountSchema.index(
-  { email_index: 1 },
+  { email: 1 },
   {
     unique: true,
     partialFilterExpression: { email: { $exists: true, $type: "string" } },
@@ -29,7 +29,7 @@ accountSchema.index(
 );
 
 accountSchema.index(
-  { github_id_index: 1 },
+  { github_id: 1 },
   {
     unique: true,
     partialFilterExpression: { github_id: { $exists: true, $type: "string" } },
@@ -37,7 +37,7 @@ accountSchema.index(
 );
 
 accountSchema.index(
-  { google_id_index: 1 },
+  { google_id: 1 },
   {
     unique: true,
     partialFilterExpression: { google_id: { $exists: true, $type: "string" } },

@@ -3,8 +3,12 @@ const registerForm = document.querySelector("#login-form");
 const iEmail = document.querySelector("#user_email");
 const iPassword = document.querySelector("#user_password");
 
+const alertMessage = document.querySelector("#alertMessage");
+
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  alertMessage.style.display = "none";
+
   const data = {
     email: iEmail.value,
     password: iPassword.value,
@@ -20,13 +24,17 @@ registerForm.addEventListener("submit", async (event) => {
     .then((response) => response.json())
     .then((data) => {
       if (!data.success) {
-        return alert("Invalid credentials");
+        iEmail.value = "";
+        iPassword.value = "";
+        return (alertMessage.style.display = "block");
       }
 
       window.location.href = "/products";
     })
     .catch((error) => {
-      alert("Invalid credentials");
+      iEmail.value = "";
+      iPassword.value = "";
+      alertMessage.style.display = "block";
     });
 });
 
