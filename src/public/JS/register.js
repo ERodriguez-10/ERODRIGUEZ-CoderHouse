@@ -5,8 +5,13 @@ const iLastname = document.querySelector("#user_lastname");
 const iEmail = document.querySelector("#user_email");
 const iPassword = document.querySelector("#user_password");
 
+const failedRegister = document.querySelector("#failedRegister");
+
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+
+  failedRegister.style.display = "none";
+
   const data = {
     first_name: iFirstname.value,
     last_name: iLastname.value,
@@ -27,13 +32,22 @@ registerForm.addEventListener("submit", async (event) => {
     .then((response) => response.json())
     .then((data) => {
       if (!data.success) {
-        return alert("Error al crear el usuario");
+        iFirstname.value = "";
+        iLastname.value = "";
+        iEmail.value = "";
+        iPassword.value = "";
+
+        return (failedRegister.style.display = "block");
       }
 
       window.location.href = "/";
     })
     .catch((error) => {
-      alert("Error al crear el usuario");
+      iFirstname.value = "";
+      iLastname.value = "";
+      iEmail.value = "";
+      iPassword.value = "";
+      failedRegister.style.display = "block";
     });
 });
 
