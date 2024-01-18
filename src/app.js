@@ -157,9 +157,7 @@ serverSocket.on("connection", (socket) => {
   });
 
   socket.on("addProductToCart", async (productId) => {
-    const userEmail = socket.request.session.email;
-
-    const id = await getUserByEmail(userEmail);
+    const id = socket.request.session.userId;
 
     const cartId = await getCartByUserId(id);
 
@@ -168,11 +166,12 @@ serverSocket.on("connection", (socket) => {
       if (newCart) {
         socket.emit("productSuccessfullyAdded");
       }
-    }
-    const addProductToCart = await postProductToCart(cartId._id, productId);
+    } else {
+      const addProductToCart = await postProductToCart(cartId._id, productId);
 
-    if (addProductToCart) {
-      socket.emit("productSuccessfullyAdded");
+      if (addProductToCart) {
+        socket.emit("productSuccessfullyAdded");
+      }
     }
   });
 

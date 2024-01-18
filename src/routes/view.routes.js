@@ -135,9 +135,7 @@ viewRouter.get("/realtimeproducts", auth, async (req, res) => {
 });
 
 viewRouter.get("/cart", auth, async (req, res) => {
-  const userEmail = req.session.email;
-
-  const userId = await getUserByEmail(userEmail);
+  const userId = req.session.userId;
 
   const payloadCarts = await getCartByUserId(userId);
 
