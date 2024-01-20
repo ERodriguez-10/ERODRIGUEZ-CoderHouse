@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createHash, isValidPassword } from "#utils/bcrytp.js";
-import { createAccount, getAccountByEmail } from "#controllers/auth/index.js";
+import { authController } from "#controllers/auth/index.js";
 
 const sessionRouter = Router();
 
@@ -8,7 +8,7 @@ sessionRouter.post("/register", async (req, res) => {
   let newUser = req.body;
   newUser.password = await createHash(newUser.password);
   try {
-    const account = await createAccount(newUser);
+    const account = await authController.createAccount(newUser);
     return res.status(200).json({
       success: true,
       data: account,
@@ -37,7 +37,7 @@ sessionRouter.post("/login", async (req, res) => {
       });
     }
 
-    const account = await getAccountByEmail(email);
+    const account = await authController.getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }
@@ -85,7 +85,7 @@ sessionRouter.get("/logout", async (req, res) => {
 sessionRouter.get("/user/:email", async (req, res) => {
   try {
     const { email } = req.params;
-    const account = await getAccountByEmail(email);
+    const account = await authController.getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }

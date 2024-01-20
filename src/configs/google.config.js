@@ -1,8 +1,5 @@
 import { Strategy } from "passport-google-oauth20";
-import {
-  getAccountByGoogleId,
-  createAccount,
-} from "#controllers/auth/index.js";
+import { authController } from "#controllers/auth/index.js";
 
 const GoogleStrategy = new Strategy(
   {
@@ -12,7 +9,7 @@ const GoogleStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await getAccountByGoogleId(profile._json.sub);
+      let user = await authController.getAccountByGoogleId(profile._json.sub);
       if (!user) {
         let newUser = {
           first_name: profile._json.given_name,
@@ -23,12 +20,13 @@ const GoogleStrategy = new Strategy(
           google_id: profile._json.sub,
         };
 
-        let result = await createAccount(newUser);
+        let result = await authController.createAccount(newUser);
         done(null, result);
       } else {
         done(null, user);
       }
     } catch (error) {
+      console.log(error);
       done(null, false);
     }
   }

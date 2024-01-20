@@ -1,8 +1,8 @@
 import { Router } from "express";
 
 import { getCartByUserId } from "#utils/fetch.js";
-import { getMessages } from "#controllers/chat/index.js";
-import { getProducts, getProductById } from "#controllers/product/index.js";
+import { chatController } from "#controllers/chat/index.js";
+import { productController } from "#controllers/product/index.js";
 
 const viewRouter = Router();
 
@@ -33,6 +33,14 @@ viewRouter.get("/register", async (req, res) => {
 });
 
 viewRouter.get("/profile", auth, async (req, res) => {
+  let avatarImg;
+
+  if (req.session.passport !== undefined) {
+    avatarImg = req.session.passport.user.avatar;
+  } else {
+    avatarImg = "https://i.imgur.com/6VBx3io.png";
+  }
+
   res.render("profile", {
     tabTitle: "Bookify Store - Profile",
     fileCss: "css/styles.css",
@@ -41,7 +49,7 @@ viewRouter.get("/profile", auth, async (req, res) => {
     email: req.session.email,
     role: req.session.role,
     registerWith: req.session.registerWith,
-    avatar: req.session.passport.user.avatar,
+    avatar: avatarImg,
   });
 });
 
@@ -51,7 +59,7 @@ viewRouter.get("/chat", auth, async (req, res) => {
   res.render("chat", {
     tabTitle: "Bookify Store",
     pageTitle: "Chat Room",
-    messages: await getMessages(),
+    messages: await chatController.getMessages(),
     username: randomUser,
     fileCss: "css/styles.css",
   });
@@ -60,7 +68,12 @@ viewRouter.get("/chat", auth, async (req, res) => {
 viewRouter.get("/products", auth, async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
-  const productData = await getProducts(limit, page, sort, query);
+  const productData = await productController.getProducts(
+    limit,
+    page,
+    sort,
+    query
+  );
 
   const payloadProducts = productData.payload;
 
@@ -100,7 +113,7 @@ viewRouter.get("/products", auth, async (req, res) => {
 viewRouter.get("/product/:pid", auth, async (req, res) => {
   const { pid } = req.params;
 
-  const productInfo = await getProductById(pid);
+  const productInfo = await productController.getProductById(pid);
 
   res.render("productDetail", {
     tabTitle: "Bookify Store",
@@ -112,7 +125,7 @@ viewRouter.get("/product/:pid", auth, async (req, res) => {
 });
 
 viewRouter.get("/realtimeproducts", auth, async (req, res) => {
-  const payloadProducts = (await getProducts()).payload;
+  const payloadProducts = (await productController.getProducts()).payload;
 
   let productsView = payloadProducts.map((product) => {
     return Object.assign({}, product);
@@ -129,7 +142,7 @@ viewRouter.get("/realtimeproducts", auth, async (req, res) => {
 viewRouter.get("/cart", auth, async (req, res) => {
   const userId = req.session.userId;
 
-  const payloadCarts = await getCartByUserId(userId);
+  const payloadCarts = await chatController.getCartByUserId(userId);
 
   res.render("cart", {
     tabTitle: "Bookify Store",

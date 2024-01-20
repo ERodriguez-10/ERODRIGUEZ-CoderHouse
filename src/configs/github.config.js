@@ -1,8 +1,5 @@
 import { Strategy } from "passport-github2";
-import {
-  getAccountByGitHubId,
-  createAccount,
-} from "#controllers/auth/index.js";
+import { authController } from "#controllers/auth/index.js";
 
 const GitHubStrategy = new Strategy(
   {
@@ -12,7 +9,7 @@ const GitHubStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await getAccountByGitHubId(profile._json.id);
+      let user = await authController.getAccountByGitHubId(profile._json.id);
       if (!user) {
         let newUser = {
           first_name: profile._json.name,
@@ -22,7 +19,7 @@ const GitHubStrategy = new Strategy(
           github_id: profile._json.id,
         };
 
-        let result = await createAccount(newUser);
+        let result = await authController.createAccount(newUser);
         done(null, result);
       } else {
         done(null, user);
