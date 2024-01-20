@@ -1,11 +1,8 @@
 import { Router } from "express";
 
-import ProductController from "../controllers/mongo/product.controller.js";
-import MessageController from "../controllers/mongo/message.controller.js";
-import { getCartByUserId, getUserByEmail } from "../utils/fetch.js";
-
-const ProductsInstance = new ProductController();
-const MessageInstance = new MessageController();
+import { getCartByUserId } from "#utils/fetch.js";
+import { getMessages } from "#controllers/chat/index.js";
+import { getProducts, getProductById } from "#controllers/product/index.js";
 
 const viewRouter = Router();
 
@@ -54,7 +51,7 @@ viewRouter.get("/chat", auth, async (req, res) => {
   res.render("chat", {
     tabTitle: "Bookify Store",
     pageTitle: "Chat Room",
-    messages: await MessageInstance.getMessages(),
+    messages: await getMessages(),
     username: randomUser,
     fileCss: "css/styles.css",
   });
@@ -63,12 +60,7 @@ viewRouter.get("/chat", auth, async (req, res) => {
 viewRouter.get("/products", auth, async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
-  const productData = await ProductsInstance.getProducts(
-    limit,
-    page,
-    sort,
-    query
-  );
+  const productData = await getProducts(limit, page, sort, query);
 
   const payloadProducts = productData.payload;
 
@@ -108,7 +100,7 @@ viewRouter.get("/products", auth, async (req, res) => {
 viewRouter.get("/product/:pid", auth, async (req, res) => {
   const { pid } = req.params;
 
-  const productInfo = await ProductsInstance.getProductById(pid);
+  const productInfo = await getProductById(pid);
 
   res.render("productDetail", {
     tabTitle: "Bookify Store",
@@ -120,7 +112,7 @@ viewRouter.get("/product/:pid", auth, async (req, res) => {
 });
 
 viewRouter.get("/realtimeproducts", auth, async (req, res) => {
-  const payloadProducts = (await ProductsInstance.getProducts()).payload;
+  const payloadProducts = (await getProducts()).payload;
 
   let productsView = payloadProducts.map((product) => {
     return Object.assign({}, product);

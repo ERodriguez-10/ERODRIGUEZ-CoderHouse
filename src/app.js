@@ -7,23 +7,23 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 
 // Routers
-import cartRouter from "./routes/carts.routes.js";
-import messageRouter from "./routes/messages.routes.js";
-import productRouter from "./routes/products.routes.js";
-import viewRouter from "./routes/view.routes.js";
+import cartRouter from "#routes/carts.routes.js";
+import messageRouter from "#routes/messages.routes.js";
+import productRouter from "#routes/products.routes.js";
+import viewRouter from "#routes/view.routes.js";
+import sessionRouter from "#routes/sessions.routes.js";
+import authRouter from "#routes/auth.routes.js";
 
 // Other imports
 import {
   getCartByUserId,
-  getUserByEmail,
   postNewCart,
   postProductToCart,
-} from "./utils/fetch.js";
+} from "#utils/fetch.js";
 import __dirname from "./utils.js";
 import mongoose from "mongoose";
-import sessionRouter from "./routes/sessions.routes.js";
-import authRouter from "./routes/auth.routes.js";
-import accountModel from "./models/account.model.js";
+
+import accountModel from "#models/account.js";
 
 // Server
 const app = express();

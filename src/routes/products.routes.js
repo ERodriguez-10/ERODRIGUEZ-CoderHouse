@@ -1,19 +1,18 @@
 import { Router } from "express";
-import ProductController from "../controllers/mongo/product.controller.js";
-
-const ProductsInstance = new ProductController();
+import {
+  getProducts,
+  getProductById,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+} from "#controllers/product/index.js";
 
 const productRouter = Router();
 
 productRouter.get("/", async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
-  const productData = await ProductsInstance.getProducts(
-    limit,
-    page,
-    sort,
-    query
-  );
+  const productData = await getProducts(limit, page, sort, query);
 
   res.status(200).json({ productData });
 });
@@ -22,7 +21,7 @@ productRouter.get("/:pid", async (req, res) => {
   const { pid } = req.params;
 
   try {
-    const productFind = await ProductsInstance.getProductById(pid);
+    const productFind = await getProductById(pid);
     res.status(200).json({ productSelected: productFind });
   } catch (e) {
     res.status(404).json({ error: e.message });
@@ -33,7 +32,7 @@ productRouter.post("/", async (req, res) => {
   const productReq = req.body;
 
   try {
-    const productCreated = await ProductsInstance.addProduct(productReq);
+    const productCreated = await addProduct(productReq);
     res.status(201).json({
       message: "Product succesfully created",
       productCreated: productCreated,
@@ -48,8 +47,9 @@ productRouter.put("/:pid", async (req, res) => {
   const productReq = req.body;
 
   try {
-    const updateProduct = await ProductsInstance.updateProduct(pid, productReq);
-    if (updateProduct.modifiedCount === 0) throw new Error("Product not found");
+    const updateProductResult = await updateProduct(pid, productReq);
+    if (updateProductResult.modifiedCount === 0)
+      throw new Error("Product not found");
 
     res.status(200).json({ message: "Product has modified" });
   } catch (e) {
@@ -63,7 +63,7 @@ productRouter.delete("/:pid", async (req, res) => {
   const { pid } = req.params;
 
   try {
-    await ProductsInstance.deleteProduct(pid);
+    await deleteProduct(pid);
     res.status(200).json({
       message: "Content successfully deleted!",
     });

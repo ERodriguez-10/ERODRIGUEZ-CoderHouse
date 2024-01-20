@@ -1,15 +1,14 @@
 import { Router } from "express";
-import AccountController from "../controllers/mongo/account.controller.js";
-import { createHash, isValidPassword } from "../utils/bcrytp.js";
+import { createHash, isValidPassword } from "#utils/bcrytp.js";
+import { createAccount, getAccountByEmail } from "#controllers/auth/index.js";
 
 const sessionRouter = Router();
-const accountController = new AccountController();
 
 sessionRouter.post("/register", async (req, res) => {
   let newUser = req.body;
   newUser.password = await createHash(newUser.password);
   try {
-    const account = await accountController.createAccount(newUser);
+    const account = await createAccount(newUser);
     return res.status(200).json({
       success: true,
       data: account,
@@ -38,7 +37,7 @@ sessionRouter.post("/login", async (req, res) => {
       });
     }
 
-    const account = await accountController.getAccountByEmail(email);
+    const account = await getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }
@@ -86,7 +85,7 @@ sessionRouter.get("/logout", async (req, res) => {
 sessionRouter.get("/user/:email", async (req, res) => {
   try {
     const { email } = req.params;
-    const account = await accountController.getAccountByEmail(email);
+    const account = await getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }

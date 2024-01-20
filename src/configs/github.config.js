@@ -1,7 +1,8 @@
 import { Strategy } from "passport-github2";
-import AccountController from "../controllers/mongo/account.controller.js";
-
-const AccountInstance = new AccountController();
+import {
+  getAccountByGitHubId,
+  createAccount,
+} from "#controllers/auth/index.js";
 
 const GitHubStrategy = new Strategy(
   {
@@ -11,19 +12,17 @@ const GitHubStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await AccountInstance.getAccountByGitHubId(profile._json.id);
+      let user = await getAccountByGitHubId(profile._json.id);
       if (!user) {
         let newUser = {
           first_name: profile._json.name,
-          last_name: null,
           avatar: profile._json.avatar_url,
-          password: null,
           registerWith: "GitHub",
           role: "User",
           github_id: profile._json.id,
         };
 
-        let result = await AccountInstance.createAccount(newUser);
+        let result = await createAccount(newUser);
         done(null, result);
       } else {
         done(null, user);

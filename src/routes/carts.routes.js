@@ -1,20 +1,22 @@
 import { Router } from "express";
-import CartController from "../controllers/mongo/cart.controller.js";
-
-const CartsInstance = new CartController();
+import {
+  createCart,
+  addProductByCartId,
+  getCartByUserId,
+  getCartByCartId,
+  cleanCartByCartId,
+  updateCart,
+  updateQuantityProduct,
+  deleteProductByCartId,
+} from "#controllers/cart/index.js";
 
 const cartRouter = Router();
-
-cartRouter.get("/", async (req, res) => {
-  const carts = await CartsInstance.getCarts();
-  res.status(200).json({ cartList: carts });
-});
 
 cartRouter.get("/user/:uid", async (req, res) => {
   const { uid } = req.params;
 
   try {
-    const cartSelected = await CartsInstance.getCartByUserId(uid);
+    const cartSelected = await getCartByUserId(uid);
     res.status(200).json({ cartSelected: cartSelected });
   } catch (e) {
     res.status(404).json({ error: e.message });
@@ -36,7 +38,7 @@ cartRouter.post("/", async (req, res) => {
       error: "Please send an array of products to create your cart.",
     });
   } else {
-    const newCart = await CartsInstance.createCart(productMap, userId);
+    const newCart = await createCart(productMap, userId);
 
     res
       .status(200)
@@ -48,7 +50,7 @@ cartRouter.get("/:cid", async (req, res) => {
   const { cid } = req.params;
 
   try {
-    const cartSelected = await CartsInstance.getCartById(cid);
+    const cartSelected = await getCartByCartId(cid);
     res.status(200).json({ cartSelected: cartSelected });
   } catch (e) {
     res.status(404).json({ error: e.message });
@@ -73,7 +75,7 @@ cartRouter.put("/:cid", async (req, res) => {
   }
 
   try {
-    await CartsInstance.updateProductInCart(cid, productMap);
+    await updateCart(cid, productMap);
     res.status(200).json({ message: "Product updated successuflly" });
   } catch (error) {
     res.status(400).json({ error });
@@ -84,7 +86,7 @@ cartRouter.delete("/:cid", async (req, res) => {
   const { cid } = req.params;
 
   try {
-    await CartsInstance.deleteAllProductsInCart(cid);
+    await cleanCartByCartId(cid);
     res.status(200).json({ message: "Cart empty successfully" });
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -95,7 +97,7 @@ cartRouter.post("/:cid/product/:pid", async (req, res) => {
   const { cid, pid } = req.params;
 
   try {
-    await CartsInstance.addProductToCart(cid, pid);
+    await addProductByCartId(cid, pid);
     res.status(200).json({ message: "New product has added!" });
   } catch (e) {
     res.status(400).json({ error: e.message });
@@ -107,7 +109,7 @@ cartRouter.put("/:cid/products/:pid", async (req, res) => {
   const { quantity } = req.body;
 
   try {
-    await CartsInstance.updateQuantityProductInCart(cid, pid, quantity);
+    await updateQuantityProduct(cid, pid, quantity);
     res.status(200).json({ message: "Quantity successufully updated" });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -118,7 +120,7 @@ cartRouter.delete("/:cid/products/:pid", async (req, res) => {
   const { cid, pid } = req.params;
 
   try {
-    await CartsInstance.deleteProductToCart(cid, pid);
+    await deleteProductByCartId(cid, pid);
     res.status(200).json({ message: "Product removed successfully" });
   } catch (error) {
     res.status(404).json({ error: error.message });

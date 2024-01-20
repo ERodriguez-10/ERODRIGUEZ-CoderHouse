@@ -1,7 +1,8 @@
 import { Strategy } from "passport-google-oauth20";
-import AccountController from "../controllers/mongo/account.controller.js";
-
-const AccountInstance = new AccountController();
+import {
+  getAccountByGoogleId,
+  createAccount,
+} from "#controllers/auth/index.js";
 
 const GoogleStrategy = new Strategy(
   {
@@ -11,19 +12,18 @@ const GoogleStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await AccountInstance.getAccountByGoogleId(profile._json.sub);
+      let user = await getAccountByGoogleId(profile._json.sub);
       if (!user) {
         let newUser = {
           first_name: profile._json.given_name,
           last_name: profile._json.family_name,
           avatar: profile._json.picture,
-          password: null,
           registerWith: "Google",
           role: "User",
           google_id: profile._json.sub,
         };
 
-        let result = await AccountInstance.createAccount(newUser);
+        let result = await createAccount(newUser);
         done(null, result);
       } else {
         done(null, user);
