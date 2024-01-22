@@ -1,5 +1,5 @@
-import accountModel from "#models/account.js";
+import userModel from "#models/user.js";
 
 export async function deleteAccount(id) {
-  return await accountModel.findByIdAndDelete(id);
+  return await userModel.findByIdAndDelete(id);
 }

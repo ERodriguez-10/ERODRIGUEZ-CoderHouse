@@ -1,5 +1,5 @@
-import accountModel from "#models/account.js";
+import userModel from "#models/user.js";
 
 export async function getAccountByGitHubId(github_id) {
-  return await accountModel.findOne({ github_id: github_id });
+  return await userModel.findOne({ github_id: github_id });
 }

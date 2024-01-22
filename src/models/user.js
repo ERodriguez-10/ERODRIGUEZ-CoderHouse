@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 
-const accountCollection = "accounts";
+const userCollection = "users";
 
-const accountSchema = new Schema({
+const userSchema = new Schema({
   first_name: { type: String, required: true },
   last_name: { type: String },
   email: {
@@ -10,6 +10,7 @@ const accountSchema = new Schema({
   },
   avatar: { type: String },
   password: { type: String },
+  cart: { type: Array },
   registerWith: { type: String, required: true },
   role: { type: String, required: true },
   github_id: {
@@ -20,7 +21,7 @@ const accountSchema = new Schema({
   },
 });
 
-accountSchema.index(
+userSchema.index(
   { email: 1 },
   {
     unique: true,
@@ -28,7 +29,7 @@ accountSchema.index(
   }
 );
 
-accountSchema.index(
+userSchema.index(
   { github_id: 1 },
   {
     unique: true,
@@ -36,7 +37,7 @@ accountSchema.index(
   }
 );
 
-accountSchema.index(
+userSchema.index(
   { google_id: 1 },
   {
     unique: true,
@@ -44,6 +45,6 @@ accountSchema.index(
   }
 );
 
-const accountModel = model(accountCollection, accountSchema);
+const userModel = model(userCollection, userSchema);
 
-export default accountModel;
+export default userModel;

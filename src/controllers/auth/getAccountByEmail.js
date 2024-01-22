@@ -1,5 +1,5 @@
-import accountModel from "#models/account.js";
+import userModel from "#models/user.js";
 
 export async function getAccountByEmail(email) {
-  return await accountModel.findOne({ email: email });
+  return await userModel.findOne({ email: email });
 }
