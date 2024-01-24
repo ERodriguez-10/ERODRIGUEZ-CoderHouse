@@ -1,12 +1,15 @@
 import { Router } from "express";
 import passport from "passport";
+
 import GitHubStrategy from "#configs/github.config.js";
 import GoogleStrategy from "#configs/google.config.js";
+import JwtStrategy from "#configs/jwt.config.js";
 
 // TODO: Add more strategies
 
 passport.use(GitHubStrategy);
 passport.use(GoogleStrategy);
+passport.use(JwtStrategy);
 
 const authRouter = new Router();
 

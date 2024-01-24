@@ -3,6 +3,7 @@ import { Router } from "express";
 import { getCartByUserId } from "#utils/fetch.js";
 import { chatController } from "#controllers/chat/index.js";
 import { productController } from "#controllers/product/index.js";
+import { passportCall } from "#utils/passport.js";
 
 const viewRouter = Router();
 
@@ -32,7 +33,7 @@ viewRouter.get("/register", async (req, res) => {
   });
 });
 
-viewRouter.get("/profile", auth, async (req, res) => {
+viewRouter.get("/profile", passportCall("JwtStrategy"), async (req, res) => {
   let avatarImg;
 
   if (req.session.passport !== undefined) {

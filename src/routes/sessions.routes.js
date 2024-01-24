@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createHash, isValidPassword } from "#utils/bcrytp.js";
 import { authController } from "#controllers/auth/index.js";
+import { generateJWToken } from "#utils/jwt.js";
 
 const sessionRouter = Router();
 
@@ -22,9 +23,8 @@ sessionRouter.post("/register", async (req, res) => {
 });
 
 sessionRouter.post("/login", async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-
     if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
       req.session.user = "Admin";
       req.session.lastName = "N/A";
@@ -48,11 +48,20 @@ sessionRouter.post("/login", async (req, res) => {
       throw new Error("Invalid credentials");
     }
 
-    req.session.user = account.first_name;
-    req.session.lastName = account.last_name;
-    req.session.email = account.email;
-    req.session.role = "user";
-    req.session.registerWith = account.registerWith;
+    const tokenUser = {
+      user: account.first_name,
+      lastName: account.last_name,
+      email: account.email,
+      role: "user",
+      registerWith: account.registerWith,
+    };
+
+    const access_token = generateJWToken(tokenUser);
+
+    res.cookie("access_token", access_token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       success: true,
