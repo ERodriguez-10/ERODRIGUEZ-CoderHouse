@@ -17,7 +17,7 @@ const URL = process.env.URL;
 const socketServer = new Server(httpServer);
 
 socketServer.on("connection", (socket) => {
-  console.log("[server-socket]: A new client has connected.");
+  console.log("[ServerSocket]: A new client has connected.");
 
   socket.on("newProductClient", (product) => {
     fetch(`${URL}/api/products`, {
@@ -94,7 +94,7 @@ socketServer.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("[server-socket]:A client has disconnected.");
+    console.log("[ServerSocket]: A client has disconnected.");
   });
 });
 

@@ -4,18 +4,9 @@ import { getCartByUserId } from "#utils/fetch.js";
 import { chatController } from "#controllers/chat/index.js";
 import { productController } from "#controllers/product/index.js";
 import { passportCall } from "#utils/passport.js";
+import JwtStrategy from "#configs/jwt.config.js";
 
 const viewRouter = Router();
-
-// Middleware to check if user is authenticated
-
-function auth(req, res, next) {
-  if (req.session.user) {
-    return next();
-  }
-
-  res.redirect("/");
-}
 
 // Routes
 
@@ -33,7 +24,7 @@ viewRouter.get("/register", async (req, res) => {
   });
 });
 
-viewRouter.get("/profile", passportCall("JwtStrategy"), async (req, res) => {
+viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
   let avatarImg;
 
   if (req.session.passport !== undefined) {
@@ -54,7 +45,7 @@ viewRouter.get("/profile", passportCall("JwtStrategy"), async (req, res) => {
   });
 });
 
-viewRouter.get("/chat", auth, async (req, res) => {
+viewRouter.get("/chat", passportCall(JwtStrategy), async (req, res) => {
   const randomUser = `Anonymous${Math.floor(Math.random() * 1000000)}`;
 
   res.render("chat", {
@@ -66,7 +57,7 @@ viewRouter.get("/chat", auth, async (req, res) => {
   });
 });
 
-viewRouter.get("/products", auth, async (req, res) => {
+viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
   const productData = await productController.getProducts(
@@ -103,15 +94,15 @@ viewRouter.get("/products", auth, async (req, res) => {
     products: productsView,
     controllers: productData,
     fileCss: "css/styles.css",
-    name: req.session.user,
-    email: req.session.email,
-    role: req.session.role,
+    name: req.user.user,
+    email: req.user.email,
+    role: req.user.role,
     nProduct: nProduct,
     pages: arrayPages,
   });
 });
 
-viewRouter.get("/product/:pid", auth, async (req, res) => {
+viewRouter.get("/product/:pid", passportCall(JwtStrategy), async (req, res) => {
   const { pid } = req.params;
 
   const productInfo = await productController.getProductById(pid);
@@ -121,26 +112,30 @@ viewRouter.get("/product/:pid", auth, async (req, res) => {
     pageTitle: "All products",
     product: productInfo,
     fileCss: "css/styles.css",
-    name: req.session.user,
+    name: req.user.user,
   });
 });
 
-viewRouter.get("/realtimeproducts", auth, async (req, res) => {
-  const payloadProducts = (await productController.getProducts()).payload;
+viewRouter.get(
+  "/realtimeproducts",
+  passportCall(JwtStrategy),
+  async (req, res) => {
+    const payloadProducts = (await productController.getProducts()).payload;
 
-  let productsView = payloadProducts.map((product) => {
-    return Object.assign({}, product);
-  });
+    let productsView = payloadProducts.map((product) => {
+      return Object.assign({}, product);
+    });
 
-  res.render("realTimeProducts", {
-    tabTitle: "Bookify Store",
-    pageTitle: "Real Time Products",
-    products: productsView,
-    fileCss: "css/styles.css",
-  });
-});
+    res.render("realTimeProducts", {
+      tabTitle: "Bookify Store",
+      pageTitle: "Real Time Products",
+      products: productsView,
+      fileCss: "css/styles.css",
+    });
+  }
+);
 
-viewRouter.get("/cart", auth, async (req, res) => {
+viewRouter.get("/cart", passportCall(JwtStrategy), async (req, res) => {
   const userId = req.session.userId;
 
   const payloadCarts = await chatController.getCartByUserId(userId);

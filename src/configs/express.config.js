@@ -11,6 +11,7 @@ import __dirname from "../utils.js";
 
 import express from "express";
 import handlebars from "express-handlebars";
+import cookieParser from "cookie-parser";
 
 /* ========= END IMPORTS SECTION ========= */
 
@@ -28,6 +29,8 @@ expressApp.use((req, res, next) => {
 
 expressApp.use(express.json());
 expressApp.use(express.urlencoded({ extended: true }));
+
+expressApp.use(cookieParser("4q1w564aseq"));
 
 expressApp.use("/", viewRouter);
 expressApp.use("/auth", authRouter);
