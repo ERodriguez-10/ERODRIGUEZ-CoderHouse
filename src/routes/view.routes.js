@@ -1,10 +1,12 @@
-import { Router } from "express";
+import JwtStrategy from "#configs/auth/jwt.config.js";
 
-import { getCartByUserId } from "#utils/fetch.js";
-import { chatController } from "#controllers/chat/index.js";
-import { productController } from "#controllers/product/index.js";
+import { chatController } from "#controllers/chat/index.controller.js";
+import { productController } from "#controllers/product/index.controller.js";
+import { cartController } from "#controllers/cart/index.controller.js";
+
 import { passportCall } from "#utils/passport.js";
-import JwtStrategy from "#configs/jwt.config.js";
+
+import { Router } from "express";
 
 const viewRouter = Router();
 
@@ -27,8 +29,8 @@ viewRouter.get("/register", async (req, res) => {
 viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
   let avatarImg;
 
-  if (req.session.passport !== undefined) {
-    avatarImg = req.session.passport.user.avatar;
+  if (req.user.avatar !== undefined) {
+    avatarImg = req.user.avatar;
   } else {
     avatarImg = "https://i.imgur.com/6VBx3io.png";
   }
@@ -36,11 +38,11 @@ viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
   res.render("profile", {
     tabTitle: "Bookify Store - Profile",
     fileCss: "css/styles.css",
-    name: req.session.user,
-    lastName: req.session.lastName,
-    email: req.session.email,
-    role: req.session.role,
-    registerWith: req.session.registerWith,
+    name: req.user.first_name,
+    lastName: req.user.last_name,
+    email: req.user.email,
+    role: req.user.role,
+    registerWith: req.user.registerWith,
     avatar: avatarImg,
   });
 });
@@ -94,7 +96,7 @@ viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
     products: productsView,
     controllers: productData,
     fileCss: "css/styles.css",
-    name: req.user.user,
+    name: req.user.first_name,
     email: req.user.email,
     role: req.user.role,
     nProduct: nProduct,
@@ -136,9 +138,9 @@ viewRouter.get(
 );
 
 viewRouter.get("/cart", passportCall(JwtStrategy), async (req, res) => {
-  const userId = req.session.userId;
+  const userId = req.user.userId;
 
-  const payloadCarts = await chatController.getCartByUserId(userId);
+  const payloadCarts = await cartController.getCartByUserId(userId);
 
   res.render("cart", {
     tabTitle: "Bookify Store",

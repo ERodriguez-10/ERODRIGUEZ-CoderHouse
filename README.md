@@ -129,3 +129,22 @@ Se agregaron los siguientes endpoints:
 Cuenta con una cuenta admin no registrada en la base de datos.
 
 - [Desafío 7] - Refactor a nuestro login. Fecha de entrega: 16/01/2024.
+
+- [Desafío 8] - Práctica de integración sobre tu ecommerce. Fecha de entrega: 26/01/2024.
+
+Se hizo una gran refactorización de la estructura del proyecto. 
+
+Dentro de la carpeta src se encuentran los siguientes directorios:
+
+- configs => Directorio relativo a la configuración inicial de variables de entorno, servidor, bases de datos, otras librerias.
+- constants => Directorio exclusivo de variables constantes
+- controllers => Directorio de los controladores
+- models => Directorio de los modelos y schemas de los objetos a utilizar en Mongo
+- routes => Directorio relativo a las rutas del backend
+- utils => Directorio dedicado a funciones utiles en todo el proyecto
+
+Se modifico el package.json para incluir imports con tags. Ejemplo: #controllers o #models.
+
+La nomenclatura de los archivos sigue el siguiente patrón: nombre.tipo.js. Ejemplo: env.config.js o createCart.controller.js.
+
+Se removieron las sessions y se trabaja con JWT para la gestión de los datos del usuario en la sesión.

@@ -6,10 +6,7 @@ export const passportCall = (strategy) => {
       if (error) return next(error);
 
       if (!user) {
-        return res.status(401).json({
-          success: false,
-          error: "You are not authorized to access this resource",
-        });
+        return res.redirect("/");
       }
 
       req.user = user;

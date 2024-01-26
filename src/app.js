@@ -1,12 +1,8 @@
-/* ========= START IMPORTS SECTION ========= */
-
 import "#configs/env.config.js";
 
-import connectDB from "#configs/db.config.js";
-import httpServer from "#configs/http.config.js";
-import socketServer from "#configs/socket.config.js";
-
-/* ========= END IMPORTS SECTION ========= */
+import connectDB from "#configs/db/db.config.js";
+import httpServer from "#configs/server/http.config.js";
+import socketServer from "#configs/server/socket.config.js";
 
 const PORT = process.env.PORT || 8080;
 const DB_USER = process.env.DB_USER;

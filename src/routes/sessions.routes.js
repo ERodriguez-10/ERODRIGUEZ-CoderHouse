@@ -1,7 +1,9 @@
-import { Router } from "express";
+import { authController } from "#controllers/auth/index.controller.js";
+
 import { createHash, isValidPassword } from "#utils/bcrytp.js";
-import { authController } from "#controllers/auth/index.js";
 import { generateJWToken } from "#utils/jwt.js";
+
+import { Router } from "express";
 
 const sessionRouter = Router();
 
@@ -26,14 +28,24 @@ sessionRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-      req.session.user = "Admin";
-      req.session.lastName = "N/A";
-      req.session.role = "admin";
-      req.session.email = "N/A";
-      req.session.passedBy = "App";
+      const tokenAdmin = {
+        first_name: "Admin",
+        last_name: "N/A",
+        email: "N/A",
+        role: "Admin",
+        registerWith: "App",
+      };
+
+      const access_token = generateJWToken(tokenAdmin);
+
+      res.cookie("access_token", access_token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+
       return res.status(200).json({
         success: true,
-        data: "admin",
+        data: "Admin",
       });
     }
 
@@ -49,11 +61,12 @@ sessionRouter.post("/login", async (req, res) => {
     }
 
     const tokenUser = {
-      user: account.first_name,
-      lastName: account.last_name,
+      first_name: account.first_name,
+      last_name: account.last_name,
       email: account.email,
       role: "user",
       registerWith: account.registerWith,
+      userId: account._id,
     };
 
     const access_token = generateJWToken(tokenUser);
@@ -76,18 +89,10 @@ sessionRouter.post("/login", async (req, res) => {
 });
 
 sessionRouter.get("/logout", async (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      res.status(400).json({
-        success: false,
-        error: err.message,
-      });
-    } else {
-      res.status(200).json({
-        success: true,
-        data: "User logged out",
-      });
-    }
+  res.clearCookie("access_token");
+  res.status(200).json({
+    success: true,
+    data: "Logged out",
   });
 });
 

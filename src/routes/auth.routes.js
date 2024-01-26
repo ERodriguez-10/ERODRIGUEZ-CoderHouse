@@ -1,11 +1,11 @@
+import GitHubStrategy from "#configs/auth/github.config.js";
+import GoogleStrategy from "#configs/auth/google.config.js";
+import JwtStrategy from "#configs/auth/jwt.config.js";
+
+import { generateJWToken } from "#utils/jwt.js";
+
 import { Router } from "express";
 import passport from "passport";
-
-import GitHubStrategy from "#configs/github.config.js";
-import GoogleStrategy from "#configs/google.config.js";
-import JwtStrategy from "#configs/jwt.config.js";
-
-// TODO: Add more strategies
 
 passport.use(GitHubStrategy);
 passport.use(GoogleStrategy);
@@ -14,7 +14,6 @@ passport.use(JwtStrategy);
 const authRouter = new Router();
 
 authRouter.use(passport.initialize());
-authRouter.use(passport.session());
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -32,18 +31,28 @@ authRouter.get(
 authRouter.get(
   "/github/callback",
   passport.authenticate(GitHubStrategy, {
+    session: false,
     failureRedirect: "/",
     failureFlash: true,
   }),
   async (req, res) => {
     const user = req.user;
 
-    req.session.user = user.first_name;
-    req.session.lastName = "N/A";
-    req.session.email = "N/A";
-    req.session.role = user.role;
-    req.session.registerWith = user.registerWith;
-    req.session.userId = user._id;
+    const tokenGitHubUser = {
+      first_name: user.first_name,
+      last_name: "N/A",
+      email: "N/A",
+      role: user.role,
+      registerWith: user.registerWith,
+      userId: user._id,
+    };
+
+    const access_token = generateJWToken(tokenGitHubUser);
+
+    res.cookie("access_token", access_token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.redirect("/products");
   }
@@ -57,18 +66,28 @@ authRouter.get(
 authRouter.get(
   "/google/callback",
   passport.authenticate("google", {
+    session: false,
     failureRedirect: "/",
     failureFlash: true,
   }),
   (req, res) => {
     const user = req.user;
 
-    req.session.user = user.first_name;
-    req.session.lastName = "N/A";
-    req.session.email = "N/A";
-    req.session.role = user.role;
-    req.session.registerWith = user.registerWith;
-    req.session.userId = user._id;
+    const tokenGoogleUser = {
+      first_name: user.first_name,
+      last_name: "N/A",
+      email: "N/A",
+      role: user.role,
+      registerWith: user.registerWith,
+      userId: user._id,
+    };
+
+    const access_token = generateJWToken(tokenGoogleUser);
+
+    res.cookie("access_token", access_token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.redirect("/products");
   }
