@@ -111,7 +111,11 @@ Producto de ejemplo para agregar:
 	"stock": 100
 }`
 
+##
+
 - [PRE-ENTREGA 2] - Mongo Avanzado (Parte II). Fecha de entrega: 27/12/2023.
+
+##
 
 - [Desafío 6] - Implementación de login. Fecha de entrega: 08/01/2024.
 
@@ -128,7 +132,11 @@ Se agregaron los siguientes endpoints:
 
 Cuenta con una cuenta admin no registrada en la base de datos.
 
+##
+
 - [Desafío 7] - Refactor a nuestro login. Fecha de entrega: 16/01/2024.
+
+##
 
 - [Desafío 8] - Práctica de integración sobre tu ecommerce. Fecha de entrega: 26/01/2024.
 
@@ -148,3 +156,7 @@ Se modifico el package.json para incluir imports con tags. Ejemplo: #controllers
 La nomenclatura de los archivos sigue el siguiente patrón: nombre.tipo.js. Ejemplo: env.config.js o createCart.controller.js.
 
 Se removieron las sessions y se trabaja con JWT para la gestión de los datos del usuario en la sesión.
+
+## 
+
+- [Desafío 9] - Arquitectura por capas. 
