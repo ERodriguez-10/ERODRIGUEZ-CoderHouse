@@ -72,25 +72,29 @@ socketServer.on("connection", (socket) => {
   });
 
   socket.on("addProductToCart", async (productId) => {
-    const jwtToken = socket.request.headers.cookie.split("=")[1];
+    try {
+      const jwtToken = socket.request.headers.cookie.split("=")[1];
 
-    const tokenData = jwt.verify(jwtToken, process.env.JWT_SECRET);
+      const tokenData = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
-    const userId = tokenData.user.userId;
+      const userId = tokenData.user.userId;
 
-    const cartId = await getCartByUserId(userId);
+      const cartId = await getCartByUserId(userId);
 
-    if (!cartId) {
-      const newCart = await postNewCart(userId, productId);
-      if (newCart) {
-        socket.emit("productSuccessfullyAdded");
+      if (!cartId) {
+        const newCart = await postNewCart(userId, productId);
+        if (newCart) {
+          socket.emit("productSuccessfullyAdded");
+        }
+      } else {
+        const addProductToCart = await postProductToCart(cartId._id, productId);
+
+        if (addProductToCart) {
+          socket.emit("productSuccessfullyAdded");
+        }
       }
-    } else {
-      const addProductToCart = await postProductToCart(cartId._id, productId);
-
-      if (addProductToCart) {
-        socket.emit("productSuccessfullyAdded");
-      }
+    } catch (error) {
+      console.error("Error adding product to cart: ", error);
     }
   });
 
