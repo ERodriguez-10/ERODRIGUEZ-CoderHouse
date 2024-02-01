@@ -1,16 +1,18 @@
-import { authController } from "#controllers/auth/index.controller.js";
+import { configEnv } from "#configs/env.config.js";
+
+import { authServices } from "#services/auth/index.services.js";
 
 import { Strategy } from "passport-google-oauth20";
 
 const GoogleStrategy = new Strategy(
   {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    clientID: configEnv.GOOGLE_CLIENT_ID,
+    clientSecret: configEnv.GOOGLE_SECRET,
+    callbackURL: configEnv.GOOGLE_CALLBACK_URL,
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await authController.getAccountByGoogleId(profile._json.sub);
+      let user = await authServices.getAccountByGoogleId(profile._json.sub);
       if (!user) {
         let newUser = {
           first_name: profile._json.given_name,
@@ -21,7 +23,7 @@ const GoogleStrategy = new Strategy(
           google_id: profile._json.sub,
         };
 
-        let result = await authController.createAccount(newUser);
+        let result = await authServices.createAccount(newUser);
         done(null, result);
       } else {
         done(null, user);

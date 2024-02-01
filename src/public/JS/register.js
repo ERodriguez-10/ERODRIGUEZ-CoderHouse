@@ -22,7 +22,7 @@ registerForm.addEventListener("submit", async (event) => {
     role: "User",
   };
 
-  await fetch("http://localhost:8080/api/sessions/register", {
+  await fetch("http://localhost:8080/api/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import httpServer from "#configs/server/http.config.js";
+import { configEnv } from "#configs/env.config.js";
 
 import {
   getCartByUserId,
@@ -9,7 +10,7 @@ import {
 import jwt from "jsonwebtoken";
 import { Server } from "socket.io";
 
-const URL = process.env.URL;
+const URL = configEnv.URL;
 
 const socketServer = new Server(httpServer);
 
@@ -75,7 +76,7 @@ socketServer.on("connection", (socket) => {
     try {
       const jwtToken = socket.request.headers.cookie.split("=")[1];
 
-      const tokenData = jwt.verify(jwtToken, process.env.JWT_SECRET);
+      const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
 
       const userId = tokenData.user.userId;
 

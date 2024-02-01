@@ -1,16 +1,18 @@
-import { authController } from "#controllers/auth/index.controller.js";
+import { configEnv } from "#configs/env.config.js";
+
+import { authServices } from "#services/auth/index.services.js";
 
 import { Strategy } from "passport-github2";
 
 const GitHubStrategy = new Strategy(
   {
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK_URL,
+    clientID: configEnv.GITHUB_CLIENT_ID,
+    clientSecret: configEnv.GITHUB_SECRET,
+    callbackURL: configEnv.GITHUB_CALLBACK_URL,
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await authController.getAccountByGitHubId(profile._json.id);
+      let user = await authServices.getAccountByGitHubId(profile._json.id);
       if (!user) {
         let newUser = {
           first_name: profile._json.name,
@@ -20,7 +22,7 @@ const GitHubStrategy = new Strategy(
           github_id: profile._json.id,
         };
 
-        let result = await authController.createAccount(newUser);
+        let result = await authServices.createAccount(newUser);
         done(null, result);
       } else {
         done(null, user);

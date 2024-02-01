@@ -1,5 +1,5 @@
 import cartModel from "#models/cart.model.js";
-import { getCartByCartId } from "#controllers/cart/getCartByCartId.controller.js";
+import { getCartByCartId } from "#services/cart/getCartByCartId.services.js";
 
 async function addProductByCartId(cartId, productId) {
   const selectedCart = await getCartByCartId(cartId);

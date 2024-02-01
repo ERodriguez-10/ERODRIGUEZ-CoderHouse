@@ -1,3 +1,5 @@
+import { configEnv } from "#configs/env.config.js";
+
 import { Strategy, ExtractJwt } from "passport-jwt";
 
 const cookieExtractor = (req) => {
@@ -13,7 +15,7 @@ const cookieExtractor = (req) => {
 const JwtStrategy = new Strategy(
   {
     jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: configEnv.JWT_SECRET,
   },
   async (payload, done) => {
     try {

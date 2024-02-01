@@ -1,7 +1,9 @@
-const URL = process.env.URL;
+import { configEnv } from "#configs/env.config.js";
+
+const URL = configEnv.URL;
 
 export async function getUserByEmail(userEmail) {
-  return fetch(`${URL}/api/sessions/user/${userEmail}`, {
+  return fetch(`${URL}/api/auth/user/${userEmail}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -1,7 +1,9 @@
+import { configEnv } from "#configs/env.config.js";
+
 import jwt from "jsonwebtoken";
 
 export const generateJWToken = (user) => {
-  const token = jwt.sign({ user }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ user }, configEnv.JWT_SECRET, {
     expiresIn: "1h",
   });
 

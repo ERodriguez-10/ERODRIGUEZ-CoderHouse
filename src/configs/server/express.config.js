@@ -1,8 +1,9 @@
+import { configEnv } from "#configs/env.config.js";
+
 import cartRouter from "#routes/carts.routes.js";
 import messageRouter from "#routes/messages.routes.js";
 import productRouter from "#routes/products.routes.js";
 import viewRouter from "#routes/view.routes.js";
-import sessionRouter from "#routes/sessions.routes.js";
 import authRouter from "#routes/auth.routes.js";
 
 import __dirname from "../../utils.js";
@@ -26,13 +27,12 @@ expressApp.use((req, res, next) => {
 expressApp.use(express.json());
 expressApp.use(express.urlencoded({ extended: true }));
 
-expressApp.use(cookieParser(process.env.COOKIE_SECRET));
+expressApp.use(cookieParser(configEnv.COOKIE_SECRET));
 
 expressApp.use("/", viewRouter);
-expressApp.use("/auth", authRouter);
+expressApp.use("/api/auth", authRouter);
 expressApp.use("/api/carts", cartRouter);
 expressApp.use("/api/messages", messageRouter);
-expressApp.use("/api/sessions", sessionRouter);
 expressApp.use("/api/products", productRouter);
 
 expressApp.engine(

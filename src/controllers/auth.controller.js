@@ -1,17 +1,57 @@
-import { authController } from "#controllers/auth/index.controller.js";
+import { authServices } from "#services/auth/index.services.js";
 
 import { createHash, isValidPassword } from "#utils/bcrytp.js";
 import { generateJWToken } from "#utils/jwt.js";
 
-import { Router } from "express";
+const githubCallbackController = async (req, res) => {
+  const user = req.user;
 
-const sessionRouter = Router();
+  const tokenGitHubUser = {
+    first_name: user.first_name,
+    last_name: "N/A",
+    email: "N/A",
+    role: user.role,
+    registerWith: user.registerWith,
+    userId: user._id,
+  };
 
-sessionRouter.post("/register", async (req, res) => {
+  const access_token = generateJWToken(tokenGitHubUser);
+
+  res.cookie("access_token", access_token, {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+
+  res.redirect("/products");
+};
+
+const googleCallbackController = async (req, res) => {
+  const user = req.user;
+
+  const tokenGoogleUser = {
+    first_name: user.first_name,
+    last_name: "N/A",
+    email: "N/A",
+    role: user.role,
+    registerWith: user.registerWith,
+    userId: user._id,
+  };
+
+  const access_token = generateJWToken(tokenGoogleUser);
+
+  res.cookie("access_token", access_token, {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  });
+
+  res.redirect("/products");
+};
+
+const registerController = async (req, res) => {
   let newUser = req.body;
   newUser.password = await createHash(newUser.password);
   try {
-    const account = await authController.createAccount(newUser);
+    const account = await authServices.createAccount(newUser);
     return res.status(200).json({
       success: true,
       data: account,
@@ -22,9 +62,9 @@ sessionRouter.post("/register", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-sessionRouter.post("/login", async (req, res) => {
+const loginController = async (req, res) => {
   const { email, password } = req.body;
   try {
     if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
@@ -49,7 +89,7 @@ sessionRouter.post("/login", async (req, res) => {
       });
     }
 
-    const account = await authController.getAccountByEmail(email);
+    const account = await authServices.getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }
@@ -86,20 +126,20 @@ sessionRouter.post("/login", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-sessionRouter.get("/logout", async (req, res) => {
+const logoutController = async (req, res) => {
   res.clearCookie("access_token");
   res.status(200).json({
     success: true,
     data: "Logged out",
   });
-});
+};
 
-sessionRouter.get("/user/:email", async (req, res) => {
+const getAccountByEmailController = async (req, res) => {
   try {
     const { email } = req.params;
-    const account = await authController.getAccountByEmail(email);
+    const account = await authServices.getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }
@@ -113,6 +153,13 @@ sessionRouter.get("/user/:email", async (req, res) => {
       error: error.message,
     });
   }
-});
+};
 
-export default sessionRouter;
+export {
+  githubCallbackController,
+  googleCallbackController,
+  registerController,
+  loginController,
+  logoutController,
+  getAccountByEmailController,
+};

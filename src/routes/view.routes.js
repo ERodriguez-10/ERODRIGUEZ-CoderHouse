@@ -1,8 +1,11 @@
 import JwtStrategy from "#configs/auth/jwt.config.js";
 
-import { chatController } from "#controllers/chat/index.controller.js";
-import { productController } from "#controllers/product/index.controller.js";
-import { cartController } from "#controllers/cart/index.controller.js";
+import { getMessagesController } from "#controllers/chat.controller.js";
+import {
+  getProductsController,
+  getProductByIdController,
+} from "#controllers/products.controller.js";
+import { getCartByUserIdController } from "#controllers/cart.controller.js";
 
 import { passportCall } from "#utils/passport.js";
 
@@ -53,7 +56,7 @@ viewRouter.get("/chat", passportCall(JwtStrategy), async (req, res) => {
   res.render("chat", {
     tabTitle: "Bookify Store",
     pageTitle: "Chat Room",
-    messages: await chatController.getMessages(),
+    messages: await getMessagesController(),
     username: randomUser,
     fileCss: "css/styles.css",
   });
@@ -62,12 +65,7 @@ viewRouter.get("/chat", passportCall(JwtStrategy), async (req, res) => {
 viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
-  const productData = await productController.getProducts(
-    limit,
-    page,
-    sort,
-    query
-  );
+  const productData = await getProductsController(limit, page, sort, query);
 
   const payloadProducts = productData.payload;
 
@@ -107,7 +105,7 @@ viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
 viewRouter.get("/product/:pid", passportCall(JwtStrategy), async (req, res) => {
   const { pid } = req.params;
 
-  const productInfo = await productController.getProductById(pid);
+  const productInfo = await getProductByIdController(pid);
 
   res.render("productDetail", {
     tabTitle: "Bookify Store",
@@ -122,7 +120,7 @@ viewRouter.get(
   "/realtimeproducts",
   passportCall(JwtStrategy),
   async (req, res) => {
-    const payloadProducts = (await productController.getProducts()).payload;
+    const payloadProducts = (await getProductsController).payload;
 
     let productsView = payloadProducts.map((product) => {
       return Object.assign({}, product);
@@ -140,7 +138,7 @@ viewRouter.get(
 viewRouter.get("/cart", passportCall(JwtStrategy), async (req, res) => {
   const userId = req.user.userId;
 
-  const payloadCarts = await cartController.getCartByUserId(userId);
+  const payloadCarts = await getCartByUserIdController(userId);
 
   res.render("cart", {
     tabTitle: "Bookify Store",

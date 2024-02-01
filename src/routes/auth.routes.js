@@ -2,7 +2,14 @@ import GitHubStrategy from "#configs/auth/github.config.js";
 import GoogleStrategy from "#configs/auth/google.config.js";
 import JwtStrategy from "#configs/auth/jwt.config.js";
 
-import { generateJWToken } from "#utils/jwt.js";
+import {
+  githubCallbackController,
+  googleCallbackController,
+  registerController,
+  loginController,
+  logoutController,
+  getAccountByEmailController,
+} from "#controllers/auth.controller.js";
 
 import { Router } from "express";
 import passport from "passport";
@@ -35,27 +42,7 @@ authRouter.get(
     failureRedirect: "/",
     failureFlash: true,
   }),
-  async (req, res) => {
-    const user = req.user;
-
-    const tokenGitHubUser = {
-      first_name: user.first_name,
-      last_name: "N/A",
-      email: "N/A",
-      role: user.role,
-      registerWith: user.registerWith,
-      userId: user._id,
-    };
-
-    const access_token = generateJWToken(tokenGitHubUser);
-
-    res.cookie("access_token", access_token, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    res.redirect("/products");
-  }
+  githubCallbackController
 );
 
 authRouter.get(
@@ -70,27 +57,15 @@ authRouter.get(
     failureRedirect: "/",
     failureFlash: true,
   }),
-  (req, res) => {
-    const user = req.user;
-
-    const tokenGoogleUser = {
-      first_name: user.first_name,
-      last_name: "N/A",
-      email: "N/A",
-      role: user.role,
-      registerWith: user.registerWith,
-      userId: user._id,
-    };
-
-    const access_token = generateJWToken(tokenGoogleUser);
-
-    res.cookie("access_token", access_token, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    res.redirect("/products");
-  }
+  googleCallbackController
 );
+
+authRouter.post("/register", registerController);
+
+authRouter.post("/login", loginController);
+
+authRouter.get("/logout", logoutController);
+
+authRouter.get("/user/:email", getAccountByEmailController);
 
 export default authRouter;

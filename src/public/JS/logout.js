@@ -1,7 +1,7 @@
 const logoutBtn = document.querySelector("#logout-btn");
 
 logoutBtn.addEventListener("click", async () => {
-  await fetch("http://localhost:8080/api/sessions/logout", {
+  await fetch("http://localhost:8080/api/auth/logout", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
