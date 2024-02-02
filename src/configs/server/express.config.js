@@ -16,9 +16,10 @@ import cors from "cors";
 const expressApp = express();
 
 const corsOptions = {
-  origin: "http://127.0.0.1:4321, http://127.0.0.1:8080",
+  origin: "http://127.0.0.1:8080",
   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-  allowedHeaders: "Content-Type, Authorization",
+  allowedHeaders:
+    "Content-Type, Authorization, X-Request-With, Accept, Origin, Access-Control-Allow-Headers",
   credentials: true,
 };
 

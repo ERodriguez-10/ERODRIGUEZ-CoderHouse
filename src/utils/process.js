@@ -18,8 +18,10 @@ process.on("exit", (code) => {
   console.log("Exit code process: " + code);
 });
 
+/*
 process.on("uncaughtException", (exception) => {
   console.log("Something went wrong! Unhandled exception: " + exception);
 });
+*/
 
 export default program;
