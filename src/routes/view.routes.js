@@ -62,8 +62,6 @@ viewRouter.get("/chat", passportCall(JwtStrategy), async (req, res) => {
 viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
-  console.log(limit, page, sort, query);
-
   const productData = await productServices.getProducts(
     limit,
     page,

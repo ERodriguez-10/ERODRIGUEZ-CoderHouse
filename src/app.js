@@ -16,7 +16,7 @@ const initializeServer = async () => {
   try {
     await connectDB(URL_MONGO);
 
-    socketServer.attach(httpServer);
+    socketServer;
 
     httpServer.listen(PORT, () => {
       console.log(`[Server]: Server is running on port ${PORT}`);
