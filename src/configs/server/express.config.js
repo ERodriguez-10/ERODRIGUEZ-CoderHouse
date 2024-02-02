@@ -11,18 +11,18 @@ import __dirname from "../../utils.js";
 import express from "express";
 import handlebars from "express-handlebars";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const expressApp = express();
 
-expressApp.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-  next();
-});
+const corsOptions = {
+  origin: "http://127.0.0.1:4321, http://127.0.0.1:8080",
+  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+  allowedHeaders: "Content-Type, Authorization",
+  credentials: true,
+};
+
+expressApp.use(cors(corsOptions));
 
 expressApp.use(express.json());
 expressApp.use(express.urlencoded({ extended: true }));
