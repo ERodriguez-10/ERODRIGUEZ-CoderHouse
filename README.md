@@ -140,7 +140,7 @@ Cuenta con una cuenta admin no registrada en la base de datos.
 
 - [Desafío 8] - Práctica de integración sobre tu ecommerce. Fecha de entrega: 26/01/2024.
 
-Se hizo una gran refactorización de la estructura del proyecto. 
+Se hizo una gran refactorización de la estructura del proyecto.
 
 Dentro de la carpeta src se encuentran los siguientes directorios:
 
@@ -157,6 +157,8 @@ La nomenclatura de los archivos sigue el siguiente patrón: nombre.tipo.js. Ejem
 
 Se removieron las sessions y se trabaja con JWT para la gestión de los datos del usuario en la sesión.
 
-## 
+##
 
-- [Desafío 9] - Arquitectura por capas. 
+- [Desafío 9] - Arquitectura por capas. Fecha de entrega: 05/02/2024.
+
+Se incluyó la capa de services y se restructuraron los controladores. Se agregaron cors.
