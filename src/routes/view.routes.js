@@ -76,6 +76,7 @@ viewRouter.get(
       tabTitle: "Bookify Store - Profile",
       fileCss: "css/styles.css",
       products: productsView,
+      name: req.user.first_name,
     });
   }
 );
@@ -147,7 +148,7 @@ viewRouter.get("/product/:pid", passportCall(JwtStrategy), async (req, res) => {
     pageTitle: "All products",
     product: productInfo,
     fileCss: "css/styles.css",
-    name: req.user.user,
+    name: req.user.first_name,
   });
 });
 
@@ -180,6 +181,7 @@ viewRouter.get("/cart", passportCall(JwtStrategy), async (req, res) => {
     pageTitle: "Real Time Products",
     products: payloadCarts,
     fileCss: "css/styles.css",
+    name: req.user.first_name,
   });
 });
 
