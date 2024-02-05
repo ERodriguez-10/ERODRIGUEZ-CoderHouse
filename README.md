@@ -162,3 +162,5 @@ Se removieron las sessions y se trabaja con JWT para la gestión de los datos de
 - [Desafío 9] - Arquitectura por capas. Fecha de entrega: 05/02/2024.
 
 Se incluyó la capa de services y se restructuraron los controladores. Se agregaron cors.
+
+Se removieron las rutas de las sessiones y se integró todo dentro de auth router.
