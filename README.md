@@ -164,3 +164,7 @@ Se removieron las sessions y se trabaja con JWT para la gestión de los datos de
 Se incluyó la capa de services y se restructuraron los controladores. Se agregaron cors.
 
 Se removieron las rutas de las sessiones y se integró todo dentro de auth router.
+
+##
+
+- [PRE-ENTREGA 3] - Mailing y mensajería.
