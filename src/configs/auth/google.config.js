@@ -1,6 +1,6 @@
 import { configEnv } from "#configs/env.config.js";
 
-import { authServices } from "#services/auth/index.services.js";
+import AuthServices from "#services/auth.services.js";
 
 import { Strategy } from "passport-google-oauth20";
 
@@ -12,7 +12,7 @@ const GoogleStrategy = new Strategy(
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await authServices.getAccountByGoogleId(profile._json.sub);
+      let user = await AuthServices.getAccountByGoogleId(profile._json.sub);
       if (!user) {
         let newUser = {
           first_name: profile._json.given_name,
@@ -23,7 +23,7 @@ const GoogleStrategy = new Strategy(
           google_id: profile._json.sub,
         };
 
-        let result = await authServices.createAccount(newUser);
+        let result = await AuthServices.createAccount(newUser);
         done(null, result);
       } else {
         done(null, user);
