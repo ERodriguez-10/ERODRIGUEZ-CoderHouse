@@ -1,4 +1,4 @@
-import { productServices } from "#services/product/index.services.js";
+import { productServices } from "#services/factory.js";
 
 const getProductsController = async (req, res) => {
   const { limit, page, sort, query } = req.query;

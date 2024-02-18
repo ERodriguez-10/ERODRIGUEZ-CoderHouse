@@ -9,10 +9,15 @@ program
 
 program
   .option("-p <port>", "Server port", 8080)
-  .option("--mode <mode>", "Enviroment", "dev")
+  .option("-d", "Variable for debug", "false")
+  .option("--persist <mode>", "Persistance mode", "mongodb")
+  .option("--mode <mode>", "Enviroment mode", "dev")
   .option("-u <user>", "Logged user", "No user is logged");
 
 program.parse();
+
+console.log("Environment Mode Option:", program.opts().mode);
+console.log("Persistence Mode Option:", program.opts().persist);
 
 process.on("exit", (code) => {
   console.log("Exit code process: " + code);

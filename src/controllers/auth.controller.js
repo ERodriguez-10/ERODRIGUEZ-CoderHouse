@@ -1,4 +1,4 @@
-import AuthServices from "#services/auth.services.js";
+import { authServices } from "#services/factory.js";
 
 import { createHash, isValidPassword } from "#utils/bcrytp.js";
 import { generateJWToken } from "#utils/jwt.js";
@@ -51,7 +51,7 @@ const registerController = async (req, res) => {
   let newUser = req.body;
   newUser.password = await createHash(newUser.password);
   try {
-    const account = await AuthServices.createAccount(newUser);
+    const account = await authServices.createAccount(newUser);
     return res.status(200).json({
       success: true,
       data: account,
@@ -89,7 +89,7 @@ const loginController = async (req, res) => {
       });
     }
 
-    const account = await AuthServices.getAccountByEmail(email);
+    const account = await authServices.getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }
@@ -139,7 +139,7 @@ const logoutController = async (req, res) => {
 const getAccountByEmailController = async (req, res) => {
   try {
     const { email } = req.params;
-    const account = await AuthServices.getAccountByEmail(email);
+    const account = await authServices.getAccountByEmail(email);
     if (!account) {
       throw new Error("Invalid credentials");
     }

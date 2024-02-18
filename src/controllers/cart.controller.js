@@ -1,4 +1,4 @@
-import { cartServices } from "#services/cart/index.services.js";
+import { cartServices } from "#services/factory.js";
 
 const getCartByUserIdController = async (req, res) => {
   const { uid } = req.params;

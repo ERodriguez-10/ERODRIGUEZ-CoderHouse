@@ -1,8 +1,10 @@
 import JwtStrategy from "#configs/auth/jwt.config.js";
 
-import { cartServices } from "#services/cart/index.services.js";
-import { chatServices } from "#services/chat/index.services.js";
-import { productServices } from "#services/product/index.services.js";
+import {
+  cartServices,
+  chatServices,
+  productServices,
+} from "#services/factory.js";
 
 import { passportCall } from "#utils/passport.js";
 

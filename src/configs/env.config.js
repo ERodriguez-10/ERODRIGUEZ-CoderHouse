@@ -9,6 +9,7 @@ dotenv.config({
 });
 
 export const configEnv = {
+  PERSISTANCE: program.opts().persist,
   URL: process.env.URL,
   PORT: process.env.PORT,
   JWT_SECRET: process.env.JWT_SECRET,

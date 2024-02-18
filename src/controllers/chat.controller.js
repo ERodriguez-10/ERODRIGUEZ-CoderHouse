@@ -1,4 +1,4 @@
-import { chatServices } from "#services/chat/index.services.js";
+import { chatServices } from "#services/factory.js";
 
 const getMessagesController = async (req, res) => {
   try {
