@@ -1,9 +1,7 @@
 import productModel from "#models/product.model.js";
 
-export default class ProductServices {
-  constructor() {
-    console.log("Working products with Database persistence in MongoDB");
-  }
+export default class ProductDAO {
+  constructor() {}
 
   addProduct = async (product) => {
     try {

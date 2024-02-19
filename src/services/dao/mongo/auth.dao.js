@@ -1,9 +1,7 @@
 import userModel from "#models/user.model.js";
 
-export default class AuthServices {
-  constructor() {
-    console.log("Working auth with Database persistence in MongoDB");
-  }
+export default class AuthDAO {
+  constructor() {}
 
   createAccount = async (account) => {
     return await userModel.create(account);

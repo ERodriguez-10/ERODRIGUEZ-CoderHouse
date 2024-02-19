@@ -1,9 +1,7 @@
 import messageModel from "#models/chat.model.js";
 
-export default class ChatServices {
-  constructor() {
-    console.log("Working chat with Database persistence in MongoDB");
-  }
+export default class ChatDAO {
+  constructor() {}
 
   getMessages = async () => {
     return await messageModel.find().lean();

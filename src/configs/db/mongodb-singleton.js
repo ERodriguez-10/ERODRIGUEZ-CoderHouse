@@ -30,7 +30,7 @@ export default class MongoSingleton {
     try {
       await mongoose.connect(URL_MONGO).then(() => {
         userModel.syncIndexes();
-        console.log("[SERVER]: MongoDB connected.");
+        console.log("[Server]: MongoDB connected.");
       });
     } catch (error) {
       console.log("[ERROR] Connection to MongoDB failed: " + error);

@@ -6,6 +6,8 @@ import {
   productServices,
 } from "#services/factory.js";
 
+import UserDto from "#services/dto/user.dto.js";
+
 import { passportCall } from "#utils/passport.js";
 
 import { Router } from "express";
@@ -37,15 +39,12 @@ viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
     avatarImg = "https://i.imgur.com/6VBx3io.png";
   }
 
+  const userDto = new UserDto(req.user, avatarImg);
+
   res.render("profile", {
     tabTitle: "Bookify Store - Profile",
     fileCss: "css/styles.css",
-    name: req.user.first_name,
-    lastName: req.user.last_name,
-    email: req.user.email,
-    role: req.user.role,
-    registerWith: req.user.registerWith,
-    avatar: avatarImg,
+    user: userDto,
   });
 });
 

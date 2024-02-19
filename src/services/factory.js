@@ -1,37 +1,47 @@
 import { configEnv } from "#configs/env.config.js";
 import MongoSingleton from "#configs/db/mongodb-singleton.js";
 
+import AuthRepository from "#services/repository/auth.repository.js";
+import CartRepository from "#services/repository/cart.repository.js";
+import ChatRepository from "#services/repository/chat.repository.js";
+import ProductRepository from "#services/repository/product.repository.js";
+
 let authServices;
 let cartServices;
 let chatServices;
 let productServices;
 
 async function initializeMongoService() {
-  console.log("[SERVER]: Initializing MongoDB services");
+  console.log("[Server]: Initializing MongoDB services");
 
   try {
     await MongoSingleton.getInstance();
 
     const { default: AuthServiceMongo } = await import(
-      "#services/auth.services.js"
+      "#services/dao/mongo/auth.dao.js"
     );
-    authServices = new AuthServiceMongo();
+    let authDao = new AuthServiceMongo();
+    authServices = new AuthRepository(authDao);
 
     const { default: CartServiceMongo } = await import(
-      "#services/cart.services.js"
+      "#services/dao/mongo/cart.dao.js"
     );
-    cartServices = new CartServiceMongo();
+    let cartDao = new CartServiceMongo();
+    cartServices = new CartRepository(cartDao);
 
     const { default: ChatServiceMongo } = await import(
-      "#services/chat.services.js"
+      "#services/dao/mongo/chat.dao.js"
     );
-    chatServices = new ChatServiceMongo();
+    let chatDao = new ChatServiceMongo();
+    chatServices = new ChatRepository(chatDao);
 
     const { default: ProductServiceMongo } = await import(
-      "#services/product.services.js"
+      "#services/dao/mongo/product.dao.js"
     );
-    productServices = new ProductServiceMongo();
-    console.log("[SERVER]: All services are loaded.");
+    let productDao = new ProductServiceMongo();
+    productServices = new ProductRepository(productDao);
+
+    console.log("[Server]: All services working with MongoDB are loaded.");
   } catch (error) {
     console.error("[ERROR]: Failed initialize MongoDB: " + error);
     process.exit(1);
