@@ -14,13 +14,25 @@
         />
       </div>
       <div class="flex align-center items-center justify-end">
-        <a href="/cart"><i
-            class="fa-solid fa-cart-shopping mx-3 lg:mx-6 text-xl"
-          ></i></a>
+        {{#if isUser}}
+          <a href="/cart" class="flex items-center mx-3 lg:mx-6"><i
+              class="fa-solid fa-cart-shopping text-xl"
+            ></i>
+            <p class="ms-2">My cart</p>
+          </a>
+        {{/if}}
+
+        {{#if isAdmin}}
+          <a href="/adminPanel" class="flex items-center mx-3 lg:mx-6"><i
+              class="fa-solid fa-gear text-xl"
+            ></i>
+            <p class="ms-2">Dashboard</p>
+          </a>
+        {{/if}}
 
         <a href="/profile" class="flex items-center mx-3 lg:mx-6">
           <i class="fa-solid fa-user text-xl"></i>
-          <p class="ms-4">{{name}}</p>
+          <p class="ms-2">{{name}}</p>
         </a>
 
         <button class="bg-black text-white py-2 px-4 rounded" id="logout-btn">
@@ -126,6 +138,16 @@
     </div>
   </div>
 
+  {{#if isUser}}
+    <div class="fixed bottom-10 right-10">
+      <div class="rounded-full bg-black py-5 px-4 hover:cursor-pointer">
+        <a href="/chat">
+          <i class="fa-solid fa-comments text-white text-3xl"></i>
+        </a>
+      </div>
+    </div>
+  {{/if}}
+
   <footer class="text-gray-600 body-font">
     <div
       class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
@@ -170,6 +192,6 @@
   </footer>
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  <script src="/js/productsView.js"></script>
+  <script src="/js/home.js"></script>
   <script src="/js/logout.js"></script>
 </div>

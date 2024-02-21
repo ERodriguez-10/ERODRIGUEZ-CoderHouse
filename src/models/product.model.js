@@ -43,11 +43,11 @@ const productSchema = new mongoose.Schema({
     ],
   },
   status: { type: Boolean, required: true, max: 100 },
-  seller: {
+  /*seller: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "accounts",
     required: true,
-  },
+  },*/
 });
 
 productSchema.plugin(moongosePaginate);

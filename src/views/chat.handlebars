@@ -1,40 +1,116 @@
-<div class="home-chat container">
-  <h1 style="color: #43a047; text-align: center;"><i
-      class="fa-solid fa-bookmark"
-      style="color: #43a047"
-    ></i>
-    -
-    {{pageTitle}}
-    -
-    <i class="fa-solid fa-bookmark" style="color: #43a047"></i>
-  </h1>
+<div
+  class="container h-screen mx-auto text-black flex flex-col justify-between"
+>
+  <nav class="grid grid-cols-2 py-8">
+    <div class="flex align-middle items-center">
+      <a href="/products"><p class="font-bold text-2xl">BookifyStore</p></a>
+      <p class="text-lg mx-6 items-center text-gray-600">Categories</p>
+      <input
+        type="text"
+        placeholder="Search"
+        class="text-white bg-slate-200 border-slate-200 py-2 px-4 rounded lg:w-full"
+        disabled
+      />
+    </div>
+    <div class="flex align-center items-center justify-end">
+      {{#if isUser}}
+        <a href="/cart" class="flex items-center mx-3 lg:mx-6"><i
+            class="fa-solid fa-cart-shopping text-xl"
+          ></i>
+          <p class="ms-2">My cart</p>
+        </a>
+      {{/if}}
+
+      {{#if isAdmin}}
+        <a href="/adminPanel" class="flex items-center mx-3 lg:mx-6"><i
+            class="fa-solid fa-gear text-xl"
+          ></i>
+          <p class="ms-2">Dashboard</p>
+        </a>
+      {{/if}}
+
+      <a href="/profile" class="flex items-center mx-3 lg:mx-6">
+        <i class="fa-solid fa-user text-xl"></i>
+        <p class="ms-2">{{name}}</p>
+      </a>
+
+      <button class="bg-black text-white py-2 px-4 rounded" id="logout-btn">
+        <i class="fa-solid fa-door-open me-2"></i>
+        Logout
+      </button>
+    </div>
+  </nav>
+
+  <hr />
+
+  <h2 class="text-center text-6xl font-bold my-8">Start chatting now
+    <span id="userTag">{{username}}</span>!</h2>
 
   <div class="flex-column">
-    <h4 style="text-align: center;">Start chatting now
-      <span id="userTag">{{username}}</span>!</h4>
     <ul class="chat" id="chat">
       {{#each messages}}
         <li><span class="date-bold">{{date}} - {{user}}:</span> {{message}}</li>
       {{/each}}
     </ul>
 
-    <form id="chatForm" action="">
-      <div class="flex">
+    <form id="chatForm" action="" class="grid grid-cols-12">
+      <div class="col-span-10 me-10">
         <input
           type="text"
           id="message"
           name="message"
           placeholder="Message"
-          style="margin-right: 50px;"
+          class="w-full"
         />
-        <input
-          type="submit"
-          value="Send"
-          style="width: 25%; padding-left: 15px; background-color: #43a047; border-color: #43a047;"
-        />
+      </div>
+      <div class="col-span-2">
+        <input type="submit" value="Send" class="w-full bg-green-500 h-full" />
       </div>
     </form>
   </div>
+
+  <footer class="text-gray-600 body-font">
+    <div
+      class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
+    >
+      <a
+        class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+      >
+        <i class="fa-solid fa-book"></i>
+        <span class="ml-3 text-xl">BookifyStore</span>
+      </a>
+      <p
+        class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
+      >© 2024 BookifyStore —
+        <span class="text-gray-600 ml-1">Emiliano Rodriguez</span>
+      </p>
+      <span
+        class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
+      >
+        <a
+          class="ml-3 text-gray-500"
+          href="https://www.linkedin.com/in/erodriguez-dev/"
+          target="_blank"
+        >
+          <svg
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="none"
+              d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+            ></path>
+            <circle cx="4" cy="4" r="2" stroke="none"></circle>
+          </svg>
+        </a>
+      </span>
+    </div>
+  </footer>
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script src="/js/chat.js"></script>

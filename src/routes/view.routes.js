@@ -11,6 +11,10 @@ import UserDto from "#services/dto/user.dto.js";
 import { passportCall } from "#utils/passport.js";
 
 import { Router } from "express";
+import {
+  hasAdminPermission,
+  hasUserPermission,
+} from "../middlewares/hasPermissions.middleware.js";
 
 const viewRouter = Router();
 
@@ -45,6 +49,9 @@ viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
     tabTitle: "Bookify Store - Profile",
     fileCss: "css/styles.css",
     user: userDto,
+    name: req.user.first_name,
+    isUser: req.user.role === "user" ? true : false,
+    isAdmin: req.user.role === "Admin" ? true : false,
   });
 });
 
@@ -78,21 +85,29 @@ viewRouter.get(
       fileCss: "css/styles.css",
       products: productsView,
       name: req.user.first_name,
+      isUser: req.user.role === "user" ? true : false,
+      isAdmin: req.user.role === "Admin" ? true : false,
     });
   }
 );
 
-viewRouter.get("/chat", passportCall(JwtStrategy), async (req, res) => {
-  const randomUser = `Anonymous${Math.floor(Math.random() * 1000000)}`;
-
-  res.render("chat", {
-    tabTitle: "Bookify Store",
-    pageTitle: "Chat Room",
-    messages: await chatServices.getMessages(),
-    username: randomUser,
-    fileCss: "css/styles.css",
-  });
-});
+viewRouter.get(
+  "/chat",
+  passportCall(JwtStrategy),
+  hasUserPermission(),
+  async (req, res) => {
+    res.render("chat", {
+      tabTitle: "Bookify Store",
+      pageTitle: "Chat Room",
+      messages: await chatServices.getMessages(),
+      username: req.user.first_name,
+      fileCss: "css/styles.css",
+      name: req.user.first_name,
+      isUser: req.user.role === "user" ? true : false,
+      isAdmin: req.user.role === "Admin" ? true : false,
+    });
+  }
+);
 
 viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
   const { limit, page, sort, query } = req.query;
@@ -134,6 +149,8 @@ viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
     name: req.user.first_name,
     email: req.user.email,
     role: req.user.role,
+    isUser: req.user.role === "user" ? true : false,
+    isAdmin: req.user.role === "Admin" ? true : false,
     nProduct: nProduct,
     pages: arrayPages,
   });
@@ -150,24 +167,50 @@ viewRouter.get("/product/:pid", passportCall(JwtStrategy), async (req, res) => {
     product: productInfo,
     fileCss: "css/styles.css",
     name: req.user.first_name,
+    isUser: req.user.role === "user" ? true : false,
+    isAdmin: req.user.role === "Admin" ? true : false,
   });
 });
 
 viewRouter.get(
-  "/realtimeproducts",
+  "/adminPanel",
   passportCall(JwtStrategy),
+  hasAdminPermission(),
   async (req, res) => {
-    const payloadProducts = (await productServices.getProducts).payload;
+    const productData = await productServices.getProducts();
+
+    const payloadProducts = productData.payload;
 
     let productsView = payloadProducts.map((product) => {
       return Object.assign({}, product);
     });
 
-    res.render("realTimeProducts", {
+    const arrayPages = [];
+
+    for (let i = 1; i <= productData.totalPages; i++) {
+      arrayPages.push({
+        page: i,
+        limit: productData.limit,
+        isActive: i === productData.page ? true : false,
+      });
+    }
+
+    const nProduct =
+      productData.page === "1"
+        ? productData.docsPerPage
+        : productData.limit * (productData.page - 1) + productData.docsPerPage;
+
+    res.render("adminPanel", {
       tabTitle: "Bookify Store",
       pageTitle: "Real Time Products",
       products: productsView,
+      controllers: productData,
       fileCss: "css/styles.css",
+      name: req.user.first_name,
+      nProduct: nProduct,
+      pages: arrayPages,
+      isUser: req.user.role === "user" ? true : false,
+      isAdmin: req.user.role === "Admin" ? true : false,
     });
   }
 );
@@ -183,6 +226,8 @@ viewRouter.get("/cart", passportCall(JwtStrategy), async (req, res) => {
     products: payloadCarts,
     fileCss: "css/styles.css",
     name: req.user.first_name,
+    isUser: req.user.role === "user" ? true : false,
+    isAdmin: req.user.role === "Admin" ? true : false,
   });
 });
 

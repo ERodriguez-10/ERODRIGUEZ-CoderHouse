@@ -12,7 +12,7 @@ export default class CartDAO {
   };
 
   addProductByCartId = async (cartId, productId) => {
-    const selectedCart = await getCartByCartId(cartId);
+    const selectedCart = await this.getCartByCartId(cartId);
 
     if (selectedCart) {
       const productIndex = selectedCart.products.findIndex(

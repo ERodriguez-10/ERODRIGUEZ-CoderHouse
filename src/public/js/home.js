@@ -19,3 +19,13 @@ socket.on("productSuccessfullyAdded", () => {
     },
   }).showToast();
 });
+
+socket.on("adminError", () => {
+  Toastify({
+    text: "Admin cannot add products to cart",
+    duration: 3000,
+    style: {
+      background: "rgb(255,0,0)",
+    },
+  }).showToast();
+});

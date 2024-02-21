@@ -9,7 +9,7 @@ const iDescription = document.getElementById("description");
 const iStock = document.getElementById("stock");
 const iPrice = document.getElementById("price");
 const iCode = document.getElementById("code");
-const iThumbnails = document.getElementById("thumbnails");
+const iThumbnail = document.getElementById("thumbnail");
 const iStatus = document.getElementsByName("status");
 
 // Form submit event
@@ -32,7 +32,7 @@ form.addEventListener("submit", (e) => {
     stock: iStock.value,
     price: iPrice.value,
     code: iCode.value,
-    thumbnails: iThumbnails.value,
+    thumbnail: iThumbnail.value,
     status: iStatusValue,
   };
 
@@ -52,38 +52,43 @@ document.querySelectorAll("#buttonDelete").forEach((button) => {
 
 // Socket.io events
 socket.on("productCreatedServer", (product) => {
-  const cardProduct = document.createElement("article");
+  const cardProduct = document.createElement("div");
   cardProduct.className = "product";
-  cardProduct.id = `product-${product.id}`;
+  cardProduct.id = `product-${product._id}`;
   cardProduct.innerHTML = `
-      <header class="card-header">${product.category} - ${product.title}</header>
-      <div class="card-body">
-        <i
-          class="fa-solid fa-circle-info"
-          style="margin-right: 5px; color: lightskyblue"
-        ></i>
-        ${product.description}
-      </div>
-      <footer class="flex">
-        <div>
-          <i class="fa-solid fa-book" style="color: #43a047"></i>
-          ${product.stock}
-        </div>
-        <div>
-          <i class="fa-solid fa-dollar-sign" style="color: #43a047"></i>
-          ${product.price}
-        </div>
-        <div style="margin-top: 1rem;">
+  <div class="h-full flex flex-col items-center text-center">
+    <img
+      alt="team"
+      class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+      src="${product.thumbnail}"
+    />
+    <div class="w-full">
+      <h2 class="title-font font-medium text-lg">${product.title}</h2>
+      <h3 class="text-gray-500 mb-3">${product.category}</h3>
+      <p class="mb-4">U$D ${product.price}</p>
+
+      <div class="flex">
+
+        <button
+          class="flex flex-grow items-center w-full text-white bg-red-600 py-2 px-4 me-2 focus:outline-none justify-center rounded-sm text-base"
+          id="buttonDelete"
+          data-product-id="${product._id}"
+        >
+          <i class="fa-solid fa-trash mr-3"></i>
+          Delete product</button>
+
+        <a href="/product/${product._id}">
           <button
-            class="outline contrast"
-            style="color: red;"
-            id="buttonDelete"
-            data-product-id="${product.id}"
+            class="flex h-full items-center border-2 border-black py-2 px-4 focus:outline-none rounded text-base"
+            id="view-product"
+            data-product-id="${product._id}"
           >
-            <i class="fa-solid fa-trash"></i>
-            Delete product</button>
-        </div>
-      </footer>
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
   `;
 
   cardProduct.querySelector("#buttonDelete").addEventListener("click", (e) => {
@@ -92,7 +97,7 @@ socket.on("productCreatedServer", (product) => {
     socket.emit("deleteProductClient", productId);
   });
 
-  document.querySelector(".parent").appendChild(cardProduct);
+  document.querySelector("#grid-product").appendChild(cardProduct);
 
   Toastify({
     text: "Product created successfully",

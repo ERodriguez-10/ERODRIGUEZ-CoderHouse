@@ -1,0 +1,325 @@
+<div
+  class="container h-screen mx-auto text-black flex flex-col justify-between"
+>
+  <div>
+    <nav class="grid grid-cols-2 py-8">
+      <div class="flex align-middle items-center">
+        <a href="/products"><p class="font-bold text-2xl">BookifyStore</p></a>
+        <p class="text-lg mx-6 items-center text-gray-600">Categories</p>
+        <input
+          type="text"
+          placeholder="Search"
+          class="text-white bg-slate-200 border-slate-200 py-2 px-4 rounded lg:w-full"
+          disabled
+        />
+      </div>
+      <div class="flex align-center items-center justify-end">
+        {{#if isUser}}
+          <a href="/cart" class="flex items-center mx-3 lg:mx-6"><i
+              class="fa-solid fa-cart-shopping text-xl"
+            ></i>
+            <p class="ms-2">My cart</p>
+          </a>
+        {{/if}}
+
+        {{#if isAdmin}}
+          <a href="/adminPanel" class="flex items-center mx-3 lg:mx-6"><i
+              class="fa-solid fa-gear text-xl"
+            ></i>
+            <p class="ms-2">Dashboard</p>
+          </a>
+        {{/if}}
+
+        <a href="/profile" class="flex items-center mx-3 lg:mx-6">
+          <i class="fa-solid fa-user text-xl"></i>
+          <p class="ms-2">{{name}}</p>
+        </a>
+
+        <button class="bg-black text-white py-2 px-4 rounded" id="logout-btn">
+          <i class="fa-solid fa-door-open me-2"></i>
+          Logout
+        </button>
+
+      </div>
+    </nav>
+
+    <hr />
+
+    <h2 class="text-center text-6xl font-bold my-8">Admin Panel</h2>
+
+    <div class="p-6 bg-gray-100 flex items-center justify-center">
+      <div class="container max-w-screen-lg mx-auto">
+        <div>
+          <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+            <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+              <div class="lg:col-span-3">
+                <form
+                  id="form"
+                  action=""
+                  class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5"
+                >
+                  <div class="md:col-span-2">
+                    <label for="full_name">Category</label>
+                    <select
+                      id="category"
+                      class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                      required
+                    >
+                      <option value="" selected>Select a category...</option>
+                      <option value="Drama">Drama</option>
+                      <option value="Fiction">Fiction</option>
+                    </select>
+                  </div>
+
+                  <div class="md:col-span-3">
+                    <label for="email">Title</label>
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                      placeholder="Eg: Harry Potter I"
+                      required
+                    />
+                  </div>
+
+                  <div class="md:col-span-5">
+                    <label for="description">
+                      Description
+                      <textarea
+                        id="description"
+                        class="h-28 border mt-1 rounded px-4 w-full bg-gray-50"
+                        required
+                      ></textarea>
+                    </label>
+                  </div>
+
+                  <div class="md:col-span-1">
+                    <label for="stock">Stock</label>
+                    <input
+                      type="text"
+                      id="stock"
+                      name="stock"
+                      class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                      placeholder="Eg: 150"
+                      required
+                    />
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label for="price">Price</label>
+                    <input
+                      type="text"
+                      id="price"
+                      name="price"
+                      class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                      placeholder="Eg: U$D 59.99"
+                      required
+                    />
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label for="code">Code</label>
+                    <input
+                      type="text"
+                      id="code"
+                      name="code"
+                      class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                      placeholder="Eg: 65ASEQ"
+                      required
+                    />
+                  </div>
+
+                  <div class="md:col-span-3">
+                    <label for="thumbnail">Thumbnail</label>
+                    <input
+                      type="text"
+                      id="thumbnail"
+                      name="thumbnail"
+                      class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                      placeholder="Eg. `https://picsum.photos/id/54/200`"
+                      required
+                    />
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <fieldset class="flex h-full items-center">
+                      <legend>Status</legend>
+                      <label for="active">
+                        <input
+                          type="radio"
+                          id="active"
+                          name="status"
+                          value="true"
+                          checked
+                        />
+                        Active
+                      </label>
+                      <label for="deactive" style="margin-left: 40px;">
+                        <input
+                          type="radio"
+                          id="deactive"
+                          name="status"
+                          value="false"
+                        />
+                        Disabled
+                      </label>
+                    </fieldset>
+                  </div>
+
+                  <div class="md:col-span-5">
+                    <input
+                      type="submit"
+                      value="Send"
+                      class="w-full py-4 text-xl mt-4 bg-black text-white rounded-sm hover:cursor-pointer"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <p class="pb-6 font-bold pt-12">Showing
+      {{nProduct}}
+      of
+      {{controllers.totalDocs}}
+      products</p>
+
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12"
+      id="grid-product"
+    >
+      {{#each products}}
+        <div id="product-{{_doc._id}}">
+          <div class="h-full flex flex-col items-center text-center">
+            <img
+              alt="team"
+              class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+              src="{{_doc.thumbnail}}"
+            />
+            <div class="w-full">
+              <h2 class="title-font font-medium text-lg">{{_doc.title}}</h2>
+              <h3 class="text-gray-500 mb-3">{{_doc.category}}</h3>
+              <p class="mb-4">U$D {{{_doc.price}}}</p>
+
+              <div class="flex">
+
+                <button
+                  class="flex flex-grow items-center w-full text-white bg-red-600 py-2 px-4 me-2 focus:outline-none justify-center rounded-sm text-base"
+                  id="buttonDelete"
+                  data-product-id="{{_doc._id}}"
+                >
+                  <i class="fa-solid fa-trash mr-3"></i>
+                  Delete product</button>
+
+                <a href="/product/{{_doc._id}}">
+                  <button
+                    class="flex h-full items-center border-2 border-black py-2 px-4 focus:outline-none rounded text-base"
+                    id="view-product"
+                    data-product-id="{{_doc._id}}"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="text-center py-12">
+
+    <nav aria-label="Page navigation example text-black">
+      <ul style="display: flex; justify-content: center; align-items: center;">
+        {{#if controllers.hasPrevPage}}
+          <li class="flex justify-center items-center pe-4"><a
+              href="/products?page={{controllers.prevPage}}&limit={{controllers.limit}}"
+            ><i class="fa-solid fa-chevron-left mr-1"></i>
+              Previous</a></li>
+        {{/if}}
+
+        {{#each pages}}
+          {{#if isActive}}
+            <a
+              href="/products?page={{page}}&limit={{limit}}"
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-slate-300 shadow-sm hover:bg-accent hover:text-accent-foreground h-9 w-9 mx-1"
+            >
+              {{page}}
+            </a>
+          {{/if}}
+          {{#unless isActive}}
+            <a
+              href="/products?page={{page}}&limit={{limit}}"
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9 mx-1"
+            >
+              {{page}}
+            </a>
+          {{/unless}}
+        {{/each}}
+
+        {{! Links a siguientes páginas }}
+
+        {{#if controllers.hasNextPage}}
+          <li class="flex justify-center items-center ps-4"><a
+              href="/products?page={{controllers.nextPage}}&limit={{controllers.limit}}"
+            >Next <i class="fa-solid fa-chevron-right ms-1"></i></a></li>
+        {{/if}}
+
+      </ul>
+    </nav>
+  </div>
+
+  <footer class="text-gray-600 body-font">
+    <div
+      class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
+    >
+      <a
+        class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+      >
+        <i class="fa-solid fa-book"></i>
+        <span class="ml-3 text-xl">BookifyStore</span>
+      </a>
+      <p
+        class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
+      >© 2024 BookifyStore —
+        <span class="text-gray-600 ml-1">Emiliano Rodriguez</span>
+      </p>
+      <span
+        class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
+      >
+        <a
+          class="ml-3 text-gray-500"
+          href="https://www.linkedin.com/in/erodriguez-dev/"
+          target="_blank"
+        >
+          <svg
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="none"
+              d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+            ></path>
+            <circle cx="4" cy="4" r="2" stroke="none"></circle>
+          </svg>
+        </a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/adminPanel.js"></script>
+  <script src="/js/logout.js"></script>
+</div>

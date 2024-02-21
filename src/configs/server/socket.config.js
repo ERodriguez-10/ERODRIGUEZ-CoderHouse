@@ -29,7 +29,7 @@ socketServer.on("connection", (socket) => {
       .then((data) => {
         if (data.error) return socket.emit("errorServer", data.error);
 
-        socketServer.emit("productCreatedServer", data.product);
+        socketServer.emit("productCreatedServer", data.productCreated);
       })
       .catch((err) => {
         console.log(err);
@@ -78,24 +78,53 @@ socketServer.on("connection", (socket) => {
 
       const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
 
-      const userId = tokenData.user.userId;
+      const isUser = tokenData.user.role;
 
-      const cartId = await getCartByUserId(userId);
-
-      if (!cartId) {
-        const newCart = await postNewCart(userId, productId);
-        if (newCart) {
-          socket.emit("productSuccessfullyAdded");
-        }
+      if (isUser === "Admin") {
+        socket.emit("adminError");
       } else {
-        const addProductToCart = await postProductToCart(cartId._id, productId);
+        const userId = tokenData.user.userId;
 
-        if (addProductToCart) {
-          socket.emit("productSuccessfullyAdded");
+        const cartId = await getCartByUserId(userId);
+
+        if (!cartId) {
+          const newCart = await postNewCart(userId, productId);
+          if (newCart) {
+            socket.emit("productSuccessfullyAdded");
+          }
+        } else {
+          const addProductToCart = await postProductToCart(
+            cartId._id,
+            productId
+          );
+
+          if (addProductToCart) {
+            socket.emit("productSuccessfullyAdded");
+          }
         }
       }
     } catch (error) {
       console.error("Error adding product to cart: ", error);
+    }
+  });
+
+  socket.on("checkout", async (cartId) => {
+    try {
+      fetch(`${URL}/api/carts/${cartId}/purchase`, {
+        method: "POST",
+        headers: {
+          "Contet-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          socketServer.emit("checkoutSuccessfully");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.error("Error purchasing: ", error);
     }
   });
 
