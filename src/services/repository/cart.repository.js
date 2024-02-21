@@ -47,6 +47,14 @@ export default class CartRepository {
     }
   };
 
+  postPayment = async (cartId) => {
+    try {
+      return await this.dao.postPayment(cartId);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
   updateQuantityProduct = async (cartId, productId, quantity) => {
     try {
       return await this.dao.updateQuantityProduct(cartId, productId, quantity);

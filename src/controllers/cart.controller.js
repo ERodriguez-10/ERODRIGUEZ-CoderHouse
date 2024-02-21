@@ -92,6 +92,17 @@ const addProductByCartIdController = async (req, res) => {
   }
 };
 
+const postPaymentController = async (req, res) => {
+  const { cid } = req.params;
+
+  try {
+    await cartServices.postPayment(cid);
+    res.status(200).json({ message: "Payment successufully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const updateQuantityProductController = async (req, res) => {
   const { cid, pid } = req.params;
   const { quantity } = req.body;
@@ -122,6 +133,7 @@ export {
   updateCartController,
   cleanCartByCartIdController,
   addProductByCartIdController,
+  postPaymentController,
   updateQuantityProductController,
   deleteProductByCartIdController,
 };

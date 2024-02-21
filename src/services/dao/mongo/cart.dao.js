@@ -69,6 +69,21 @@ export default class CartDAO {
     }
   };
 
+  postPayment = async (cartId) => {
+    try {
+      return await cartModel.updateOne(
+        {
+          _id: cartId,
+        },
+        {
+          $set: { hasPurchased: true },
+        }
+      );
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
   updateQuantityProduct = async (cartId, productId, quantity) => {
     try {
       return await cartModel.updateOne(
