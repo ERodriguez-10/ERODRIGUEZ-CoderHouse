@@ -220,15 +220,56 @@ viewRouter.get("/cart", passportCall(JwtStrategy), async (req, res) => {
 
   const payloadCarts = await cartServices.getCartByUserId(userId);
 
+  let subtotal = 0;
+
+  if (payloadCarts) {
+    for (let i = 0; i < payloadCarts.products.length; i++) {
+      subtotal +=
+        payloadCarts.products[i].productId.price *
+        payloadCarts.products[i].quantity;
+    }
+  }
+
   res.render("cart", {
     tabTitle: "Bookify Store",
-    pageTitle: "Real Time Products",
     products: payloadCarts,
     fileCss: "css/styles.css",
     name: req.user.first_name,
+    hasProducts: payloadCarts ? true : false,
+    subtotal: subtotal ? Number(subtotal.toFixed(2)) : 0,
     isUser: req.user.role === "user" ? true : false,
     isAdmin: req.user.role === "Admin" ? true : false,
   });
 });
+
+viewRouter.get(
+  "/cart/success/:cid",
+  passportCall(JwtStrategy),
+  async (req, res) => {
+    const { cid } = req.params;
+
+    const purchasedCart = await cartServices.getCartByCartId(cid);
+
+    let subtotal = 0;
+
+    for (let i = 0; i < purchasedCart.products.length; i++) {
+      subtotal +=
+        purchasedCart.products[i].productId.price *
+        purchasedCart.products[i].quantity;
+    }
+
+    res.render("succesfullyBuy", {
+      tabTitle: "Bookify Store",
+      products: purchasedCart,
+      fileCss: "css/styles.css",
+      name: req.user.first_name,
+      subtotal: subtotal ? Number(subtotal.toFixed(2)) : 0,
+      cartId: cid,
+      total: subtotal + 10,
+      isUser: req.user.role === "user" ? true : false,
+      isAdmin: req.user.role === "Admin" ? true : false,
+    });
+  }
+);
 
 export default viewRouter;

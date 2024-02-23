@@ -1,0 +1,189 @@
+<div
+  class="container h-screen mx-auto text-black flex flex-col justify-between"
+>
+  <div>
+    <nav class="grid grid-cols-2 py-8">
+      <div class="flex align-middle items-center">
+        <a href="/products"><p class="font-bold text-2xl">BookifyStore</p></a>
+        <p class="text-lg mx-6 items-center text-gray-600">Categories</p>
+        <input
+          type="text"
+          placeholder="Search"
+          class="text-white bg-slate-200 border-slate-200 py-2 px-4 rounded lg:w-full"
+          disabled
+        />
+      </div>
+      <div class="flex align-center items-center justify-end">
+        {{#if isUser}}
+          <a href="/cart" class="flex items-center mx-3 lg:mx-6"><i
+              class="fa-solid fa-cart-shopping text-xl"
+            ></i>
+            <p class="ms-2">My cart</p>
+          </a>
+        {{/if}}
+
+        {{#if isAdmin}}
+          <a href="/adminPanel" class="flex items-center mx-3 lg:mx-6"><i
+              class="fa-solid fa-gear text-xl"
+            ></i>
+            <p class="ms-2">Dashboard</p>
+          </a>
+        {{/if}}
+
+        <a href="/profile" class="flex items-center mx-3 lg:mx-6">
+          <i class="fa-solid fa-user text-xl"></i>
+          <p class="ms-2">{{name}}</p>
+        </a>
+
+        <button class="bg-black text-white py-2 px-4 rounded" id="logout-btn">
+          <i class="fa-solid fa-door-open me-2"></i>
+          Logout
+        </button>
+
+      </div>
+    </nav>
+
+    <hr />
+
+    <h2 class="text-center text-6xl font-bold my-8">Thanks for order</h2>
+
+    <hr />
+
+    <h4 class="text-center my-6 text-xl"><i
+        class="fa-solid fa-circle-check text-green-400 pe-3"
+      ></i>
+      Payment completed successfully!</h4>
+
+    <hr />
+
+    <div class="mt-8 mb-6 grid lg:grid-cols-4 gap-12">
+      <div class="col-span-3">
+        <p class="mb-6">What you ordered:</p>
+
+        <ul role="list" class="-my-6 divide-y divide-gray-200">
+          {{#each products.products}}
+            <li class="flex py-6">
+              <div
+                class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+              >
+                <img
+                  src={{productId.thumbnail}}
+                  alt="Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch."
+                  class="h-full w-full object-cover object-center"
+                />
+              </div>
+
+              <div class="ml-4 flex flex-1 flex-col">
+                <div>
+                  <div
+                    class="flex justify-between text-base font-medium text-gray-900"
+                  >
+                    <h3>
+                      <a href="#">{{productId.title}}</a>
+                    </h3>
+                  </div>
+                  <p
+                    class="mt-1 text-sm text-gray-500"
+                  >{{productId.category}}</p>
+                </div>
+                <div class="flex flex-1 items-end justify-between text-sm">
+                  <p class="text-gray-500">Qty {{quantity}}</p>
+                </div>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="col-start-4 col-span-1">
+        <div class="bg-black text-white rounded-lg p-6">
+          <p class="mb-4 text-lg">Totals</p>
+
+          <div class="flex justify-between">
+            <p class="text-sm mb-2">Subtotal</p>
+            <p class="text-md font-bold">${{subtotal}}</p>
+          </div>
+          <div class="flex justify-between">
+            <p class="text-sm mb-2">Shipping</p>
+            <p class="text-md font-bold">$10</p>
+          </div>
+
+          <div
+            class="flex justify-between mt-12 pb-4 border-b-2 border-b-gray-400"
+          >
+            <p class="text-sm font-bold">Total</p>
+            <p class="text-md font-bold">${{total}}</p>
+          </div>
+
+          <button
+            class="bg-white text-black py-2 px-4 mt-4 rounded w-full"
+            id="send-invoce"
+            data-cart-id={{cartId}}
+          >
+            Send invoce
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  {{#if isUser}}
+    <div class="fixed bottom-10 right-10">
+      <div class="rounded-full bg-black py-5 px-4 hover:cursor-pointer">
+        <a href="/chat">
+          <i class="fa-solid fa-comments text-white text-3xl"></i>
+        </a>
+      </div>
+    </div>
+  {{/if}}
+
+  <footer class="text-gray-600 body-font">
+    <div
+      class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col"
+    >
+      <a
+        class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900"
+      >
+        <i class="fa-solid fa-book"></i>
+        <span class="ml-3 text-xl">BookifyStore</span>
+      </a>
+      <p
+        class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4"
+      >© 2024 BookifyStore —
+        <span class="text-gray-600 ml-1">Emiliano Rodriguez</span>
+      </p>
+      <span
+        class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start"
+      >
+        <a
+          class="ml-3 text-gray-500"
+          href="https://www.linkedin.com/in/erodriguez-dev/"
+          target="_blank"
+        >
+          <svg
+            fill="currentColor"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="none"
+              d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+            ></path>
+            <circle cx="4" cy="4" r="2" stroke="none"></circle>
+          </svg>
+        </a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/js/sendEmail.js"></script>
+  <script src="/js/logout.js"></script>
+</div>

@@ -95,9 +95,14 @@ const addProductByCartIdController = async (req, res) => {
 const postPaymentController = async (req, res) => {
   const { cid } = req.params;
 
+  const productData = await cartServices.getCartByCartId(cid);
+
   try {
     await cartServices.postPayment(cid);
-    res.status(200).json({ message: "Payment successufully" });
+    res.status(200).json({
+      message: "Payment successufully",
+      products: productData,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

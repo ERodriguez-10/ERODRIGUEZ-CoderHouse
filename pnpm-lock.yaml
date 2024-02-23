@@ -41,6 +41,9 @@ dependencies:
   mongoose-paginate-v2:
     specifier: ^1.7.4
     version: 1.7.4
+  nodemailer:
+    specifier: ^6.9.10
+    version: 6.9.10
   passport:
     specifier: ^0.7.0
     version: 0.7.0
@@ -1268,6 +1271,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /nodemailer@6.9.10:
+    resolution: {integrity: sha512-qtoKfGFhvIFW5kLfrkw2R6Nm6Ur4LNUMykyqu6n9BRKJuyQrqEGwdXXUAbwWEKt33dlWUGXb7rzmJP/p4+O+CA==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nodemon@3.0.3:

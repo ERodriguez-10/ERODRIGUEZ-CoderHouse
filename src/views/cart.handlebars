@@ -45,73 +45,96 @@
 
     <hr />
 
-    <h2 class="text-center text-6xl font-bold my-8 pb-8">My cart</h2>
+    {{#if hasProducts}}
+      <h2 class="text-center text-6xl font-bold my-8 pb-8">My cart</h2>
 
-    <div class="container mx-auto w-1/2">
-      <div class="mt-8 mb-6">
+      <div class="container mx-auto w-1/2">
+        <div class="mt-8 mb-6">
 
-        <ul role="list" class="-my-6 divide-y divide-gray-200">
-          {{#each products.products}}
-            <li class="flex py-6">
-              <div
-                class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
-              >
-                <img
-                  src={{productId.thumbnail}}
-                  alt="Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch."
-                  class="h-full w-full object-cover object-center"
-                />
-              </div>
-
-              <div class="ml-4 flex flex-1 flex-col">
-                <div>
-                  <div
-                    class="flex justify-between text-base font-medium text-gray-900"
-                  >
-                    <h3>
-                      <a href="#">{{productId.title}}</a>
-                    </h3>
-                    <p class="ml-4">${{productId.price}}</p>
-                  </div>
-                  <p
-                    class="mt-1 text-sm text-gray-500"
-                  >{{productId.category}}</p>
+          <ul role="list" class="-my-6 divide-y divide-gray-200">
+            {{#each products.products}}
+              <li class="flex py-6">
+                <div
+                  class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+                >
+                  <img
+                    src={{productId.thumbnail}}
+                    alt="Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch."
+                    class="h-full w-full object-cover object-center"
+                  />
                 </div>
-                <div class="flex flex-1 items-end justify-between text-sm">
-                  <p class="text-gray-500">Qty {{quantity}}</p>
 
-                  <div class="flex">
-                    <button
-                      type="button"
-                      class="font-medium text-indigo-600 hover:text-indigo-500"
-                    >Remove</button>
+                <div class="ml-4 flex flex-1 flex-col">
+                  <div>
+                    <div
+                      class="flex justify-between text-base font-medium text-gray-900"
+                    >
+                      <h3>
+                        <a href="#">{{productId.title}}</a>
+                      </h3>
+                      <p class="ml-4">${{productId.price}}</p>
+                    </div>
+                    <p
+                      class="mt-1 text-sm text-gray-500"
+                    >{{productId.category}}</p>
+                  </div>
+                  <div class="flex flex-1 items-end justify-between text-sm">
+                    <p class="text-gray-500">Qty {{quantity}}</p>
+
+                    <div class="flex">
+                      <button
+                        type="button"
+                        class="font-medium text-indigo-600 hover:text-indigo-500"
+                      >Remove</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          {{/each}}
-          <!-- More products... -->
-        </ul>
+              </li>
+            {{/each}}
+          </ul>
 
+        </div>
+
+        <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+          <div class="flex justify-between text-base font-medium text-gray-900">
+            <p>Subtotal</p>
+            <p>U$D {{subtotal}}</p>
+          </div>
+          <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated
+            at checkout.</p>
+          <div class="mt-6 flex items-center justify-center">
+            <button
+              id="checkout"
+              data-cart-id={{products._id}}
+              class="rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+            >Checkout</button>
+          </div>
+          <div
+            class="mt-6 flex justify-center text-center text-sm text-gray-500"
+          >
+            <p>
+              or
+              <a href="/products">
+                <button
+                  type="button"
+                  class="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Continue Shopping
+                  <span aria-hidden="true"> &rarr;</span>
+                </button>
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
-
-      <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
-        <div class="flex justify-between text-base font-medium text-gray-900">
-          <p>Subtotal</p>
-          <p>$262.00</p>
-        </div>
-        <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at
-          checkout.</p>
-        <div class="mt-6">
-          <button
-            id="checkout"
-            data-cart-id={{products._id}}
-            class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-          >Checkout</button>
-        </div>
-        <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-          <p>
-            or
+    {{else}}
+      <div class="container mx-auto w-1/2">
+        <div class="mt-8 mb-6">
+          <div class="flex justify-center">
+            <h1 class="text-center text-6xl font-bold my-8 pb-8">Your cart is
+              empty</h1>
+          </div>
+          <div class="flex justify-center">
             <a href="/products">
               <button
                 type="button"
@@ -121,11 +144,10 @@
                 <span aria-hidden="true"> &rarr;</span>
               </button>
             </a>
-          </p>
+          </div>
         </div>
       </div>
-    </div>
-
+    {{/if}}
   </div>
 
   {{#if isUser}}

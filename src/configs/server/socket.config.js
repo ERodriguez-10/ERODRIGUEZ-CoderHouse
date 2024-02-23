@@ -1,6 +1,8 @@
 import httpServer from "#configs/server/http.config.js";
 import { configEnv } from "#configs/env.config.js";
 
+import { cartServices } from "#services/factory.js";
+
 import {
   getCartByUserId,
   postNewCart,
@@ -9,14 +11,13 @@ import {
 
 import jwt from "jsonwebtoken";
 import { Server } from "socket.io";
+import sendInvoceToEmail from "../../utils/mail.js";
 
 const URL = configEnv.URL;
 
 const socketServer = new Server(httpServer);
 
 socketServer.on("connection", (socket) => {
-  console.log("[ServerSocket]: A new client has connected.");
-
   socket.on("newProductClient", (product) => {
     fetch(`${URL}/api/products`, {
       method: "POST",
@@ -118,13 +119,31 @@ socketServer.on("connection", (socket) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          socketServer.emit("checkoutSuccessfully");
+          socketServer.emit("checkoutSuccessfully", data.products._id);
         })
         .catch((err) => {
           console.log(err);
         });
     } catch (error) {
       console.error("Error purchasing: ", error);
+    }
+  });
+
+  socket.on("sendInvoce", async (cartId) => {
+    try {
+      const jwtToken = socket.request.headers.cookie.split("=")[1];
+
+      const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
+
+      const userEmail = tokenData.user.email;
+
+      const purchasedData = await cartServices.getCartByCartId(cartId);
+
+      await sendInvoceToEmail(userEmail, purchasedData.products);
+
+      socket.emit("emailSuccess");
+    } catch (error) {
+      console.log(error);
     }
   });
 
