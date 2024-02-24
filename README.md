@@ -168,3 +168,7 @@ Se removieron las rutas de las sessiones y se integró todo dentro de auth route
 ##
 
 - [PRE-ENTREGA 3] - Mailing y mensajería.
+
+Se agregaron nuevas vistas, se completo la pasarela de pago.
+
+Se agregaron dependencias nuevas.
