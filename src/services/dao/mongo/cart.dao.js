@@ -1,4 +1,9 @@
 import cartModel from "#models/cart.model.js";
+import ticketModel from "#models/ticket.model.js";
+import productModel from "#models/product.model.js";
+import { cartServices } from "#services/factory.js";
+
+import { v4 as uuidv4 } from "uuid";
 
 export default class CartDAO {
   constructor() {}
@@ -70,15 +75,101 @@ export default class CartDAO {
   };
 
   postPayment = async (cartId) => {
+    let hasNewCart = false;
+    let amountPurchased = 0;
+    let purchasedProducts = [];
+    let nonShopProducts = [];
+    let newCart = null;
+    let ticketCreated = false;
+    let ticketUser = null;
+
     try {
-      return await cartModel.updateOne(
-        {
-          _id: cartId,
-        },
-        {
-          $set: { hasPurchased: true },
+      const productData = await cartServices.getCartByCartId(cartId);
+
+      for (let i = 0; i < productData.products.length; i++) {
+        if (
+          productData.products[i].productId.stock >=
+          productData.products[i].quantity
+        ) {
+          productData.products[i].productId.stock -=
+            productData.products[i].quantity;
+
+          await productModel.updateOne(
+            {
+              _id: productData.products[i].productId._id,
+            },
+            {
+              $set: {
+                stock: productData.products[i].productId.stock,
+              },
+            }
+          );
+
+          amountPurchased +=
+            productData.products[i].productId.price *
+            productData.products[i].quantity;
+
+          purchasedProducts.push(productData.products[i]);
+        } else {
+          nonShopProducts.push(productData.products[i]);
         }
-      );
+      }
+
+      if (nonShopProducts.length === productData.products.length) {
+        hasNewCart = false;
+      } else {
+        hasNewCart = true;
+      }
+
+      if (hasNewCart) {
+        newCart = await cartModel.create({
+          products: purchasedProducts,
+          userId: productData.userId,
+          hasPurchased: true,
+        });
+
+        await cartModel.updateOne(
+          {
+            _id: cartId,
+          },
+          {
+            $set: { products: nonShopProducts },
+          }
+        );
+
+        ticketCreated = true;
+      } else if (!hasNewCart && purchasedProducts.length > 0) {
+        await cartModel.updateOne(
+          {
+            _id: cartId,
+          },
+          {
+            $set: { hasPurchased: true },
+          }
+        );
+
+        ticketCreated = true;
+      }
+
+      if (ticketCreated) {
+        ticketUser = await ticketModel.create({
+          code: uuidv4(),
+          purchaseDatetime: new Date(),
+          amount: amountPurchased,
+          productsBought: purchasedProducts,
+          purchaser: productData.userId,
+        });
+      }
+
+      const data = {
+        ticket: ticketUser ? ticketUser : null,
+        hasNewCart: hasNewCart,
+        buyCart: hasNewCart ? newCart : null,
+        productBought: purchasedProducts,
+        nonShopProducts: nonShopProducts,
+      };
+
+      return data;
     } catch (error) {
       throw new Error(error.message);
     }

@@ -9,3 +9,13 @@ document.querySelector("#checkout").addEventListener("click", (event) => {
 socket.on("checkoutSuccessfully", (id) => {
   window.location.href = "/cart/success/" + id;
 });
+
+socket.on("checkoutFailed", () => {
+  Toastify({
+    text: "Checkout failed. Not enough products available",
+    duration: 3000,
+    style: {
+      background: "rgb(255,0,0)",
+    },
+  }).showToast();
+});

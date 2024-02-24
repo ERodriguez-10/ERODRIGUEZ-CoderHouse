@@ -119,7 +119,15 @@ socketServer.on("connection", (socket) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          socketServer.emit("checkoutSuccessfully", data.products._id);
+          let id = data.hasNewCart ? data.buyCart._id : cartId;
+
+          if (data.message === "Payment failed") {
+            socketServer.emit("checkoutFailed");
+          }
+
+          if (data.message === "Payment successufully") {
+            socketServer.emit("checkoutSuccessfully", id);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -147,9 +155,7 @@ socketServer.on("connection", (socket) => {
     }
   });
 
-  socket.on("disconnect", () => {
-    console.log("[ServerSocket]: A client has disconnected.");
-  });
+  socket.on("disconnect", () => {});
 });
 
 export default socketServer;

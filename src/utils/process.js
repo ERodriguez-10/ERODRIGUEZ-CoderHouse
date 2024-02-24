@@ -24,8 +24,8 @@ process.on("exit", (code) => {
 });
 
 /* COMMENT THIS LINE IN DEV MODE */
-/*process.on("uncaughtException", (exception) => {
+process.on("uncaughtException", (exception) => {
   console.log("Something went wrong! Unhandled exception: " + exception);
-});*/
+});
 
 export default program;

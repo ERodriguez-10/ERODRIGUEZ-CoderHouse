@@ -95,14 +95,28 @@ const addProductByCartIdController = async (req, res) => {
 const postPaymentController = async (req, res) => {
   const { cid } = req.params;
 
-  const productData = await cartServices.getCartByCartId(cid);
-
   try {
-    await cartServices.postPayment(cid);
-    res.status(200).json({
-      message: "Payment successufully",
-      products: productData,
-    });
+    let result = await cartServices.postPayment(cid);
+
+    if (result.ticket !== null) {
+      res.status(200).json({
+        message: "Payment successufully",
+        productsBuy: result.productBought,
+        ticket: result.ticket,
+        productsLeft: result.nonShopProducts,
+        hasNewCart: result.hasNewCart,
+        buyCart: result.buyCart,
+      });
+    } else {
+      res.status(404).json({
+        message: "Payment failed",
+        productsBuy: result.productBought,
+        ticket: result.ticket,
+        productsLeft: result.nonShopProducts,
+        hasNewCart: result.hasNewCart,
+        buyCart: result.buyCart,
+      });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
