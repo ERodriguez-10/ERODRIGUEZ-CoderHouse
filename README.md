@@ -167,7 +167,7 @@ Se removieron las rutas de las sessiones y se integró todo dentro de auth route
 
 ##
 
-- [PRE-ENTREGA 3] - Mailing y mensajería.
+- [PRE-ENTREGA 3] - Mailing y mensajería. Fecha de entrega: 24/02/2024.
 
 Se agregaron nuevas vistas, se completo la pasarela de pago.
 
