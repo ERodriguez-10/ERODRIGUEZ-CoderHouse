@@ -1,5 +1,7 @@
 import { configEnv } from "#configs/env.config.js";
 
+import errorMiddleware from "../../middlewares/error.middleware.js";
+
 import cartRouter from "#routes/carts.routes.js";
 import messageRouter from "#routes/messages.routes.js";
 import productRouter from "#routes/products.routes.js";
@@ -29,6 +31,8 @@ expressApp.use(express.json());
 expressApp.use(express.urlencoded({ extended: true }));
 
 expressApp.use(cookieParser(configEnv.COOKIE_SECRET));
+
+expressApp.use(errorMiddleware);
 
 expressApp.use("/", viewRouter);
 expressApp.use("/api/auth", authRouter);
