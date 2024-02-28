@@ -172,3 +172,15 @@ Se removieron las rutas de las sessiones y se integró todo dentro de auth route
 Se agregaron nuevas vistas, se completo la pasarela de pago.
 
 Se agregaron dependencias nuevas.
+
+##
+
+- [Desafío 10] - Optimización. Fecha de entrega: 28/02/2024.
+
+Se agregaron test.
+
+Se agregaron CustomErrors.
+
+Nueva ruta en /api, endpoint /mockingproducts para obtener 50 productos fake.
+
+Correcion de errores.
