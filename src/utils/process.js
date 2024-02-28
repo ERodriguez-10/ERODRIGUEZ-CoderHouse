@@ -12,12 +12,14 @@ program
   .option("-d", "Variable for debug", "false")
   .option("--persist <mode>", "Persistance mode", "mongodb")
   .option("--mode <mode>", "Enviroment mode", "dev")
+  .option("-t", "Variable para testing", "false")
   .option("-u <user>", "Logged user", "No user is logged");
 
 program.parse();
 
 console.log("[Server-info]: Environment Mode Option:", program.opts().mode);
 console.log("[Server-info]: Persistence Mode Option:", program.opts().persist);
+console.log("[Server-info]: Test Mode Option:", program.opts().t);
 
 process.on("exit", (code) => {
   console.log("Exit code process: " + code);

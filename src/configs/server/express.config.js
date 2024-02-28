@@ -7,6 +7,7 @@ import messageRouter from "#routes/messages.routes.js";
 import productRouter from "#routes/products.routes.js";
 import viewRouter from "#routes/view.routes.js";
 import authRouter from "#routes/auth.routes.js";
+import mockRouter from "#routes/mock.routes.js";
 
 import __dirname from "../../utils.js";
 
@@ -32,9 +33,10 @@ expressApp.use(express.urlencoded({ extended: true }));
 
 expressApp.use(cookieParser(configEnv.COOKIE_SECRET));
 
-expressApp.use(errorMiddleware);
+//expressApp.use(errorMiddleware);
 
 expressApp.use("/", viewRouter);
+expressApp.use("/api/", mockRouter);
 expressApp.use("/api/auth", authRouter);
 expressApp.use("/api/carts", cartRouter);
 expressApp.use("/api/messages", messageRouter);

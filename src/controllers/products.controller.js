@@ -34,7 +34,15 @@ const addProductController = async (req, res) => {
       productCreated: productCreated,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.log(error);
+    res
+      .status(400)
+      .json({
+        error: error.name,
+        message: error.message,
+        code: error.code,
+        cause: error.cause,
+      });
   }
 };
 
