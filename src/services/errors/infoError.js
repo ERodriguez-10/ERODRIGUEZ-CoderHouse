@@ -3,10 +3,10 @@ export const generateProductErrorInfo = (product) => {
   List of required properties:
   * title: needs to be a String, received: ${product.title}
   * description: needs to be a String, received: ${product.description}
-  * price: needs to be a String, received: ${product.price}
+  * price: needs to be a Number, received: ${product.price}
   * thumbnail: needs to be a String, received: ${product.thumbnail}
-  * category: needs to be a String, received: ${product.category}
-  * stock: needs to be a String, received: ${product.stock}
+  * category: needs to be a Category ENUM, received: ${product.category}
+  * stock: needs to be a Number, received: ${product.stock}
   * code: needs to be a String, received: ${product.code}
-  * status: needs to be a String, received: ${product.status}`;
+  * status: needs to be a Boolean, received: ${product.status}`;
 };

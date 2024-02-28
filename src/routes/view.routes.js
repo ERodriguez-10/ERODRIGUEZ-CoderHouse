@@ -55,7 +55,7 @@ viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
   });
 });
 
-viewRouter.get(
+/*viewRouter.get(
   "/profile/my-products",
   passportCall(JwtStrategy),
   async (req, res) => {
@@ -89,7 +89,7 @@ viewRouter.get(
       isAdmin: req.user.role === "Admin" ? true : false,
     });
   }
-);
+);*/
 
 viewRouter.get(
   "/chat",

@@ -1,9 +1,5 @@
 import productModel from "#models/product.model.js";
 
-import CustomError from "../../errors/CustomError.js";
-import { generateProductErrorInfo } from "../../errors/infoError.js";
-import { EErrors } from "../../errors/enumsError.js";
-
 export default class ProductDAO {
   constructor() {}
 
@@ -11,12 +7,7 @@ export default class ProductDAO {
     try {
       return await productModel.create(product);
     } catch (error) {
-      throw CustomError.createError({
-        name: "MyCustomError",
-        cause: "Some cause",
-        message: "Something went wrong!",
-        code: 123,
-      });
+      throw new Error("Product not created");
     }
   };
 

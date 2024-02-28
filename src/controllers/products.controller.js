@@ -1,5 +1,9 @@
 import { productServices } from "#services/factory.js";
 
+import CustomError from "../services/errors/CustomError.js";
+import { generateProductErrorInfo } from "../services/errors/infoError.js";
+import { EErrors } from "../services/errors/enumsError.js";
+
 const getProductsController = async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
@@ -28,21 +32,30 @@ const addProductController = async (req, res) => {
   const productReq = req.body;
 
   try {
-    const productCreated = await productServices.addProduct(productReq);
-    res.status(201).json({
-      message: "Product succesfully created",
-      productCreated: productCreated,
-    });
-  } catch (error) {
-    console.log(error);
-    res
-      .status(400)
-      .json({
-        error: error.name,
-        message: error.message,
-        code: error.code,
-        cause: error.cause,
+    try {
+      const productCreated = await productServices.addProduct(productReq);
+      res.status(201).json({
+        message: "Product succesfully created",
+        productCreated: productCreated,
       });
+    } catch (error) {
+      CustomError.createError({
+        name: "Product creation error",
+        cause: generateProductErrorInfo(productReq),
+        message:
+          "Product cannot be created. Please see your console for details.",
+        code: EErrors.MISSING_PROPERTY_ERROR,
+      });
+    }
+  } catch (error) {
+    console.log("================================================");
+    console.log("[ERROR]: " + error.cause);
+    console.log("================================================");
+    res.status(400).json({
+      error: error.name,
+      message: error.message,
+      code: error.code,
+    });
   }
 };
 

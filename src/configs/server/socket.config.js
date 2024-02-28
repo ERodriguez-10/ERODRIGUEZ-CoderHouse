@@ -74,38 +74,43 @@ socketServer.on("connection", (socket) => {
   });
 
   socket.on("addProductToCart", async (productId) => {
-    try {
-      const jwtToken = socket.request.headers.cookie.split("=")[1];
+    const jwtCookie = socket.request.headers.cookie;
 
-      const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
+    if (jwtCookie && jwtCookie.includes("token=")) {
+      const jwtToken = jwtCookie.split("=")[1];
+      try {
+        const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
 
-      const isUser = tokenData.user.role;
+        const isUser = tokenData.user.role;
 
-      if (isUser === "Admin") {
-        socket.emit("adminError");
-      } else {
-        const userId = tokenData.user.userId;
-
-        const cartId = await getCartByUserId(userId);
-
-        if (!cartId) {
-          const newCart = await postNewCart(userId, productId);
-          if (newCart) {
-            socket.emit("productSuccessfullyAdded");
-          }
+        if (isUser === "Admin") {
+          socket.emit("adminError");
         } else {
-          const addProductToCart = await postProductToCart(
-            cartId._id,
-            productId
-          );
+          const userId = tokenData.user.userId;
 
-          if (addProductToCart) {
-            socket.emit("productSuccessfullyAdded");
+          const cartId = await getCartByUserId(userId);
+
+          if (!cartId) {
+            const newCart = await postNewCart(userId, productId);
+            if (newCart) {
+              socket.emit("productSuccessfullyAdded");
+            }
+          } else {
+            const addProductToCart = await postProductToCart(
+              cartId._id,
+              productId
+            );
+
+            if (addProductToCart) {
+              socket.emit("productSuccessfullyAdded");
+            }
           }
         }
+      } catch (error) {
+        console.error("Error verifying JWT token: ", error);
       }
-    } catch (error) {
-      console.error("Error adding product to cart: ", error);
+    } else {
+      console.error("JWT token not found in request headers.");
     }
   });
 
@@ -138,20 +143,26 @@ socketServer.on("connection", (socket) => {
   });
 
   socket.on("sendInvoce", async (cartId) => {
-    try {
-      const jwtToken = socket.request.headers.cookie.split("=")[1];
+    const jwtCookie = socket.request.headers.cookie;
 
-      const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
+    if (jwtCookie && jwtCookie.includes("token=")) {
+      const jwtToken = jwtCookie.split("=")[1];
 
-      const userEmail = tokenData.user.email;
+      try {
+        const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
 
-      const purchasedData = await cartServices.getCartByCartId(cartId);
+        const userEmail = tokenData.user.email;
 
-      await sendInvoceToEmail(userEmail, purchasedData.products);
+        const purchasedData = await cartServices.getCartByCartId(cartId);
 
-      socket.emit("emailSuccess");
-    } catch (error) {
-      console.log(error);
+        await sendInvoceToEmail(userEmail, purchasedData.products);
+
+        socket.emit("emailSuccess");
+      } catch (error) {
+        console.error("Error verifying JWT token: ", error);
+      }
+    } else {
+      console.error("JWT token not found in request headers.");
     }
   });
 
