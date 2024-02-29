@@ -4,6 +4,8 @@ import { authServices } from "#services/factory.js";
 
 import { Strategy } from "passport-google-oauth20";
 
+import logger from "#utils/logger.js";
+
 const GoogleStrategy = new Strategy(
   {
     clientID: configEnv.GOOGLE_CLIENT_ID,
@@ -29,7 +31,7 @@ const GoogleStrategy = new Strategy(
         done(null, user);
       }
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       done(null, false);
     }
   }

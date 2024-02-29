@@ -13,6 +13,8 @@ import jwt from "jsonwebtoken";
 import { Server } from "socket.io";
 import sendInvoceToEmail from "../../utils/mail.js";
 
+import logger from "#utils/logger.js";
+
 const URL = configEnv.URL;
 
 const socketServer = new Server(httpServer);
@@ -33,7 +35,7 @@ socketServer.on("connection", (socket) => {
         socketServer.emit("productCreatedServer", data.productCreated);
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(err);
       });
   });
 
@@ -52,7 +54,7 @@ socketServer.on("connection", (socket) => {
         socketServer.emit("messageCreatedServer", data.messageCreated);
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(err);
       });
   });
 
@@ -69,7 +71,7 @@ socketServer.on("connection", (socket) => {
         socketServer.emit("productDeletedServer", id);
       })
       .catch((err) => {
-        console.log(err);
+        logger.error(err);
       });
   });
 
@@ -135,7 +137,7 @@ socketServer.on("connection", (socket) => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          logger.error(err);
         });
     } catch (error) {
       console.error("Error purchasing: ", error);

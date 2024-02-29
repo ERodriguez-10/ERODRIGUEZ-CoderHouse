@@ -1,5 +1,7 @@
 import { configEnv } from "#configs/env.config.js";
 
+import logger from "#utils/logger.js";
+
 const URL = configEnv.URL;
 
 export async function getUserByEmail(userEmail) {
@@ -17,7 +19,7 @@ export async function getUserByEmail(userEmail) {
       return _id;
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
     });
 }
 
@@ -35,7 +37,7 @@ export async function getCartByUserId(_id) {
       return data.cartSelected;
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
     });
 }
 
@@ -52,7 +54,7 @@ export async function postNewCart(_id, productId) {
       return data;
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
     });
 }
 
@@ -68,6 +70,6 @@ export async function postProductToCart(_id, productId) {
       return data;
     })
     .catch((err) => {
-      console.log(err);
+      logger.error(err);
     });
 }

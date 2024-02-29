@@ -10,6 +10,7 @@ dotenv.config({
 
 export const configEnv = {
   PERSISTANCE: program.opts().persist,
+  MODE: program.opts().mode,
   TESTS: program.opts().t,
   URL: process.env.URL,
   PORT: process.env.PORT,

@@ -11,9 +11,9 @@ let cartServices;
 let chatServices;
 let productServices;
 
-async function initializeMongoService() {
-  console.log("[Server]: Initializing MongoDB services");
+import logger from "#utils/logger.js";
 
+async function initializeMongoService() {
   try {
     await MongoSingleton.getInstance();
 
@@ -41,19 +41,23 @@ async function initializeMongoService() {
     let productDao = new ProductServiceMongo();
     productServices = new ProductRepository(productDao);
 
-    console.log("[Server]: All services working with MongoDB are loaded.");
+    logger.info("[Server] - All services working with MongoDB are loaded.");
   } catch (error) {
-    console.error("[ERROR]: Failed initialize MongoDB: " + error);
+    logger.error("[ERROR]: Failed initialize MongoDB: " + error);
     process.exit(1);
   }
 }
 
 switch (configEnv.PERSISTANCE) {
   case "mongodb":
+    logger.info("[Config] - Environment Mode Option: " + configEnv.MODE);
+    logger.info("[Config] - Persistence Mode Option: " + configEnv.PERSISTANCE);
+    logger.info("[Config] - Test Mode Option: " + configEnv.TESTS);
+
     initializeMongoService();
     break;
   default:
-    console.error("Persistance mode not valid: ", configEnv.PERSISTANCE);
+    logger.error("Persistance mode not valid: ", configEnv.PERSISTANCE);
     process.exit(1);
 }
 

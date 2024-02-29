@@ -15,6 +15,7 @@ import express from "express";
 import handlebars from "express-handlebars";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { loggerMiddleware } from "../../middlewares/logger.middleware.js";
 
 const expressApp = express();
 
@@ -33,7 +34,8 @@ expressApp.use(express.urlencoded({ extended: true }));
 
 expressApp.use(cookieParser(configEnv.COOKIE_SECRET));
 
-//expressApp.use(errorMiddleware);
+expressApp.use(errorMiddleware);
+expressApp.use(loggerMiddleware);
 
 expressApp.use("/", viewRouter);
 expressApp.use("/api/", mockRouter);

@@ -3,8 +3,10 @@ import { missingPropertiesProductTest } from "./missingPropertiesProduct.test.js
 
 import { generateFakeProduct } from "#utils/fakerData.js";
 
+import logger from "#utils/logger.js";
+
 export default function tests() {
-  console.log("Initializing tests");
+  logger.debug("Initializing tests");
 
   // Order properties
   // ----------------

@@ -4,6 +4,8 @@ import CustomError from "../services/errors/CustomError.js";
 import { generateProductErrorInfo } from "../services/errors/infoError.js";
 import { EErrors } from "../services/errors/enumsError.js";
 
+import logger from "#utils/logger.js";
+
 const getProductsController = async (req, res) => {
   const { limit, page, sort, query } = req.query;
 
@@ -48,9 +50,7 @@ const addProductController = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log("================================================");
-    console.log("[ERROR]: " + error.cause);
-    console.log("================================================");
+    logger.error("[ERROR]: " + error.cause);
     res.status(400).json({
       error: error.name,
       message: error.message,
