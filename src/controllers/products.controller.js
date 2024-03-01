@@ -34,13 +34,16 @@ const addProductController = async (req, res) => {
   const productReq = req.body;
 
   try {
-    try {
-      const productCreated = await productServices.addProduct(productReq);
-      res.status(201).json({
-        message: "Product succesfully created",
-        productCreated: productCreated,
-      });
-    } catch (error) {
+    if (
+      productReq.title === undefined ||
+      productReq.description === undefined ||
+      productReq.price === undefined ||
+      productReq.thumbnail === undefined ||
+      productReq.category === undefined ||
+      productReq.code === undefined ||
+      productReq.status === undefined ||
+      productReq.stock === undefined
+    ) {
       CustomError.createError({
         name: "Product creation error",
         cause: generateProductErrorInfo(productReq),
@@ -49,6 +52,12 @@ const addProductController = async (req, res) => {
         code: EErrors.MISSING_PROPERTY_ERROR,
       });
     }
+
+    const productCreated = await productServices.addProduct(productReq);
+    res.status(201).json({
+      message: "Product succesfully created",
+      productCreated: productCreated,
+    });
   } catch (error) {
     logger.error("[ERROR]: " + error.cause);
     res.status(400).json({
