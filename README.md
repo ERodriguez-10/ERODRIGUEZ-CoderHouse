@@ -172,3 +172,11 @@ Se removieron las rutas de las sessiones y se integró todo dentro de auth route
 Se agregaron nuevas vistas, se completo la pasarela de pago.
 
 Se agregaron dependencias nuevas.
+
+##
+
+- [Desafío 10] - Logging y performance. Fecha de entrega: 04/03/2024.
+
+Se implemento Winston.
+
+Se implemento compresión de archivos.

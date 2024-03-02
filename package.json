@@ -1,12 +1,14 @@
 {
   "name": "backend-coderhouse",
-  "version": "1.12.1",
-  "description": "Preentrega final n°3 del curso de programación Backend de CoderHouse",
+  "version": "1.16.4",
+  "description": "Desafío n° 10 del curso de programación Backend de CoderHouse",
   "main": "app.js",
   "type": "module",
   "scripts": {
+    "test": "nodemon ./src/app.js -t",
     "dev": "nodemon ./src/app.js",
-    "start": "node ./src/app.js --mode prod"
+    "start": "node ./src/app.js",
+    "prod": "node ./src/app.js --mode prod"
   },
   "keywords": [
     "Node",
@@ -40,6 +42,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.2",
     "express": "^4.18.2",
+    "express-compression": "^1.0.2",
     "express-handlebars": "^7.1.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "~6.3.0",
@@ -55,13 +58,15 @@
     "winston": "^3.11.0"
   },
   "imports": {
-    "#controllers/*.js": "./src/controllers/*.js",
+    "#configs/*.js": "./src/configs/*.js",
     "#constants/*.js": "./src/constants/*.js",
+    "#controllers/*.js": "./src/controllers/*.js",
+    "#middlewares/*.js": "./src/middlewares/*.js",
     "#models/*.js": "./src/models/*.js",
     "#routes/*.js": "./src/routes/*.js",
+    "#services/*.js": "./src/services/*.js",
+    "#tests/*.js": "./tests/*.js",
     "#utils/*.js": "./src/utils/*.js",
-    "#views/*.js": "./src/views/*.js",
-    "#configs/*.js": "./src/configs/*.js",
-    "#services/*.js": "./src/services/*.js"
+    "#views/*.js": "./src/views/*.js"
   }
 }

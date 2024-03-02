@@ -1,8 +1,9 @@
 import { configEnv } from "#configs/env.config.js";
-
 import httpServer from "#configs/server/http.config.js";
 import socketServer from "#configs/server/socket.config.js";
-import tests from "../tests/index.js";
+
+import tests from "#tests/index.js";
+
 import logger from "#utils/logger.js";
 
 const PORT = configEnv.PORT;

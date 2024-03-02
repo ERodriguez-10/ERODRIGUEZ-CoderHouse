@@ -94,9 +94,9 @@ const loginController = async (req, res) => {
       throw new Error("Invalid credentials");
     }
 
-    const verifyPassowrd = await isValidPassword(account.password, password);
+    const verifyPassword = await isValidPassword(account.password, password);
 
-    if (!verifyPassowrd) {
+    if (!verifyPassword) {
       throw new Error("Invalid credentials");
     }
 

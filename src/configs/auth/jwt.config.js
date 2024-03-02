@@ -1,5 +1,7 @@
 import { configEnv } from "#configs/env.config.js";
 
+import logger from "#utils/logger.js";
+
 import { Strategy, ExtractJwt } from "passport-jwt";
 
 const cookieExtractor = (req) => {
@@ -21,6 +23,7 @@ const JwtStrategy = new Strategy(
     try {
       return done(null, payload.user);
     } catch (error) {
+      logger.error(error);
       return done(error);
     }
   }

@@ -2,6 +2,8 @@ import { configEnv } from "#configs/env.config.js";
 
 import { authServices } from "#services/factory.js";
 
+import logger from "#utils/logger.js";
+
 import { Strategy } from "passport-github2";
 
 const GitHubStrategy = new Strategy(
@@ -28,6 +30,7 @@ const GitHubStrategy = new Strategy(
         done(null, user);
       }
     } catch (error) {
+      logger.error(error);
       done(null, false);
     }
   }

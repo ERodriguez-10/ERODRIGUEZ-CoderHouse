@@ -1,8 +1,7 @@
-import { allPropertiesProductTest } from "./allPropertiesProduct.test.js";
-import { missingPropertiesProductTest } from "./missingPropertiesProduct.test.js";
+import { allPropertiesProductTest } from "#tests/allPropertiesProduct.test.js";
+import { missingPropertiesProductTest } from "#tests/missingPropertiesProduct.test.js";
 
 import { generateFakeProduct } from "#utils/fakerData.js";
-
 import logger from "#utils/logger.js";
 
 export default function tests() {
@@ -16,11 +15,11 @@ export default function tests() {
 
   allPropertiesProductTest(productGenerated);
 
-  const missingProperty = generateFakeProduct(
-    null,
-    "This is not a valid product",
-    null
-  );
+  const missingProperty = generateFakeProduct({
+    title: null,
+    description: "This is not a valid product",
+    price: null,
+  });
 
   missingPropertiesProductTest(missingProperty);
 }

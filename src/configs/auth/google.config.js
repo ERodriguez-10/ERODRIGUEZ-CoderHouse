@@ -2,9 +2,9 @@ import { configEnv } from "#configs/env.config.js";
 
 import { authServices } from "#services/factory.js";
 
-import { Strategy } from "passport-google-oauth20";
-
 import logger from "#utils/logger.js";
+
+import { Strategy } from "passport-google-oauth20";
 
 const GoogleStrategy = new Strategy(
   {

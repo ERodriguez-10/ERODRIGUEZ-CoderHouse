@@ -8,12 +8,11 @@ import {
   postNewCart,
   postProductToCart,
 } from "#utils/fetch.js";
+import logger from "#utils/logger.js";
+import sendInvoceToEmail from "#utils/mail.js";
 
 import jwt from "jsonwebtoken";
 import { Server } from "socket.io";
-import sendInvoceToEmail from "../../utils/mail.js";
-
-import logger from "#utils/logger.js";
 
 const URL = configEnv.URL;
 

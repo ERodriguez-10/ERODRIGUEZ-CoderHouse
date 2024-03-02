@@ -4,25 +4,6 @@ import logger from "#utils/logger.js";
 
 const URL = configEnv.URL;
 
-export async function getUserByEmail(userEmail) {
-  return fetch(`${URL}/api/auth/user/${userEmail}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      const { _id } = data.data;
-      return _id;
-    })
-    .catch((err) => {
-      logger.error(err);
-    });
-}
-
 export async function getCartByUserId(_id) {
   return fetch(`${URL}/api/carts/user/${_id}`, {
     method: "GET",

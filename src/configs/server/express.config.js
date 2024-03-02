@@ -1,6 +1,6 @@
 import { configEnv } from "#configs/env.config.js";
 
-import errorMiddleware from "../../middlewares/error.middleware.js";
+import { loggerMiddleware } from "#middlewares/logger.middleware.js";
 
 import cartRouter from "#routes/carts.routes.js";
 import messageRouter from "#routes/messages.routes.js";
@@ -11,11 +11,11 @@ import mockRouter from "#routes/mock.routes.js";
 
 import __dirname from "../../utils.js";
 
-import express from "express";
-import handlebars from "express-handlebars";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { loggerMiddleware } from "../../middlewares/logger.middleware.js";
+import express from "express";
+import handlebars from "express-handlebars";
+import compression from "express-compression";
 
 const expressApp = express();
 
@@ -34,8 +34,16 @@ expressApp.use(express.urlencoded({ extended: true }));
 
 expressApp.use(cookieParser(configEnv.COOKIE_SECRET));
 
-expressApp.use(errorMiddleware);
 expressApp.use(loggerMiddleware);
+
+expressApp.use(
+  compression({
+    brotli: {
+      enabled: true,
+      zlib: {},
+    },
+  })
+);
 
 expressApp.use("/", viewRouter);
 expressApp.use("/api/", mockRouter);
