@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
 const ticketCollection = "tickets";
 
-const ticketSchema = new mongoose.Schema({
+const ticketSchema = new Schema({
   code: { type: String, unique: true },
   purchaseDatetime: { type: Date, default: new Date() },
   amount: { type: Number },
@@ -10,6 +10,6 @@ const ticketSchema = new mongoose.Schema({
   purchaser: { type: String, required: true },
 });
 
-const ticketModel = mongoose.model(ticketCollection, ticketSchema);
+const ticketModel = model(ticketCollection, ticketSchema);
 
 export default ticketModel;
