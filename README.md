@@ -175,7 +175,15 @@ Se agregaron dependencias nuevas.
 
 ##
 
-- [Desafío 10] - Logging y performance. Fecha de entrega: 04/03/2024.
+- [Desafío 10] - Mocking y manejo de errores. Fecha de entrega: 28/02/2024.
+
+Se agregaron custom errors, errors middlewares.
+
+Nuevo endpoint de mocking products -> GET /api/mockingproducts
+
+##
+
+- [Desafío 11] - Logging y performance. Fecha de entrega: 04/03/2024.
 
 Se implemento Winston.
 
