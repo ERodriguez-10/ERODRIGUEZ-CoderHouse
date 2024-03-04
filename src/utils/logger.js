@@ -27,7 +27,10 @@ const devLogger = winston.createLogger({
     new winston.transports.Console({
       level: "debug",
     }),
-    new winston.transports.File({ filename: "logs/dev/combined.log" }),
+    new winston.transports.File({
+      filename: "logs/dev/combined.log",
+      level: "debug",
+    }),
   ],
   format: winston.format.combine(
     winston.format.timestamp({ format: "DD-MM-YYYY HH:mm:ss" }),
