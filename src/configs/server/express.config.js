@@ -1,6 +1,6 @@
 import { configEnv } from "#configs/env.config.js";
 
-import { loggerMiddleware } from "#middlewares/logger.middleware.js";
+import { loggerMiddleware } from "#middlewares/loggerMiddleware.js";
 
 import cartRouter from "#routes/carts.routes.js";
 import messageRouter from "#routes/messages.routes.js";

@@ -14,7 +14,7 @@ import { Router } from "express";
 import {
   hasAdminPermission,
   hasUserPermission,
-} from "../middlewares/hasPermissions.middleware.js";
+} from "#middlewares/hasPermissionsMiddleware.js";
 
 const viewRouter = Router();
 
