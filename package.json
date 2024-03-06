@@ -1,6 +1,6 @@
 {
   "name": "backend-coderhouse",
-  "version": "1.16.4",
+  "version": "1.17.4",
   "description": "Desafío n° 10 del curso de programación Backend de CoderHouse",
   "main": "app.js",
   "type": "module",

@@ -5,7 +5,7 @@ const program = new Command();
 program
   .name("bookify-backend")
   .description("CLI to start up the backend services")
-  .version("1.0.0");
+  .version("1.2.0");
 
 program
   .option("-p <port>", "Server port", 8080)
