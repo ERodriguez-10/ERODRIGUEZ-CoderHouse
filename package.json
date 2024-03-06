@@ -22,7 +22,9 @@
     "OAuth",
     "Google",
     "GitHub",
-    "Cors"
+    "Cors",
+    "Docker",
+    "Cookie"
   ],
   "author": "ERODRIGUEZ-10",
   "license": "ISC",
