@@ -37,3 +37,18 @@ newPasswordForm.addEventListener("submit", async (event) => {
       }
     });
 });
+
+const showPasswordIcon = document.querySelector("#showPasswordIcon");
+const hidePasswordIcon = document.querySelector("#hidePasswordIcon");
+
+showPasswordIcon.addEventListener("click", () => {
+  iPassword.setAttribute("type", "text");
+  showPasswordIcon.style.display = "none";
+  hidePasswordIcon.style.display = "block";
+});
+
+hidePasswordIcon.addEventListener("click", () => {
+  iPassword.setAttribute("type", "password");
+  showPasswordIcon.style.display = "block";
+  hidePasswordIcon.style.display = "none";
+});

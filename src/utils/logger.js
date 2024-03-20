@@ -25,11 +25,11 @@ const devLogger = winston.createLogger({
   levels: customLevelsOptions.levels,
   transports: [
     new winston.transports.Console({
-      level: "debug",
+      level: "info",
     }),
     new winston.transports.File({
       filename: "logs/dev/combined.log",
-      level: "debug",
+      level: "info",
     }),
   ],
   format: winston.format.combine(

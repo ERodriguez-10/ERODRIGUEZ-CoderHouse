@@ -46,7 +46,7 @@ const productSchema = new Schema({
   seller: {
     type: Schema.Types.ObjectId,
     ref: "accounts",
-    default: "Admin",
+    default: "65faf280e1c1eee805abb156",
   },
 });
 

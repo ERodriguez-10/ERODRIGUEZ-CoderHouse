@@ -74,7 +74,18 @@ const registerController = async (req, res) => {
 const loginController = async (req, res) => {
   const { email, password } = req.body;
   try {
-    if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+    const account = await authServices.getAccountByEmail(email);
+    if (!account) {
+      throw new Error("Invalid credentials");
+    }
+
+    const verifyPassword = await isValidPassword(account.password, password);
+
+    if (!verifyPassword) {
+      throw new Error("Invalid credentials");
+    }
+
+    if (account.role === "Admin") {
       const tokenAdmin = {
         first_name: "Admin",
         last_name: "N/A",
@@ -96,22 +107,11 @@ const loginController = async (req, res) => {
       });
     }
 
-    const account = await authServices.getAccountByEmail(email);
-    if (!account) {
-      throw new Error("Invalid credentials");
-    }
-
-    const verifyPassword = await isValidPassword(account.password, password);
-
-    if (!verifyPassword) {
-      throw new Error("Invalid credentials");
-    }
-
     const tokenUser = {
       first_name: account.first_name,
       last_name: account.last_name,
       email: account.email,
-      role: "user",
+      role: account.role,
       registerWith: account.registerWith,
       userId: account._id,
     };
@@ -233,23 +233,33 @@ const newPasswordController = async (req, res) => {
 
   const now = new Date();
   const expirationTime = findUser.expirationTime;
-  console.log("ExpTime" + expirationTime + " .Now " + now);
 
   if (now > expirationTime || !expirationTime) {
     await emailServices.deleteToken(token);
-    console.log("Expiration time completed");
     return res.redirect("/send-email-to-reset");
   }
 
   try {
-    console.log(findUser.email);
-    console.log(bycriptPassword);
-    const updatePassword = await authServices.updatePassword(
+    const account = await authServices.getAccountByEmail(findUser.email);
+
+    if (!account) {
+      throw new Error("Invalid credentials");
+    }
+
+    const isSamePassword = await isValidPassword(account.password, password);
+
+    if (isSamePassword) {
+      throw new Error("This is your current password. Please try another one.");
+    }
+
+    const passwordChange = await authServices.updatePassword(
       findUser.email,
       bycriptPassword
     );
-    console.log(updatePassword);
-    res.send("Okey");
+
+    console.log(passwordChange);
+
+    res.status(200).send({ success: true, error: null });
   } catch (err) {
     res.status(400).send({
       success: false,

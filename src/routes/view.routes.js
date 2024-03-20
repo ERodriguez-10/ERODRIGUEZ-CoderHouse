@@ -166,8 +166,10 @@ viewRouter.get("/products", passportCall(JwtStrategy), async (req, res) => {
     name: req.user.first_name,
     email: req.user.email,
     role: req.user.role,
-    isUser: req.user.role === "user" ? true : false,
-    isAdmin: req.user.role === "Admin" ? true : false,
+    isUser:
+      req.user.role === "Classic" || req.user.role === "Premium" ? true : false,
+    isAdminOrPremium:
+      req.user.role === "Admin" || req.user.role === "Premium" ? true : false,
     nProduct: nProduct,
     pages: arrayPages,
   });
@@ -184,8 +186,10 @@ viewRouter.get("/product/:pid", passportCall(JwtStrategy), async (req, res) => {
     product: productInfo,
     fileCss: "css/styles.css",
     name: req.user.first_name,
-    isUser: req.user.role === "user" ? true : false,
-    isAdmin: req.user.role === "Admin" ? true : false,
+    isUser:
+      req.user.role === "Classic" || req.user.role === "Premium" ? true : false,
+    isAdminOrPremium:
+      req.user.role === "Admin" || req.user.role === "Premium" ? true : false,
   });
 });
 
@@ -226,8 +230,12 @@ viewRouter.get(
       name: req.user.first_name,
       nProduct: nProduct,
       pages: arrayPages,
-      isUser: req.user.role === "user" ? true : false,
-      isAdmin: req.user.role === "Admin" ? true : false,
+      isUser:
+        req.user.role === "Classic" || req.user.role === "Premium"
+          ? true
+          : false,
+      isAdminOrPremium:
+        req.user.role === "Admin" || req.user.role === "Premium" ? true : false,
     });
   }
 );
@@ -254,8 +262,10 @@ viewRouter.get("/cart", passportCall(JwtStrategy), async (req, res) => {
     name: req.user.first_name,
     hasProducts: payloadCarts ? true : false,
     subtotal: subtotal ? Number(subtotal.toFixed(2)) : 0,
-    isUser: req.user.role === "user" ? true : false,
-    isAdmin: req.user.role === "Admin" ? true : false,
+    isUser:
+      req.user.role === "Classic" || req.user.role === "Premium" ? true : false,
+    isAdminOrPremium:
+      req.user.role === "Admin" || req.user.role === "Premium" ? true : false,
   });
 });
 
@@ -283,8 +293,12 @@ viewRouter.get(
       subtotal: subtotal ? Number(subtotal.toFixed(2)) : 0,
       cartId: cid,
       total: subtotal + 10,
-      isUser: req.user.role === "user" ? true : false,
-      isAdmin: req.user.role === "Admin" ? true : false,
+      isUser:
+        req.user.role === "Classic" || req.user.role === "Premium"
+          ? true
+          : false,
+      isAdminOrPremium:
+        req.user.role === "Admin" || req.user.role === "Premium" ? true : false,
     });
   }
 );
