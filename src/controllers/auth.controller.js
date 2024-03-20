@@ -1,7 +1,13 @@
-import { authServices } from "#services/factory.js";
+import { authServices, emailServices } from "#services/factory.js";
 
 import { createHash, isValidPassword } from "#utils/bcrytp.js";
 import { generateJWToken } from "#utils/jwt.js";
+
+import { v4 as uuidv4 } from "uuid";
+
+import { configEnv } from "#configs/env.config.js";
+
+import { transporter } from "../utils/mail.js";
 
 const githubCallbackController = async (req, res) => {
   const user = req.user;
@@ -50,6 +56,7 @@ const googleCallbackController = async (req, res) => {
 const registerController = async (req, res) => {
   let newUser = req.body;
   newUser.password = await createHash(newUser.password);
+  console.log(newUser);
   try {
     const account = await authServices.createAccount(newUser);
     return res.status(200).json({
@@ -155,6 +162,102 @@ const getAccountByEmailController = async (req, res) => {
   }
 };
 
+const mailOptionsToReset = {
+  from: configEnv.MAIL_USER,
+  // to: config.gmailAccount,
+  subject: "Reset password",
+};
+
+const recoverPasswordController = async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log(email);
+    if (!email) {
+      return res.status(400).send("Email not privided");
+    }
+    // Generamos un token/idrandom
+    const token = uuidv4();
+    const link = `http://localhost:8080/new-password/${token}`;
+
+    // Store the email and its expiration time
+    //  60 * 60 * 1000: Esto representa una hora en milisegundos. Multiplicando 60 (segundos) por 60 (minutos) y luego por 1000 (milisegundos), obtenemos el equivalente a una hora en milisegundos.
+    const now = new Date();
+    const oneHourMore = 60 * 60 * 1000;
+
+    console.log(now);
+    console.log(oneHourMore);
+
+    now.setTime(now.getTime() + oneHourMore);
+
+    console.log(now);
+
+    const tempDbMails = {
+      email,
+      tokenId: token,
+      expirationTime: new Date(Date.now() + 60 * 60 * 1000),
+    };
+
+    console.log(tempDbMails);
+
+    try {
+      const created = await emailServices.createEmail(tempDbMails);
+      console.log(created);
+    } catch (err) {
+      console.log(err);
+    }
+
+    mailOptionsToReset.to = email;
+    mailOptionsToReset.html = `To reset your password, click on the following link: <a href="${link}"> Reset Password</a>`;
+
+    transporter.sendMail(mailOptionsToReset, (error, info) => {
+      if (error) {
+        res.status(500).send({ message: "Error", payload: error });
+      }
+      res.send({ success: true, payload: info });
+    });
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      error: "No se pudo enviar el email desde:" + configEnv.MAIL_USER,
+    });
+  }
+};
+
+const newPasswordController = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  const bycriptPassword = await createHash(password);
+
+  const findUser = await emailServices.getEmail(token);
+
+  const now = new Date();
+  const expirationTime = findUser.expirationTime;
+  console.log("ExpTime" + expirationTime + " .Now " + now);
+
+  if (now > expirationTime || !expirationTime) {
+    await emailServices.deleteToken(token);
+    console.log("Expiration time completed");
+    return res.redirect("/send-email-to-reset");
+  }
+
+  try {
+    console.log(findUser.email);
+    console.log(bycriptPassword);
+    const updatePassword = await authServices.updatePassword(
+      findUser.email,
+      bycriptPassword
+    );
+    console.log(updatePassword);
+    res.send("Okey");
+  } catch (err) {
+    res.status(400).send({
+      success: false,
+      error: err.message,
+    });
+  }
+};
+
 export {
   githubCallbackController,
   googleCallbackController,
@@ -162,4 +265,6 @@ export {
   loginController,
   logoutController,
   getAccountByEmailController,
+  recoverPasswordController,
+  newPasswordController,
 };

@@ -9,6 +9,8 @@ import {
   loginController,
   logoutController,
   getAccountByEmailController,
+  newPasswordController,
+  recoverPasswordController,
 } from "#controllers/auth.controller.js";
 
 import { Router } from "express";
@@ -63,6 +65,10 @@ authRouter.get(
 authRouter.post("/register", registerController);
 
 authRouter.post("/login", loginController);
+
+authRouter.post("/recover-password", recoverPasswordController);
+
+authRouter.post("/new-password/:token", newPasswordController);
 
 authRouter.get("/logout", logoutController);
 

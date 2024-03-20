@@ -15,12 +15,12 @@
             alt="Login icon"
             class="h-8 w-8 self-center me-4"
           />
-          Login
+          Recovery
         </h1>
-        <p class="text-center mt-3 mb-6 text-gray-600">Welcome back</p>
+        <p class="text-center mt-3 mb-6 text-gray-600">Restore your password</p>
 
         <form
-          id="login-form"
+          id="recovery-form"
           class="px-8 flex flex-col"
           action="/login"
           method="POST"
@@ -36,53 +36,23 @@
             required
           />
 
-          <div class="mt-4">
-            <label for="user_password" class="font-bold">Password</label>
-            <div class="flex">
-              <input
-                type="password"
-                id="user_password"
-                name="user_password"
-                placeholder="********"
-                autocomplete="current-password"
-                class="px-4 py-2 border border-gray-300 rounded-lg mt-2 text-black w-full"
-                required
-              />
-              <div
-                style="margin-left: -35px; margin-top: 17px"
-                id="showPasswordIcon"
-              >
-                <img
-                  src="/assets/hidden.png"
-                  alt="Hidden icon"
-                  class="w-6 h-6 self-center hover:cursor-pointer"
-                />
-              </div>
-
-              <div
-                class="hidden"
-                style="margin-left: -35px; margin-top: 17px; display: none"
-                id="hidePasswordIcon"
-              >
-                <img
-                  src="/assets/view.png"
-                  alt="View icon"
-                  class="w-6 h-6 self-center hover:cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-
           <button
             type="submit"
             class="bg-black text-white px-4 py-2 rounded-lg mt-6 hover:bg-emerald-700 transition-all duration-300"
-          >Login</button>
+          >Send email</button>
 
           <div
             class="hidden bg-red-400 rounded-lg py-2 text-center mt-4"
             id="alertMessage"
           >
             <p>Ups! Invalid credentials</p>
+          </div>
+
+          <div
+            class="hidden bg-emerald-400 rounded-lg py-2 text-center mt-4"
+            id="emailSent"
+          >
+            <p>Email was sent successfully!</p>
           </div>
         </form>
 
@@ -116,16 +86,10 @@
         >
           Don't have an account? Sing up
         </a>
-        <a
-          href="/send-email-to-recover"
-          class="block text-center mb-8 text-gray-600 hover:underline"
-        >
-          Forgot your password? Send email
-        </a>
       </div>
     </div>
   </div>
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  <script src="/js/login.js"></script>
+  <script src="/js/recovery.js"></script>
 </div>

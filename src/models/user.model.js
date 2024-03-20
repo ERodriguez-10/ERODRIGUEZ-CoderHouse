@@ -2,6 +2,8 @@ import { Schema, model } from "mongoose";
 
 const userCollection = "users";
 
+const UserEnum = ["Classic", "Premium", "Admin"];
+
 const userSchema = new Schema({
   first_name: { type: String, required: true },
   last_name: { type: String },
@@ -12,7 +14,7 @@ const userSchema = new Schema({
   password: { type: String },
   cart: { type: Array },
   registerWith: { type: String, required: true },
-  role: { type: String, required: true },
+  role: { type: String, required: true, enum: UserEnum },
   github_id: {
     type: String,
   },

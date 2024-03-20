@@ -19,7 +19,7 @@ registerForm.addEventListener("submit", async (event) => {
     avatar: null,
     password: iPassword.value,
     registerWith: "App",
-    role: "User",
+    role: "Classic",
   };
 
   await fetch("http://localhost:8080/api/auth/register", {

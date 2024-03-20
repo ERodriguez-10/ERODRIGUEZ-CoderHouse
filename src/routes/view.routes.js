@@ -34,6 +34,23 @@ viewRouter.get("/register", async (req, res) => {
   });
 });
 
+viewRouter.get("/send-email-to-recover", async (req, res) => {
+  res.render("sendEmail", {
+    tabTitle: "Bookify Store - Send Email To Recover",
+    fileCss: "css/styles.css",
+  });
+});
+
+viewRouter.get("/new-password/:token", async (req, res) => {
+  const { token } = req.params;
+
+  res.render("newPassword", {
+    tabTitle: "Bookify Store - New Password",
+    fileCss: "css/styles.css",
+    token,
+  });
+});
+
 viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
   let avatarImg;
 

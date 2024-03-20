@@ -43,11 +43,11 @@ const productSchema = new Schema({
     ],
   },
   status: { type: Boolean, required: true, max: 100 },
-  /*seller: {
-    type: mongoose.Schema.Types.ObjectId,
+  seller: {
+    type: Schema.Types.ObjectId,
     ref: "accounts",
-    required: true,
-  },*/
+    default: "Admin",
+  },
 });
 
 productSchema.plugin(moongosePaginate);

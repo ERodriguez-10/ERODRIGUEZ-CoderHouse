@@ -26,4 +26,11 @@ export default class AuthDAO {
   deleteAccount = async (id) => {
     return await userModel.findByIdAndDelete(id);
   };
+
+  updatePassword = async (email, password) => {
+    return await userModel.findOneAndUpdate(
+      { email: email },
+      { password: password }
+    );
+  };
 }

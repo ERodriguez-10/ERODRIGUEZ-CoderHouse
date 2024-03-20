@@ -5,11 +5,13 @@ import AuthRepository from "#services/repository/auth.repository.js";
 import CartRepository from "#services/repository/cart.repository.js";
 import ChatRepository from "#services/repository/chat.repository.js";
 import ProductRepository from "#services/repository/product.repository.js";
+import EmailRepository from "#services/repository/email.repository.js";
 
 let authServices;
 let cartServices;
 let chatServices;
 let productServices;
+let emailServices;
 
 import logger from "#utils/logger.js";
 
@@ -34,6 +36,12 @@ async function initializeMongoService() {
     );
     let chatDao = new ChatServiceMongo();
     chatServices = new ChatRepository(chatDao);
+
+    const { default: EmailServiceMongo } = await import(
+      "#services/dao/mongo/email.dao.js"
+    );
+    let emailDao = new EmailServiceMongo();
+    emailServices = new EmailRepository(emailDao);
 
     const { default: ProductServiceMongo } = await import(
       "#services/dao/mongo/product.dao.js"
@@ -61,4 +69,10 @@ switch (configEnv.PERSISTANCE) {
     process.exit(1);
 }
 
-export { authServices, cartServices, chatServices, productServices };
+export {
+  authServices,
+  cartServices,
+  chatServices,
+  productServices,
+  emailServices,
+};
