@@ -142,7 +142,7 @@
                     />
                   </div>
 
-                  <div class="md:col-span-2">
+                  <div class="md:col-span-1">
                     <fieldset class="flex h-full items-center">
                       <legend>Status</legend>
                       <label for="active">
@@ -155,16 +155,30 @@
                         />
                         Active
                       </label>
-                      <label for="deactive" style="margin-left: 40px;">
+                      <label for="deactive">
                         <input
                           type="radio"
                           id="deactive"
                           name="status"
                           value="false"
+                          class="ms-4"
                         />
                         Disabled
                       </label>
                     </fieldset>
+                  </div>
+
+                  <div class="md:col-span-1">
+                    <p class="mb-2">Owner product</p>
+                    <label for="owner">
+                      <input
+                        type="checkbox"
+                        id="owner"
+                        name="owner"
+                        user-data-id="{{userId}}"
+                      />
+                      Yes, I'm the seller of the product
+                    </label>
                   </div>
 
                   <div class="md:col-span-5">
@@ -213,6 +227,7 @@
                   class="flex flex-grow items-center w-full text-white bg-red-600 py-2 px-4 me-2 focus:outline-none justify-center rounded-sm text-base"
                   id="buttonDelete"
                   data-product-id="{{_doc._id}}"
+                  data-user-id="{{_doc.seller}}"
                 >
                   <i class="fa-solid fa-trash mr-3"></i>
                   Delete product</button>

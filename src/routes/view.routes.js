@@ -236,6 +236,7 @@ viewRouter.get(
           : false,
       isAdminOrPremium:
         req.user.role === "Admin" || req.user.role === "Premium" ? true : false,
+      userId: req.user.userId,
     });
   }
 );

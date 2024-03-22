@@ -972,6 +972,10 @@ select {
   margin-top: 2rem;
 }
 
+.ms-4 {
+  margin-inline-start: 1rem;
+}
+
 .block {
   display: block;
 }

@@ -8,7 +8,6 @@ const tokenId = submitButton.getAttribute("data-token-id");
 
 newPasswordForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  console.log(tokenId);
 
   alertMessage.style.display = "none";
 
@@ -27,7 +26,6 @@ newPasswordForm.addEventListener("submit", async (event) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       if (!data.success) {
         return (alertMessage.style.display = "block");
       } else {

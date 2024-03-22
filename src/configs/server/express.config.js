@@ -46,11 +46,11 @@ expressApp.use(
 );
 
 expressApp.use("/", viewRouter);
-expressApp.use("/api/", mockRouter);
-expressApp.use("/api/auth", authRouter);
-expressApp.use("/api/carts", cartRouter);
-expressApp.use("/api/messages", messageRouter);
-expressApp.use("/api/products", productRouter);
+expressApp.use("/api/v1/", mockRouter);
+expressApp.use("/api/v1/auth", authRouter);
+expressApp.use("/api/v1/cart", cartRouter);
+expressApp.use("/api/v1/chat", messageRouter);
+expressApp.use("/api/v1/product", productRouter);
 
 expressApp.engine(
   "handlebars",

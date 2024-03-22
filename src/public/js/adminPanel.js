@@ -11,6 +11,9 @@ const iPrice = document.getElementById("price");
 const iCode = document.getElementById("code");
 const iThumbnail = document.getElementById("thumbnail");
 const iStatus = document.getElementsByName("status");
+const iOwner = document.getElementById("owner");
+
+const userId = iOwner.getAttribute("user-data-id");
 
 // Form submit event
 form.addEventListener("submit", (e) => {
@@ -36,6 +39,10 @@ form.addEventListener("submit", (e) => {
     status: iStatusValue,
   };
 
+  if (iOwner.checked) {
+    newProductFromSocket.seller = userId;
+  }
+
   if (newProductFromSocket) {
     socket.emit("newProductClient", newProductFromSocket);
     form.reset();
@@ -45,8 +52,11 @@ form.addEventListener("submit", (e) => {
 document.querySelectorAll("#buttonDelete").forEach((button) => {
   button.addEventListener("click", (event) => {
     const productId = event.target.getAttribute("data-product-id");
+    const userId = event.target.getAttribute("data-user-id");
 
-    socket.emit("deleteProductClient", productId);
+    console.log("This is the productId: " + productId + ", userId: " + userId);
+
+    socket.emit("deleteProductClient", productId, userId);
   });
 });
 

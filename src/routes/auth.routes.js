@@ -72,6 +72,4 @@ authRouter.post("/new-password/:token", newPasswordController);
 
 authRouter.get("/logout", logoutController);
 
-authRouter.get("/user/:email", getAccountByEmailController);
-
 export default authRouter;

@@ -22,7 +22,6 @@ recoveryForm.addEventListener("submit", async (event) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       if (!data.success) {
         return (alertMessage.style.display = "block");
       } else {

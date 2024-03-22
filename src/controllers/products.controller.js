@@ -59,6 +59,7 @@ const addProductController = async (req, res) => {
       productCreated: productCreated,
     });
   } catch (error) {
+    console.log(error);
     logger.error("[ERROR]: " + error.cause);
     res.status(400).json({
       error: error.name,
@@ -90,9 +91,12 @@ const updateProductController = async (req, res) => {
 
 const deleteProductController = async (req, res) => {
   const { pid } = req.params;
+  const { userId } = req.body;
+
+  console.log(pid, userId);
 
   try {
-    await productServices.deleteProduct(pid);
+    await productServices.deleteProduct(pid, userId);
     res.status(200).json({
       message: "Content successfully deleted!",
     });

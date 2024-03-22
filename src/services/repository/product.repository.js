@@ -8,6 +8,7 @@ export default class ProductRepository {
   };
 
   addProduct = async (product) => {
+    console.log(product);
     try {
       return await this.dao.addProduct(product);
     } catch (error) {
@@ -23,7 +24,7 @@ export default class ProductRepository {
     return await this.dao.updateProduct(id, product);
   };
 
-  deleteProduct = async (id) => {
-    return await this.dao.deleteProduct(id);
+  deleteProduct = async (id, userId) => {
+    return await this.dao.deleteProduct(id, userId);
   };
 }

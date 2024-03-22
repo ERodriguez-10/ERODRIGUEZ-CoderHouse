@@ -56,7 +56,7 @@ const googleCallbackController = async (req, res) => {
 const registerController = async (req, res) => {
   let newUser = req.body;
   newUser.password = await createHash(newUser.password);
-  console.log(newUser);
+
   try {
     const account = await authServices.createAccount(newUser);
     return res.status(200).json({
@@ -171,7 +171,7 @@ const mailOptionsToReset = {
 const recoverPasswordController = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log(email);
+
     if (!email) {
       return res.status(400).send("Email not privided");
     }
@@ -184,12 +184,7 @@ const recoverPasswordController = async (req, res) => {
     const now = new Date();
     const oneHourMore = 60 * 60 * 1000;
 
-    console.log(now);
-    console.log(oneHourMore);
-
     now.setTime(now.getTime() + oneHourMore);
-
-    console.log(now);
 
     const tempDbMails = {
       email,
@@ -197,11 +192,8 @@ const recoverPasswordController = async (req, res) => {
       expirationTime: new Date(Date.now() + 60 * 60 * 1000),
     };
 
-    console.log(tempDbMails);
-
     try {
-      const created = await emailServices.createEmail(tempDbMails);
-      console.log(created);
+      await emailServices.createEmail(tempDbMails);
     } catch (err) {
       console.log(err);
     }
@@ -252,12 +244,7 @@ const newPasswordController = async (req, res) => {
       throw new Error("This is your current password. Please try another one.");
     }
 
-    const passwordChange = await authServices.updatePassword(
-      findUser.email,
-      bycriptPassword
-    );
-
-    console.log(passwordChange);
+    await authServices.updatePassword(findUser.email, bycriptPassword);
 
     res.status(200).send({ success: true, error: null });
   } catch (err) {

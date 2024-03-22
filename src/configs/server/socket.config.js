@@ -57,17 +57,22 @@ socketServer.on("connection", (socket) => {
       });
   });
 
-  socket.on("deleteProductClient", (id) => {
-    fetch(`${URL}/api/products/${id}`, {
+  socket.on("deleteProductClient", (productId, userId) => {
+    const data = {
+      productId: productId,
+      userId: userId,
+    };
+
+    fetch(`${URL}/api/products/${productId}`, {
       method: "DELETE",
       headers: {
         "Contet-Type": "application/json",
       },
-      body: JSON.stringify(id),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
-        socketServer.emit("productDeletedServer", id);
+        socketServer.emit("productDeletedServer", productId);
       })
       .catch((err) => {
         logger.error(err);

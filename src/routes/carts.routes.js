@@ -14,8 +14,6 @@ import { Router } from "express";
 
 const cartRouter = Router();
 
-cartRouter.get("/user/:uid", getCartByUserIdController);
-
 cartRouter.post("/", createCartController);
 
 cartRouter.get("/:cid", getCartByCartIdController);
@@ -24,12 +22,14 @@ cartRouter.put("/:cid", updateCartController);
 
 cartRouter.delete("/:cid", cleanCartByCartIdController);
 
-cartRouter.post("/:cid/product/:pid", addProductByCartIdController);
+cartRouter.get("/user/:uid", getCartByUserIdController);
 
 cartRouter.post("/:cid/purchase", postPaymentController);
 
-cartRouter.put("/:cid/products/:pid", updateQuantityProductController);
+cartRouter.put("/:cid/product/:pid", updateQuantityProductController);
 
-cartRouter.delete("/:cid/products/:pid", deleteProductByCartIdController);
+cartRouter.post("/:cid/product/:pid", addProductByCartIdController);
+
+cartRouter.delete("/:cid/product/:pid", deleteProductByCartIdController);
 
 export default cartRouter;
