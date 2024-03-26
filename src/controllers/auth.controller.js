@@ -177,7 +177,7 @@ const recoverPasswordController = async (req, res) => {
     }
     // Generamos un token/idrandom
     const token = uuidv4();
-    const link = `http://localhost:8080/new-password/${token}`;
+    const link = `http://localhost:8080/updatePassword/${token}`;
 
     // Store the email and its expiration time
     //  60 * 60 * 1000: Esto representa una hora en milisegundos. Multiplicando 60 (segundos) por 60 (minutos) y luego por 1000 (milisegundos), obtenemos el equivalente a una hora en milisegundos.
@@ -203,14 +203,14 @@ const recoverPasswordController = async (req, res) => {
 
     transporter.sendMail(mailOptionsToReset, (error, info) => {
       if (error) {
-        res.status(500).send({ message: "Error", payload: error });
+        return res.status(400).send({ message: "Error", payload: error });
       }
-      res.send({ success: true, payload: info });
+      res.status(201).send({ success: true, payload: info });
     });
   } catch (error) {
     res.status(500).send({
       success: false,
-      error: "No se pudo enviar el email desde:" + configEnv.MAIL_USER,
+      error: "Could not send the email from:" + configEnv.MAIL_USER,
     });
   }
 };

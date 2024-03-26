@@ -17,6 +17,9 @@ import express from "express";
 import handlebars from "express-handlebars";
 import compression from "express-compression";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "../../docs/swaggerSpecs.js";
+
 const expressApp = express();
 
 const corsOptions = {
@@ -51,6 +54,17 @@ expressApp.use("/api/v1/auth", authRouter);
 expressApp.use("/api/v1/cart", cartRouter);
 expressApp.use("/api/v1/chat", messageRouter);
 expressApp.use("/api/v1/product", productRouter);
+
+expressApp.use(
+  "/api/v1/swagger",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    explorer: true,
+    swaggerOptions: {
+      operationsSorter: "method",
+    },
+  })
+);
 
 expressApp.engine(
   "handlebars",

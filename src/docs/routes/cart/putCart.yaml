@@ -1,0 +1,49 @@
+paths:
+  /cart/{cartId}:
+    put:
+      tags:
+        - cart
+      summary: Update products inside the cart
+      description: >
+        This endpoint is used to update the products in a cart. It requires a cart ID (cid) and an array of product IDs. Each product in the array is mapped to an object with a productId and a quantity of 1. If the operation is successful, a success message is returned. If there's an error, it's caught and an error message is returned.
+      operationId: updateCart
+      parameters:
+        - name: cartId
+          in: path
+          description: Cart ID related to MongoDB
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Requires an array of product IDs.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: array
+                  items:
+                    type: string
+        required: true
+      responses:
+        "200":
+          description: Products updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Product updated successfully"
+        "400":
+          description: Products update failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please send an array of products to create your cart."

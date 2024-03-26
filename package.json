@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "nodemon ./src/app.js -t",
-    "dev": "nodemon ./src/app.js",
+    "dev": "nodemon ./src/app.js -e yaml",
     "start": "node ./src/app.js",
     "prod": "node ./src/app.js --mode prod"
   },
@@ -58,6 +58,8 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "socket.io": "^4.7.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.1",
     "winston": "^3.11.0"
   },

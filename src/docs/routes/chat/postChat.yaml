@@ -1,0 +1,39 @@
+paths:
+  /chat:
+    post:
+      tags:
+        - chat
+      summary: Create a new message for a chat
+      description: >
+        This endpoint is used to create a new message in a chat. It requires a message request body. If the operation is successful, a success message and the created message are returned. If there's an error, it's caught and an error message is returned.
+      operationId: postChat
+      requestBody:
+        description: Requires a message request body.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+        required: true
+      responses:
+        "201":
+          description: Message created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Message succesfully created"
+                  messageCreated:
+                    $ref: "#/components/schemas/Message"
+        "400":
+          description: Message creation failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"

@@ -1,0 +1,74 @@
+paths:
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register a new user
+      description: >
+        This endpoint is used to register a new user. It requires a JSON object with user information, including email and password. The password is hashed before the user account is created. If the account creation is successful, the new account data is returned. If there's an error, it's caught and an error message is returned.
+      operationId: registerUser
+      requestBody:
+        description: To register a new user with a password is necessary to send an unique email.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: User's first name
+                  example: John
+                  required: true
+                last_name:
+                  type: string
+                  description: User's last name
+                  example: Doe
+                email:
+                  type: string
+                  description: User's email
+                  example: johndoe@example.com
+                avatar:
+                  type: string
+                  description: User's avatar
+                  example: https://example.com/avatar.jpg
+                password:
+                  type: string
+                  description: User's password
+                  example: 123456
+                registerWith:
+                  type: string
+                  description: User's registration method
+                  example: App
+                  required: true
+                role:
+                  type: string
+                  description: User's role
+                  example: Classic
+                  required: true
+        required: true
+      responses:
+        "200":
+          description: Account created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/User"
+        "400":
+          description: Account creation failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "Error message"

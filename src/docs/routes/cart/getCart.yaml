@@ -1,0 +1,36 @@
+paths:
+  /cart/{cartId}:
+    get:
+      tags:
+        - cart
+      summary: Get the details of a specific cart
+      description: >
+        This endpoint is used to get the details of a cart. It requires a cart ID (cid). If the operation is successful, the selected cart is returned. If there's an error, it's caught and an error message is returned.
+      operationId: getCart
+      parameters:
+        - name: cartId
+          in: path
+          description: Cart ID related to MongoDB
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cart details retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cartSelected:
+                    $ref: "#/components/schemas/Cart"
+        "404":
+          description: Cart retrieval failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"

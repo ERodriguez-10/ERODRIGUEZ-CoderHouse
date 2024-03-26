@@ -1,0 +1,36 @@
+paths:
+  /cart/user/{userId}:
+    get:
+      tags:
+        - cart
+      summary: Get the pending purchase cart
+      description: >
+        This endpoint is used to get the details of a cart by a user's ID (uid). If the operation is successful, the selected cart is returned. If there's an error, it's caught and an error message is returned.
+      operationId: getCartByUserId
+      parameters:
+        - name: userId
+          in: path
+          description: User ID related to MongoDB.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cart retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cartSelected:
+                    $ref: "#/components/schemas/Cart"
+        "404":
+          description: Cart retrieval failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"

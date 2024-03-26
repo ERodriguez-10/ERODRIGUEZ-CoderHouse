@@ -5,7 +5,7 @@ import logger from "#utils/logger.js";
 const URL = configEnv.URL;
 
 export async function getCartByUserId(_id) {
-  return fetch(`${URL}/api/carts/user/${_id}`, {
+  return fetch(`${URL}/api/v1/cart/user/${_id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export async function getCartByUserId(_id) {
 }
 
 export async function postNewCart(_id, productId) {
-  return fetch(`${URL}/api/carts`, {
+  return fetch(`${URL}/api/v1/cart`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export async function postNewCart(_id, productId) {
 }
 
 export async function postProductToCart(_id, productId) {
-  return fetch(`${URL}/api/carts/${_id}/product/${productId}`, {
+  return fetch(`${URL}/api/v1/cart/${_id}/product/${productId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

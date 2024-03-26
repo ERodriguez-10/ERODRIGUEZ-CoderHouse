@@ -52,7 +52,6 @@ form.addEventListener("submit", (e) => {
 document.querySelectorAll("#buttonDelete").forEach((button) => {
   button.addEventListener("click", (event) => {
     const productId = event.target.getAttribute("data-product-id");
-    const userId = event.target.getAttribute("data-user-id");
 
     console.log("This is the productId: " + productId + ", userId: " + userId);
 

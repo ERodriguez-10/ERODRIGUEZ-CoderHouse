@@ -1,0 +1,23 @@
+paths:
+  /loggertest:
+    get:
+      tags:
+        - test
+      summary: Generate all logger logs
+      description: This endpoint triggers all types of logger logs for testing purposes. It generates debug, http, info, warning, error, and fatal logs.
+      operationId: generateLogger
+      responses:
+        "200":
+          description: OK. Logger tests have been successfully generated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
+        "400":
+          description: Invalid status value
+        "500":
+          description: Internal server error. An error occurred while generating the logger tests.

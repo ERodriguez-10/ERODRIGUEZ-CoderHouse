@@ -1,0 +1,50 @@
+paths:
+  /product:
+    post:
+      tags:
+        - product
+      summary: Create a new product
+      description: Use this to create a new product
+      operationId: addProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                thumbnail:
+                  type: string
+                category:
+                  type: string
+                code:
+                  type: string
+                status:
+                  type: string
+                stock:
+                  type: number
+      responses:
+        "201":
+          description: Product successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Product creation failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  message:
+                    type: string
+                  code:
+                    type: string

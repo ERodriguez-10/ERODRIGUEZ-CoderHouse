@@ -1,6 +1,5 @@
 const newPasswordForm = document.querySelector("#newPassword-form");
 
-const iEmail = document.querySelector("#user_email");
 const iPassword = document.querySelector("#user_password");
 
 const submitButton = document.querySelector("#submit-btn");
@@ -12,12 +11,11 @@ newPasswordForm.addEventListener("submit", async (event) => {
   alertMessage.style.display = "none";
 
   const data = {
-    email: iEmail.value,
     password: iPassword.value,
     token: tokenId,
   };
 
-  await fetch(`http://localhost:8080/api/auth/new-password/${tokenId}`, {
+  await fetch(`http://localhost:8080/api/v1/auth/updatePassword/${tokenId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +27,6 @@ newPasswordForm.addEventListener("submit", async (event) => {
       if (!data.success) {
         return (alertMessage.style.display = "block");
       } else {
-        iEmail.value = "";
         iPassword.value = "";
         emailSent.style.display = "block";
       }

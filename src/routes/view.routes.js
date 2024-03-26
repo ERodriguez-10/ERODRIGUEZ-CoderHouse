@@ -41,7 +41,7 @@ viewRouter.get("/send-email-to-recover", async (req, res) => {
   });
 });
 
-viewRouter.get("/new-password/:token", async (req, res) => {
+viewRouter.get("/updatePassword/:token", async (req, res) => {
   const { token } = req.params;
 
   res.render("newPassword", {

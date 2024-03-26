@@ -13,7 +13,7 @@ recoveryForm.addEventListener("submit", async (event) => {
     email: iEmail.value,
   };
 
-  await fetch("http://localhost:8080/api/auth/recover-password", {
+  await fetch("http://localhost:8080/api/v1/auth/recoverPassword", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -22,6 +22,7 @@ recoveryForm.addEventListener("submit", async (event) => {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       if (!data.success) {
         return (alertMessage.style.display = "block");
       } else {

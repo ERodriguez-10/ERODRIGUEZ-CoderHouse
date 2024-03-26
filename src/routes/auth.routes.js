@@ -66,9 +66,9 @@ authRouter.post("/register", registerController);
 
 authRouter.post("/login", loginController);
 
-authRouter.post("/recover-password", recoverPasswordController);
+authRouter.post("/recoverPassword", recoverPasswordController);
 
-authRouter.post("/new-password/:token", newPasswordController);
+authRouter.post("/updatePassword/:token", newPasswordController);
 
 authRouter.get("/logout", logoutController);
 

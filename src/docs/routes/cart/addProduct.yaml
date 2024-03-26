@@ -1,0 +1,41 @@
+paths:
+  /cart/{cartId}/product/{productId}:
+    post:
+      tags:
+        - cart
+      summary: Add a product to a cart
+      description: >
+        This endpoint is used to add a product to a cart. It requires a product ID (pid) and a cart ID (cid). If the operation is successful, a success message is returned. If there's an error, it's caught and an error message is returned.
+      operationId: addProductToCart
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product added successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "New product has added!"
+        "400":
+          description: Product addition failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"

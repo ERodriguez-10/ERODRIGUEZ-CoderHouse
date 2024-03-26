@@ -1,0 +1,52 @@
+paths:
+  /cart/{cartId}/product/{productId}:
+    put:
+      tags:
+        - cart
+      summary: Update quantity of a specific product in a cart
+      description: >
+        This endpoint is used to update the quantity of a product in a cart. It requires a cart ID (cid), a product ID (pid), and a quantity. If the operation is successful, a success message is returned. If there's an error, it's caught and an error message is returned.
+      operationId: updateQuantityProduct
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Requires a quantity.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  example: 10
+        required: true
+      responses:
+        "200":
+          description: Quantity updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Quantity successfully updated"
+        "400":
+          description: Quantity update failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"

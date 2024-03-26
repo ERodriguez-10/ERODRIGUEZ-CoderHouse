@@ -1,0 +1,31 @@
+paths:
+  /chat:
+    get:
+      tags:
+        - chat
+      summary: Return all messages in a chat group
+      description: >
+        This endpoint is used to get all messages in a chat group. If the operation is successful, a list of messages is returned. If there's an error, it's caught and an error message is returned.
+      operationId: getChat
+      responses:
+        "200":
+          description: Messages retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messagesList:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Chat"
+        "500":
+          description: Messages retrieval failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"

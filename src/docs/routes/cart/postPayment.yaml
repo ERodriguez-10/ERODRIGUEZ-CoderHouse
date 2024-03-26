@@ -1,0 +1,74 @@
+paths:
+  /cart/{cartId}/purchase:
+    post:
+      tags:
+        - cart
+      summary: Complete purchase of shopping cart
+      description: >
+        This endpoint is used to complete the purchase of a shopping cart. It requires a cart ID (cid). If the operation is successful, a success message, the purchased products, the ticket, the remaining products, the new cart status, and the purchased cart are returned. If there's an error, it's caught and an error message is returned.
+      operationId: postPayment
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Payment successful.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Payment successufully"
+                  productsBuy:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+                  ticket:
+                    type: string
+                  productsLeft:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+                  hasNewCart:
+                    type: boolean
+                  buyCart:
+                    $ref: "#/components/schemas/Cart"
+        "400":
+          description: Payment failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"
+        "404":
+          description: Payment failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Payment failed"
+                  productsBuy:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+                  ticket:
+                    type: string
+                  productsLeft:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+                  hasNewCart:
+                    type: boolean
+                  buyCart:
+                    $ref: "#/components/schemas/Cart"

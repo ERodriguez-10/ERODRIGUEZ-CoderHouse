@@ -1,0 +1,48 @@
+paths:
+  /product:
+    get:
+      tags:
+        - product
+      summary: Get all products
+      description: >
+        This endpoint is used to get all products with optional parameters for limit, page, sort, and query. If the operation is successful, a list of product data is returned.
+      operationId: getProduct
+      parameters:
+        - name: limit
+          in: query
+          description: Limit the number of products returned
+          required: false
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: Page number for product data pagination
+          required: false
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: Sorting order for product data
+          required: false
+          schema:
+            type: string
+        - name: query
+          in: query
+          description: Query string to search the product data
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Products retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  productData:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+        "400":
+          description: Invalid status value.

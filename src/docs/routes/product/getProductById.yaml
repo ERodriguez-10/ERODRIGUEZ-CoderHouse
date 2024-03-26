@@ -1,0 +1,36 @@
+paths:
+  /product/{productId}:
+    get:
+      tags:
+        - product
+      summary: Get product information
+      description: >
+        This endpoint is used to get a product by its ID (pid). If the operation is successful, the selected product is returned. If there's an error, it's caught and an error message is returned.
+      operationId: getProductById
+      parameters:
+        - name: productId
+          in: path
+          description: Product ID generated from MongoDB.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  productSelected:
+                    $ref: "#/components/schemas/Product"
+        "404":
+          description: Product retrieval failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error message"

@@ -1,0 +1,46 @@
+paths:
+  /cart:
+    post:
+      tags:
+        - cart
+      summary: Create a cart
+      description: >
+        This endpoint is used to create a new shopping cart with products associated with a user. It requires a user ID and an array of product IDs. If the operation is successful, a success message and the created cart are returned. If there's an error, it's caught and an error message is returned.
+      operationId: createCart
+      requestBody:
+        description: Requires a user ID and an array of product IDs.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                products:
+                  type: array
+                  items:
+                    type: string
+        required: true
+      responses:
+        "200":
+          description: Cart created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Successfully created!"
+                  cartCreated:
+                    $ref: "#/components/schemas/Cart"
+        "400":
+          description: Cart creation failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please send an array of products to create your cart."

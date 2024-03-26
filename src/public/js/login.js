@@ -14,7 +14,7 @@ registerForm.addEventListener("submit", async (event) => {
     password: iPassword.value,
   };
 
-  await fetch("http://localhost:8080/api/auth/login", {
+  await fetch("http://localhost:8080/api/v1/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

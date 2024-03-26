@@ -20,7 +20,7 @@ const socketServer = new Server(httpServer);
 
 socketServer.on("connection", (socket) => {
   socket.on("newProductClient", (product) => {
-    fetch(`${URL}/api/products`, {
+    fetch(`${URL}/api/v1/product`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ socketServer.on("connection", (socket) => {
   });
 
   socket.on("newMessageClient", (message) => {
-    fetch(`${URL}/api/messages`, {
+    fetch(`${URL}/api/v1/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,15 +63,18 @@ socketServer.on("connection", (socket) => {
       userId: userId,
     };
 
-    fetch(`${URL}/api/products/${productId}`, {
+    fetch(`${URL}/api/v1/product/${productId}`, {
       method: "DELETE",
       headers: {
-        "Contet-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+        if (data.error) return socket.emit("errorServer", data.message);
+
         socketServer.emit("productDeletedServer", productId);
       })
       .catch((err) => {
@@ -122,7 +125,7 @@ socketServer.on("connection", (socket) => {
 
   socket.on("checkout", async (cartId) => {
     try {
-      fetch(`${URL}/api/carts/${cartId}/purchase`, {
+      fetch(`${URL}/api/v1/cart/${cartId}/purchase`, {
         method: "POST",
         headers: {
           "Contet-Type": "application/json",

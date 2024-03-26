@@ -1,0 +1,11 @@
+tags:
+  - name: auth
+    description: Everything related to authorization and authentication
+  - name: cart
+    description: Operations about shopping cart
+  - name: chat
+    description: Get and post message
+  - name: product
+    description: Manage product's store
+  - name: test
+    description: Check some funcionality

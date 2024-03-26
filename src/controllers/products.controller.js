@@ -93,13 +93,20 @@ const deleteProductController = async (req, res) => {
   const { pid } = req.params;
   const { userId } = req.body;
 
-  console.log(pid, userId);
-
   try {
-    await productServices.deleteProduct(pid, userId);
-    res.status(200).json({
-      message: "Content successfully deleted!",
-    });
+    const deletion = await productServices.deleteProduct(pid, userId);
+
+    if (deletion.deletedCount === 0) {
+      return res.status(404).json({
+        error: true,
+        message: "You are not the seller of this product. You can't delete!",
+      });
+    } else {
+      res.status(200).json({
+        error: false,
+        message: "Content successfully deleted!",
+      });
+    }
   } catch (error) {
     res.status(400).json({
       error: error.message,

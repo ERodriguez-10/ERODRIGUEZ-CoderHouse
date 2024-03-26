@@ -67,12 +67,12 @@ export default class ProductDAO {
 
     if (productPaginate.hasNextPage) {
       let nextPageNumber = Number(pageFilter) + 1;
-      nextLink = `http://localhost:8080/api/products?limit=${limitFilter}&page=${nextPageNumber}`;
+      nextLink = `http://localhost:8080/api/v1/product?limit=${limitFilter}&page=${nextPageNumber}`;
     }
 
     if (productPaginate.hasNextPage) {
       let prevPageNumber = Number(pageFilter) - 1;
-      prevLink = `http://localhost:8080/api/products?limit=${limitFilter}&page=${prevPageNumber}`;
+      prevLink = `http://localhost:8080/api/v1/product?limit=${limitFilter}&page=${prevPageNumber}`;
     }
 
     let responseObject = {

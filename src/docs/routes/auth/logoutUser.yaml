@@ -1,0 +1,23 @@
+paths:
+  /auth/logout:
+    get:
+      tags:
+        - auth
+      summary: User logout
+      description: >
+        This endpoint is responsible for logging out the current user. Upon invocation, it removes the "access_token" cookie from the client, effectively logging out the user. After successful logout, the server responds with a success message.
+      operationId: logoutUser
+      responses:
+        "200":
+          description: Successful logout.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: string
+                    example: "Logged out"
