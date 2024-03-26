@@ -1,12 +1,12 @@
 {
   "name": "backend-coderhouse",
-  "version": "1.19.4",
-  "description": "Desafío n° 12 del curso de programación Backend de CoderHouse",
+  "version": "1.18.4",
+  "description": "Pre entrega n°4 del curso de programación Backend de CoderHouse",
   "main": "app.js",
   "type": "module",
   "scripts": {
     "test": "nodemon ./src/app.js -t",
-    "dev": "nodemon ./src/app.js",
+    "dev": "nodemon ./src/app.js -e yaml",
     "start": "node ./src/app.js",
     "prod": "node ./src/app.js --mode prod"
   },
