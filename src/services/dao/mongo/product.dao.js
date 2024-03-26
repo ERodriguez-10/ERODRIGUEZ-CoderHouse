@@ -7,7 +7,6 @@ export default class ProductDAO {
     try {
       return await productModel.create(product);
     } catch (error) {
-      console.log(error);
       throw new Error("Product not created");
     }
   };
@@ -107,7 +106,7 @@ export default class ProductDAO {
     return await productModel.updateOne({ _id: id }, product);
   };
 
-  deleteProduct = async (id, userId) => {
-    return await productModel.deleteOne({ _id: id, seller: userId });
+  deleteProduct = async (id) => {
+    return await productModel.deleteOne({ _id: id });
   };
 }

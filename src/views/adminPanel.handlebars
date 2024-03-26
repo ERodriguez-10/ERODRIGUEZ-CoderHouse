@@ -168,18 +168,20 @@
                     </fieldset>
                   </div>
 
-                  <div class="md:col-span-1">
-                    <p class="mb-2">Owner product</p>
-                    <label for="owner">
-                      <input
-                        type="checkbox"
-                        id="owner"
-                        name="owner"
-                        user-data-id="{{userId}}"
-                      />
-                      Yes, I'm the seller of the product
-                    </label>
-                  </div>
+                  {{#if isUser}}
+                    <div class="md:col-span-1">
+                      <p class="mb-2">Owner product</p>
+                      <label for="owner">
+                        <input
+                          type="checkbox"
+                          id="owner"
+                          name="owner"
+                          user-data-id="{{userId}}"
+                        />
+                        Yes, I'm the seller of the product
+                      </label>
+                    </div>
+                  {{/if}}
 
                   <div class="md:col-span-5">
                     <input

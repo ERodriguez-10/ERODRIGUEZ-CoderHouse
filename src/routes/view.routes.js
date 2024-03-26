@@ -34,7 +34,7 @@ viewRouter.get("/register", async (req, res) => {
   });
 });
 
-viewRouter.get("/send-email-to-recover", async (req, res) => {
+viewRouter.get("/recoverPassword", async (req, res) => {
   res.render("sendEmail", {
     tabTitle: "Bookify Store - Send Email To Recover",
     fileCss: "css/styles.css",
@@ -71,42 +71,6 @@ viewRouter.get("/profile", passportCall(JwtStrategy), async (req, res) => {
     isAdmin: req.user.role === "Admin" ? true : false,
   });
 });
-
-/*viewRouter.get(
-  "/profile/my-products",
-  passportCall(JwtStrategy),
-  async (req, res) => {
-    const productData = await productServices.getProducts(
-      undefined,
-      undefined,
-      undefined,
-      undefined
-    );
-
-    const payloadProducts = productData.payload;
-
-    let productsView = payloadProducts.map((product) => {
-      return Object.assign({}, product);
-    });
-
-    let avatarImg;
-
-    if (req.user.avatar !== undefined) {
-      avatarImg = req.user.avatar;
-    } else {
-      avatarImg = "https://i.imgur.com/6VBx3io.png";
-    }
-
-    res.render("userProducts", {
-      tabTitle: "Bookify Store - Profile",
-      fileCss: "css/styles.css",
-      products: productsView,
-      name: req.user.first_name,
-      isUser: req.user.role === "user" ? true : false,
-      isAdmin: req.user.role === "Admin" ? true : false,
-    });
-  }
-);*/
 
 viewRouter.get(
   "/chat",

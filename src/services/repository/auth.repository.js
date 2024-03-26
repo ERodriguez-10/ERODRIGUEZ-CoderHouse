@@ -7,6 +7,10 @@ export default class AuthRepository {
     return await this.dao.createAccount(account);
   };
 
+  getAccountById = async (userId) => {
+    return await this.dao.getAccountById(userId);
+  };
+
   getAccountByEmail = async (email) => {
     return await this.dao.getAccountByEmail(email);
   };
@@ -29,5 +33,9 @@ export default class AuthRepository {
 
   deleteAccount = async (id) => {
     return await this.dao.deleteAccount(id);
+  };
+
+  updateRole = async (userId, role) => {
+    return await this.dao.updateRole(userId, role);
   };
 }

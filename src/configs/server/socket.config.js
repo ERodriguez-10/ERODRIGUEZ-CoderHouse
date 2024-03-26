@@ -7,6 +7,7 @@ import {
   getCartByUserId,
   postNewCart,
   postProductToCart,
+  getProductById,
 } from "#utils/fetch.js";
 import logger from "#utils/logger.js";
 import sendInvoceToEmail from "#utils/mail.js";
@@ -57,29 +58,45 @@ socketServer.on("connection", (socket) => {
       });
   });
 
-  socket.on("deleteProductClient", (productId, userId) => {
-    const data = {
-      productId: productId,
-      userId: userId,
-    };
+  socket.on("deleteProductClient", async (productId) => {
+    const jwtCookie = socket.request.headers.cookie;
 
-    fetch(`${URL}/api/v1/product/${productId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.error) return socket.emit("errorServer", data.message);
+    if (jwtCookie && jwtCookie.includes("token=")) {
+      const jwtToken = jwtCookie.split("=")[1];
+      try {
+        const tokenData = jwt.verify(jwtToken, configEnv.JWT_SECRET);
 
-        socketServer.emit("productDeletedServer", productId);
-      })
-      .catch((err) => {
-        logger.error(err);
-      });
+        const isUser = tokenData.user.role;
+
+        if (isUser !== "Admin") {
+          const userId = tokenData.user.userId;
+
+          const productData = await getProductById(productId);
+
+          if (userId !== productData.productSelected.seller) {
+            return socket.emit("notOwnerError");
+          }
+        }
+
+        fetch(`${URL}/api/v1/product/${productId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            socketServer.emit("productDeletedServer", productId);
+          })
+          .catch((err) => {
+            logger.error(err);
+          });
+      } catch (error) {
+        console.error("Error verifying JWT token: ", error);
+      }
+    } else {
+      console.error("JWT token not found in request headers.");
+    }
   });
 
   socket.on("addProductToCart", async (productId) => {
@@ -93,26 +110,32 @@ socketServer.on("connection", (socket) => {
         const isUser = tokenData.user.role;
 
         if (isUser === "Admin") {
-          socket.emit("adminError");
+          return socket.emit("adminError");
+        }
+
+        const userId = tokenData.user.userId;
+
+        const productData = await getProductById(productId);
+
+        if (userId === productData.productSelected.seller) {
+          return socket.emit("ownerError");
+        }
+
+        const cartId = await getCartByUserId(userId);
+
+        if (!cartId) {
+          const newCart = await postNewCart(userId, productId);
+          if (newCart) {
+            socket.emit("productSuccessfullyAdded");
+          }
         } else {
-          const userId = tokenData.user.userId;
+          const addProductToCart = await postProductToCart(
+            cartId._id,
+            productId
+          );
 
-          const cartId = await getCartByUserId(userId);
-
-          if (!cartId) {
-            const newCart = await postNewCart(userId, productId);
-            if (newCart) {
-              socket.emit("productSuccessfullyAdded");
-            }
-          } else {
-            const addProductToCart = await postProductToCart(
-              cartId._id,
-              productId
-            );
-
-            if (addProductToCart) {
-              socket.emit("productSuccessfullyAdded");
-            }
+          if (addProductToCart) {
+            socket.emit("productSuccessfullyAdded");
           }
         }
       } catch (error) {

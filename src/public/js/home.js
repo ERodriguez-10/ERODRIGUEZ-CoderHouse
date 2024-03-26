@@ -29,3 +29,13 @@ socket.on("adminError", () => {
     },
   }).showToast();
 });
+
+socket.on("ownerError", () => {
+  Toastify({
+    text: "You cannot add your own products to cart",
+    duration: 3000,
+    style: {
+      background: "rgb(255,0,0)",
+    },
+  }).showToast();
+});

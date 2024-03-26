@@ -1,0 +1,40 @@
+paths:
+  /auth/premium/{userId}:
+    post:
+      tags:
+        - auth
+      summary: Update user role
+      description: "This endpoint is responsible for updating the role of a user. The user is identified by the userId parameter. The new role is determined based on the current role of the user: if the current role is 'Classic', it will be changed to 'Premium', and vice versa."
+      operationId: updateRole
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the user whose role is to be updated.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Role update successful.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/User"
+        "400":
+          description: Role update failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string

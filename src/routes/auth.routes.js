@@ -8,9 +8,9 @@ import {
   registerController,
   loginController,
   logoutController,
-  getAccountByEmailController,
   newPasswordController,
   recoverPasswordController,
+  updateRoleController,
 } from "#controllers/auth.controller.js";
 
 import { Router } from "express";
@@ -71,5 +71,7 @@ authRouter.post("/recoverPassword", recoverPasswordController);
 authRouter.post("/updatePassword/:token", newPasswordController);
 
 authRouter.get("/logout", logoutController);
+
+authRouter.post("/premium/:userId", updateRoleController);
 
 export default authRouter;

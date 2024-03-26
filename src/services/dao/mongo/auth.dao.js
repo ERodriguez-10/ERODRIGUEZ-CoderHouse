@@ -7,6 +7,10 @@ export default class AuthDAO {
     return await userModel.create(account);
   };
 
+  getAccountById = async (userId) => {
+    return await userModel.findById({ _id: userId });
+  };
+
   getAccountByEmail = async (email) => {
     return await userModel.findOne({ email: email });
   };
@@ -31,6 +35,14 @@ export default class AuthDAO {
     return await userModel.findOneAndUpdate(
       { email: email },
       { password: password }
+    );
+  };
+
+  updateRole = async (userId, role) => {
+    return await userModel.findOneAndUpdate(
+      { _id: userId },
+      { role: role },
+      { new: true }
     );
   };
 }

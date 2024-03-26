@@ -9,6 +9,7 @@ newPasswordForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   alertMessage.style.display = "none";
+  invalidTokenMessage.style.display = "none";
 
   const data = {
     password: iPassword.value,
@@ -25,6 +26,10 @@ newPasswordForm.addEventListener("submit", async (event) => {
     .then((response) => response.json())
     .then((data) => {
       if (!data.success) {
+        if (data.error === "Token is invalid") {
+          return (invalidTokenMessage.style.display = "block");
+        }
+
         return (alertMessage.style.display = "block");
       } else {
         iPassword.value = "";

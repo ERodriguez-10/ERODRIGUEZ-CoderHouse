@@ -54,3 +54,21 @@ export async function postProductToCart(_id, productId) {
       logger.error(err);
     });
 }
+
+export async function getProductById(productId) {
+  return fetch(`${URL}/api/v1/product/${productId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
+}

@@ -162,13 +162,13 @@ const getAccountByEmailController = async (req, res) => {
   }
 };
 
-const mailOptionsToReset = {
-  from: configEnv.MAIL_USER,
-  // to: config.gmailAccount,
-  subject: "Reset password",
-};
-
 const recoverPasswordController = async (req, res) => {
+  const mailOptionsToReset = {
+    from: configEnv.MAIL_USER,
+    // to: config.gmailAccount,
+    subject: "Reset password",
+  };
+
   try {
     const { email } = req.body;
 
@@ -199,7 +199,62 @@ const recoverPasswordController = async (req, res) => {
     }
 
     mailOptionsToReset.to = email;
-    mailOptionsToReset.html = `To reset your password, click on the following link: <a href="${link}"> Reset Password</a>`;
+    mailOptionsToReset.html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <style>
+              body {
+                  font-family: Arial, sans-serif;
+                  margin: 0;
+                  padding: 0;
+                  background-color: #f4f4f4;
+              }
+              .email-container {
+                  width: 100%;
+                  max-width: 600px;
+                  margin: 0 auto;
+                  padding: 20px;
+                  background-color: #fff;
+                  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+              }
+              .email-body {
+                  font-size: 16px;
+                  line-height: 1.5;
+                  color: #333;
+              }
+              .email-footer {
+                  text-align: center;
+                  padding-top: 20px;
+                  color: #888;
+              }
+              .btn {
+                  display: inline-block;
+                  color: #fff !important;
+                  background-color: #3498db;
+                  padding: 10px 20px;
+                  text-decoration: none;
+                  border-radius: 3px;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="email-container">
+              <div class="email-body">
+                  <p>Hello,</p>
+                  <p>You have requested to reset your password. Please click the button below to proceed.</p>
+                  <p><a href="${link}" class="btn">Reset Password</a></p>
+                  <p>If you did not request this, please ignore this email.</p>
+                  <p>Best,</p>
+                  <p>The BookifyStore Team</p>
+              </div>
+              <div class="email-footer">
+                  <p>© ${new Date().getFullYear()} BookifyStore. All rights reserved.</p>
+              </div>
+          </div>
+      </body>
+      </html>
+      `;
 
     transporter.sendMail(mailOptionsToReset, (error, info) => {
       if (error) {
@@ -221,17 +276,21 @@ const newPasswordController = async (req, res) => {
 
   const bycriptPassword = await createHash(password);
 
-  const findUser = await emailServices.getEmail(token);
-
-  const now = new Date();
-  const expirationTime = findUser.expirationTime;
-
-  if (now > expirationTime || !expirationTime) {
-    await emailServices.deleteToken(token);
-    return res.redirect("/send-email-to-reset");
-  }
-
   try {
+    let findUser = await emailServices.getEmail(token);
+
+    if (findUser === null) {
+      throw new Error("Token is invalid");
+    }
+
+    const now = new Date();
+    const expirationTime = findUser.expirationTime;
+
+    if (now > expirationTime || !expirationTime) {
+      await emailServices.deleteToken(token);
+      return res.redirect("/recoverPassword");
+    }
+
     const account = await authServices.getAccountByEmail(findUser.email);
 
     if (!account) {
@@ -246,11 +305,45 @@ const newPasswordController = async (req, res) => {
 
     await authServices.updatePassword(findUser.email, bycriptPassword);
 
+    await emailServices.deleteToken(token);
+
     res.status(200).send({ success: true, error: null });
   } catch (err) {
     res.status(400).send({
       success: false,
       error: err.message,
+    });
+  }
+};
+
+const updateRoleController = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const userData = await authServices.getAccountById(userId);
+
+    if (!userData) {
+      throw new Error("User not found");
+    }
+
+    let newRole;
+
+    if (userData.role === "Classic") {
+      newRole = "Premium";
+    } else {
+      newRole = "Classic";
+    }
+
+    const account = await authServices.updateRole(userId, newRole);
+
+    res.status(200).json({
+      success: true,
+      data: account,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
     });
   }
 };
@@ -264,4 +357,5 @@ export {
   getAccountByEmailController,
   recoverPasswordController,
   newPasswordController,
+  updateRoleController,
 };

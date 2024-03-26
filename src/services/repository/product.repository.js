@@ -8,7 +8,6 @@ export default class ProductRepository {
   };
 
   addProduct = async (product) => {
-    console.log(product);
     try {
       return await this.dao.addProduct(product);
     } catch (error) {

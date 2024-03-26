@@ -13,8 +13,6 @@ const iThumbnail = document.getElementById("thumbnail");
 const iStatus = document.getElementsByName("status");
 const iOwner = document.getElementById("owner");
 
-const userId = iOwner.getAttribute("user-data-id");
-
 // Form submit event
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -39,7 +37,9 @@ form.addEventListener("submit", (e) => {
     status: iStatusValue,
   };
 
-  if (iOwner.checked) {
+  if (iOwner !== null && iOwner.checked) {
+    const userId = iOwner.getAttribute("user-data-id");
+
     newProductFromSocket.seller = userId;
   }
 
@@ -53,9 +53,7 @@ document.querySelectorAll("#buttonDelete").forEach((button) => {
   button.addEventListener("click", (event) => {
     const productId = event.target.getAttribute("data-product-id");
 
-    console.log("This is the productId: " + productId + ", userId: " + userId);
-
-    socket.emit("deleteProductClient", productId, userId);
+    socket.emit("deleteProductClient", productId);
   });
 });
 
@@ -139,6 +137,18 @@ socket.on("productDeletedServer", (id) => {
 socket.on("errorServer", (error) => {
   Toastify({
     text: error,
+    duration: 3000,
+    style: {
+      background: "rgb(255,0,0)",
+      background:
+        "linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(121,9,9,1) 100%, rgba(0,212,255,1) 100%)",
+    },
+  }).showToast();
+});
+
+socket.on("notOwnerError", () => {
+  Toastify({
+    text: "You are not the owner of this product",
     duration: 3000,
     style: {
       background: "rgb(255,0,0)",
