@@ -14,6 +14,12 @@ const getCartByUserIdController = async (req, res) => {
 const createCartController = async (req, res) => {
   const { products, userId } = req.body;
 
+  if (!products || !Array.isArray(products)) {
+    return res.status(400).json({
+      error: "Please send an array of products to create your cart.",
+    });
+  }
+
   const productMap = products.map((p) => {
     return {
       productId: p,
@@ -21,17 +27,11 @@ const createCartController = async (req, res) => {
     };
   });
 
-  if (!products || !Array.isArray(products)) {
-    return res.status(400).json({
-      error: "Please send an array of products to create your cart.",
-    });
-  } else {
-    const newCart = await cartServices.createCart(productMap, userId);
+  const newCart = await cartServices.createCart(productMap, userId);
 
-    res
-      .status(200)
-      .json({ message: "Successfully created!", cartCreated: newCart });
-  }
+  res
+    .status(200)
+    .json({ message: "Successfully created!", cartCreated: newCart });
 };
 
 const getCartByCartIdController = async (req, res) => {
